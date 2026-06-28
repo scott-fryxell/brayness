@@ -10,6 +10,15 @@ Cursor: open the project folder when coding (`work/web`). Open the repo
 root for skills only. One repo-root window + nested `.git` dirs = Agent
 search broken (Cursor limitation, not fixable with ignore files).
 
+## Dependencies
+
+See `README.md` for the full picture. Short version:
+
+- **The app** - root `node_modules/` (pi). Update: `npm install`
+- **The add-ons** - `npm/node_modules/` (packages from `settings.json`). Update: `./bin/pi update --extensions`
+
+The folder `npm/` is pi's add-on storage, not the npm program. Do not edit either `node_modules/` tree by hand.
+
 ## Personal context
 
 This repo ships a `personal-context` extension (see `extensions/personal-context/`)

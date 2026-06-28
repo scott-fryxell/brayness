@@ -55,6 +55,9 @@ Agent copies the following from `/brain/` → `/brain/work/brain/`:
 - `settings.json`
 - `AGENTS.md`
 - `package.json`
+- `README.md`
+- `npm/README.md`
+- `npm/.gitignore`
 
 ### Step 4: Validate
 
@@ -103,6 +106,9 @@ Over time: Agent can execute commits directly after validation passes and you've
 | `sessions/`               | ✓         | Session configs                       |
 | `bin/pi`                  | ✓         | Agent CLI                             |
 | `package.json`            | ✓         | Dependencies and metadata             |
+| `README.md`               | ✓         | Repo overview and setup               |
+| `npm/README.md`           | ✓         | Add-on folder signpost                |
+| `npm/.gitignore`          | ✓         | Keeps add-on storage gitignored       |
 | `.git/` (nested)          | ✗         | Nested project repos stay in dev only |
 | `.env`                    | ✗         | Secrets stay in dev                   |
 | `node_modules/`           | ✗         | Build artifacts, too large            |

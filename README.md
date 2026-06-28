@@ -1,80 +1,63 @@
-# brain
+# Brain
 
-A personal monorepo workspace for [pi](https://github.com/earendil-works/pi-coding-agent): skills, extensions, bin scripts, and agent config. Starting point for a digital brain.
+Personal workspace for [pi](https://github.com/earendil-works/pi-coding-agent): skills, extensions, and agent config.
 
-## What's here
+## Start pi
 
-| Path            | Contents                                                       |
-| --------------- | -------------------------------------------------------------- |
-| `skills/`       | Original skills maintained in this repo                        |
-| `extensions/`   | pi extensions (see below)                                      |
-| `bin/`          | Shell and JS scripts (`pi`, vault tooling, media helpers)      |
-| `AGENTS.md`     | Shared agent instructions (preferences, code style)            |
-| `settings.json` | pi settings (default provider/model, enabled models, packages) |
-| `models.json`   | Custom model + provider definitions                            |
-| `sessions/`     | Session logs                                                   |
-
-## Setup
+```bash
+npm install    # installs the app (first time only)
+npm start      # runs pi
+```
 
 Requires Node >= 22.19.
 
-```bash
-npm install
-npm start          # runs pi
+## Where things live
+
+Most folders here are things you edit. Two folders are auto-generated - ignore them.
+
+```
+brain/
+├── skills/              your skills (edit)
+├── extensions/          your extensions (edit)
+├── settings.json        pi config (edit)
+│
+├── node_modules/        THE APP  (auto-generated - do not edit)
+└── npm/                 ADD-ON STORAGE  (auto-generated - do not edit)
+    └── node_modules/    THE ADD-ONS
 ```
 
-Or run pi directly:
+### The app
 
-```bash
-./bin/pi
-```
+`node_modules/` at the repo root holds **pi itself**.
 
-## Skills
+Update it: `npm install` (from the repo root)
 
-Skills live in `skills/` - one folder per skill, each with a `SKILL.md`. pi discovers them automatically via the `pi.skills` entry in `package.json`.
+### The add-ons
 
-### Skill management approach
+`npm/node_modules/` holds **extra pi packages** listed in `settings.json` (loop, btw, autoresearch, etc.).
 
-There are two kinds of skills in a brain workspace:
+Update them: `./bin/pi update --extensions`
 
-**Original skills** (checked in here): maintained in this repo. Edit them directly.
+### Why is there a folder called `npm/`?
 
-**Externally-maintained skills** (hyperframes, skill-finder, simplify, etc.): maintained upstream. Do **not** vendor copies into `skills/` - they drift from upstream and become a maintenance burden. Install them as pi packages instead:
+The name is misleading. It is **not** the npm program.
 
-```bash
-pi install git:github.com/heygen-com/hyperframes
-pi install git:github.com/vercel-labs/skills
-```
+pi always stores downloaded add-ons in a folder called `npm/`. Because this repo *is* pi's home directory, that folder sits at the brain root.
 
-This adds them to `settings.json` under `packages`, and pi loads the skills from the managed location. Update with:
+Think of it as **the add-on cupboard**, not "npm".
 
-```bash
-pi update --all
-```
+## What to edit vs ignore
 
-If you have leftover vendored copies of externally-maintained skills in `skills/`, remove them before installing as packages to avoid duplicates.
+| You edit | Auto-generated (ignore) |
+| --- | --- |
+| `skills/` | `node_modules/` |
+| `extensions/` | `npm/` |
+| `settings.json` | `npm/node_modules/` |
+| `AGENTS.md` | |
+| `AGENTS.local.md` (personal, gitignored) | |
 
-## Extensions
+## More
 
-Extensions live in `extensions/`. Each is a subdirectory with an `index.ts`.
-
-### personal-context
-
-Auto-loads an `AGENTS.local.md` file from the current directory (or nearest ancestor) and appends it to the system prompt. Use it for machine-local or sensitive context you don't want to commit - personal preferences, absolute paths, project context that only applies to you.
-
-**Setup:**
-
-1. Create `AGENTS.local.md` next to your `AGENTS.md`.
-2. It's already in `.gitignore`, so it won't be committed.
-
-If no `AGENTS.local.md` is found, the extension does nothing. See `extensions/personal-context/README.md`.
-
-## Agent context (`AGENTS.md`)
-
-The shared `AGENTS.md` contains reusable agent config: output preferences, typography rules, communication style, and code conventions. It's safe for anyone to use.
-
-Personal context (vault references, local paths, music/events) belongs in `AGENTS.local.md` (gitignored, loaded by the personal-context extension), not in the shared file.
-
-## Syncing dev -> published
-
-This repo is the published mirror. Develop in your local brain workspace, then sync changes here. See the `brain-sync` skill for the workflow.
+- Agent instructions: `AGENTS.md`
+- New machine setup: `docs/local-setup.md`
+- Published mirror: `work/brain/`

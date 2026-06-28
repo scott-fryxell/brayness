@@ -70,7 +70,7 @@ export default function personalContextExtension(pi: ExtensionAPI) {
 	let localFile: string | null = null;
 	let localContent: string = "";
 
-	pi.on("session_start", async (event) => {
+	pi.on("resources_discover", async (event) => {
 		localFile = findLocalContextFile(event.cwd);
 		localContent = localFile ? readLocalContext(localFile) : "";
 	});
