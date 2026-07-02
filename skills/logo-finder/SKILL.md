@@ -1,13 +1,13 @@
 ---
 name: logo-finder
-description: Find and install brand SVG logos via SVGL (https://svgl.app/) and Wikimedia Commons fallbacks into public/brands for social proof and integration rows. Use for logo-finder, company logos, svgl.app, integration logos, missing About.vue logos, or refreshing work/web/public/brands. Pair with copywriting for social-proof copy.
+description: Find and install brand SVG logos via SVGL (https://svgl.app/) and Wikimedia Commons fallbacks into any project's static asset folder. Use for company logos, integration rows, social proof, or refreshing a brands directory. Pair with copywriting for social-proof copy.
 ---
 
 # Logo Finder (SVGL + Commons)
 
-Download brand logos into `work/web/public/brands/`. **Prefer SVG** (`.svg`); use PNG only when Commons/Wikipedia has no vector (e.g. [Final Cut Pro](https://en.wikipedia.org/wiki/Final_Cut_Pro#/media/File:FinalCutProACS2026.png)). Vite serves the folder at `/brands/{slug}.svg` or `.png`. Commit assets with the repo.
+Download brand logos into a static asset folder of your choice. **Prefer SVG** (`.svg`); use PNG only when Commons/Wikipedia has no vector (e.g. [Final Cut Pro](https://en.wikipedia.org/wiki/Final_Cut_Pro#/media/File:FinalCutProACS2026.png)). Commit assets with the repo.
 
-**Primary:** [SVGL API](https://svgl.app/docs/api)  
+**Primary:** [SVGL API](https://svgl.app/docs/api)
 **Fallback:** curated [Wikimedia Commons](https://commons.wikimedia.org/) rows in `assets/commons-logos.tsv` (see [references/commons.md](references/commons.md))
 
 ## How files are created
@@ -16,13 +16,13 @@ Download brand logos into `work/web/public/brands/`. **Prefer SVG** (`.svg`); us
 
 1. **Search** - `GET https://api.svgl.app?search={product name}`
 2. **Download** - `GET https://api.svgl.app/svg/{filename}`
-3. **Save** - `work/web/public/brands/{slug}.svg` where `slug` matches the tool name in `About.vue` (e.g. `premiere-pro`, `after-effects`).
+3. **Save** - `{out_dir}/{slug}.svg` where `slug` is lowercase-hyphenated (`DaVinci Resolve` -> `davinci-resolve`).
 
 ### Commons (when SVGL misses)
 
 1. Find SVG on Commons (or use a known file page, e.g. [DaVinci Resolve 17 logo](https://commons.wikimedia.org/wiki/File:DaVinci_Resolve_17_logo.svg)).
 2. Add `slug`, `upload_url`, wiki link, and `product_name` to `assets/commons-logos.tsv`.
-3. Run `commons.sh` or let `missing-from-about.sh` pick it up after SVGL fails.
+3. Run `commons.sh` or pass the upload URL directly with `--url`.
 
 ## Scripts
 
@@ -30,56 +30,61 @@ Requires `curl` and `jq` (`brew install jq`).
 
 ```bash
 # SVGL - one logo
-bash skills/logo-finder/scripts/logo.sh Figma work/web/public/brands/figma.svg
+bash skills/logo-finder/scripts/logo.sh Figma path/to/brands/figma.svg
 bash skills/logo-finder/scripts/logo.sh "Premiere Pro" --search
 
-# SVGL - batch list
-bash skills/logo-finder/scripts/batch.sh skills/logo-finder/assets/realness-integrations.txt work/web/public/brands
+# SVGL - batch from a list (one brand per line)
+bash skills/logo-finder/scripts/batch.sh skills/logo-finder/examples/sample-brands.txt path/to/brands
 
-# Commons - manifest or direct URL
-bash skills/logo-finder/scripts/commons.sh "DaVinci Resolve" work/web/public/brands/davinci-resolve.svg
-bash skills/logo-finder/scripts/commons.sh --list
-
-# About.vue tools with logo: null - try SVGL then commons
-bash skills/logo-finder/scripts/missing-from-about.sh work/web/src/views/About.vue work/web/public/brands
+# Commons - manifest entry or direct upload URL
+bash skills/logo-finder/scripts/commons.sh "DaVinci Resolve" path/to/brands/davinci-resolve.svg
+bash skills/logo-finder/scripts/commons.sh --url 'https://upload.wikimedia.org/.../file.svg' path/to/brands/file.svg
 ```
 
-Not fetched at runtime on the live site - only during install. Commit `public/brands/*.svg`.
+Not fetched at runtime on the live site - only during install. Commit the downloaded assets.
 
-## About page wiring
+## Where to place logos - ask first
 
-`About.vue` uses **static HTML** (no `v-for` data array):
+Never assume the output directory. **Ask the user where logos should go** before downloading. If they have no preference, propose a best-practice path based on the project's framework:
 
-```html
-<img class="integration-logo" src="/brands/figma.svg" alt="" width="24" height="24" />
-<strong>Figma</strong>
-```
+| Framework               | Default path                | Served as                   |
+| ----------------------- | --------------------------- | --------------------------- |
+| Vite (Vue/React/Svelte) | `public/brands/`            | `/brands/{slug}.svg`        |
+| Next.js                 | `public/brands/`            | `/brands/{slug}.svg`        |
+| Astro                   | `public/brands/`            | `/brands/{slug}.svg`        |
+| SvelteKit               | `static/brands/`            | `/brands/{slug}.svg`        |
+| Django/Flask            | `static/brands/`            | `/static/brands/{slug}.svg` |
+| Rails                   | `app/assets/images/brands/` | asset pipeline              |
 
-Slug in the path = lowercase hyphenated name (`DaVinci Resolve` -> `/brands/davinci-resolve.svg`). Wire only in the integrations `<ol>` (no hero rotator).
+Conventions worth keeping:
 
-No logo yet: use `<icon name="finished" />` instead of `<img>`.
+- One folder, named `brands/` or `logos/` (pick one, stay consistent).
+- Slug filenames: lowercase, hyphenated (`DaVinci Resolve` -> `davinci-resolve.svg`).
+- Prefer a single committed folder over scattered per-component copies - logos are shared assets.
+- Commit SVGs to the repo; do not fetch at runtime.
 
-Raster fallback: `<img src="/brands/final-cut-pro.png" ...>` when only PNG exists on Commons.
-
-When SVGL and Commons miss: add `commons-logos.tsv` row or fetch from [Procreate brand kit](https://procreate.com/brand-use); `commons.sh` also supports curated third-party URLs (see `procreate` row).
-
-Dark marks on dark UI: wrap in `<span class="logo-wrap logo-wrap--light-bg">` (Unity, Unreal).
+If the project already has a logo folder in use, reuse it. Confirm the served URL prefix so the slug paths you wire into markup match.
 
 ## Workflow
 
-1. List brands from `About.vue` or `assets/realness-integrations.txt`.
-2. Run `missing-from-about.sh` (or `batch.sh` for the full list).
-3. For remaining misses: `logo.sh --search`, browse SVGL, or search Commons and append `commons-logos.tsv`.
-4. Paste static `<img src="/brands/{slug}.svg" ...>` into `About.vue` integrations `<li>`.
-5. **Git add** `public/brands/*.svg`.
-6. Verify `/brands/{slug}.svg` returns SVG (not HTML).
+1. **Ask** the user where logos should be saved, or propose the best-practice default for the framework.
+2. Identify the brands you need - build a list (one name per line) or read names from the page/component you are wiring.
+3. Run `batch.sh <list> <out_dir>`.
+4. For misses: `logo.sh <name> --search`, browse SVGL, or search Commons and append a `commons-logos.tsv` row.
+5. Wire the saved assets into your page (static `<img src="/{brands}/{slug}.svg" ...>` or framework equivalent).
+6. **Git add** the assets.
+7. Verify the served path returns SVG (not HTML).
+
+## Finding missing logos in an existing page
+
+There is no `missing-from-about` script. Instead, read the target file and find logo references that are empty or use a placeholder icon, then feed those names to `batch.sh` or `logo.sh`. This keeps the skill independent of any one template format.
 
 ## API surface (summary)
 
-| Task | Request |
-|------|---------|
-| SVGL search | `GET https://api.svgl.app?search={query}` |
-| SVGL SVG | `GET https://api.svgl.app/svg/{filename}` |
+| Task           | Request                                                          |
+| -------------- | ---------------------------------------------------------------- |
+| SVGL search    | `GET https://api.svgl.app?search={query}`                        |
+| SVGL SVG       | `GET https://api.svgl.app/svg/{filename}`                        |
 | Commons upload | Row in `assets/commons-logos.tsv` or Commons API `imageinfo.url` |
 
 See [references/api-surface.md](references/api-surface.md) and [references/commons.md](references/commons.md).

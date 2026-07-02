@@ -1,15 +1,15 @@
 ---
-name: css-motion-choreography-patterns
+name: motion-choreography-patterns
 description: Use when orchestrating multi-element UI motion, stagger systems, list reorder/insert/remove flows, modal and overlay stacks, gesture-driven transitions, and route-level choreography that preserves hierarchy and attention.
 metadata:
   category: Design & Frontend
   pairs-with:
-  - skill: css-motion-systems
+  - skill: motion-systems
     reason: Sibling skill — motion-systems covers mechanism selection and tokens; this covers multi-element sequencing and choreography
-  - skill: css-ux-interface-design
+  - skill: user-interface
     reason: Choreography serves UX goals — attention, hierarchy, continuity
   - skill: realness-design
-    reason: Animation decisions for realness projects defer to this skill and css-motion-systems
+    reason: Animation decisions for realness projects defer to this skill and motion-systems
 ---
 
 # Motion Choreography Patterns
@@ -95,6 +95,6 @@ When reduced motion is requested:
 
 ## Output Contract
 
-Use the same five-section format as `css-motion-systems`: Intent → Motion Spec → Implementation → Accessibility Fallback → QA Checklist. Replace "Intent" with "Storyboard" (who moves, in what order, and why) when orchestrating multiple elements.
+Use the same five-section format as `motion-systems`: Intent → Motion Spec → Implementation → Accessibility Fallback → QA Checklist. Replace "Intent" with "Storyboard" (who moves, in what order, and why) when orchestrating multiple elements.
 
 QA reference: [references/QA_STORYBOARD_CHECKLIST.md](references/QA_STORYBOARD_CHECKLIST.md)

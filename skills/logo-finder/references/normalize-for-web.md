@@ -19,26 +19,26 @@ Only when the brand allows monochrome and the design is single-hue:
 2. Remove fixed `width`/`height` on root if present; keep `viewBox`.
 3. Deduplicate `id` attributes inside paths (clipPath, gradients) - prefix with slug.
 
-## File storage (`work/web`)
+## File storage
 
-- Path: `work/web/public/brands/{slug}.svg` only (served as `/brands/{slug}.svg`)
-- Slug: lowercase, hyphenated - must match `integration_tools[].slug` in `About.vue`
+- Path: `{out_dir}/{slug}.svg` (default `public/brands/` for Vite; see the SKILL.md framework table)
+- Slug: lowercase, hyphenated
 - Commit SVGs with the repo; the live site does not call SVGL at runtime
 
 ## Accessibility
 
-| Pattern | alt |
-|---------|-----|
-| Logo + visible product name nearby | `alt=""` |
-| Logo strip only | `alt="{Brand}"` |
+| Pattern                                    | alt               |
+| ------------------------------------------ | ----------------- |
+| Logo + visible product name nearby         | `alt=""`          |
+| Logo strip only                            | `alt="{Brand}"`   |
 | Decorative row with `aria-label` on `<ul>` | empty alt per img |
 
 ## CSS
 
 ```css
 .integration-logo {
-  height: base-line * 1.25;
-  width: base-line * 1.25;
+  height: 1.25em;
+  width: 1.25em;
   object-fit: contain;
 }
 ```

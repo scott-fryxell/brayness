@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.80.2",
   "defaultProvider": "openrouter",
-  "defaultModel": "deepseek/deepseek-v4-flash",
-  "defaultThinkingLevel": "off",
+  "defaultModel": "z-ai/glm-5.2",
+  "defaultThinkingLevel": "medium",
   "packages": [
     "npm:pi-mono-btw",
     "npm:pi-mono-auto-fix",

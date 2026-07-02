@@ -1,36 +1,124 @@
 ---
 name: test-coverage
-description: Analyzes Vitest V8 coverage and Fallow health (complexity, CRAP, cycles, unused files) to prioritize test-first refactors. Use when improving coverage, reviewing fallow output, asking what to test before refactoring, or after test:coverage or npx fallow fails thresholds.
+description: Write Vitest specs for Vue 3 JavaScript (Vite Plus, happy-dom, @vue/test-utils) and analyze V8 coverage + Fallow health to prioritize test-first refactors. Reference implementation is work/realness. Use when writing or fixing tests, mocking composables, improving coverage, or after test:coverage or npx fallow fails thresholds.
 ---
 
-# Test coverage + Fallow refactor risk
+# Tests, coverage, and refactor risk
 
-Turn **`npm run test:coverage`** and **`npx fallow`** into a **test-before-refactor** plan — not a blind chase for 100%.
+Canonical reference: **`work/realness`** (`@realness.online/web`).
+
+Match `tests/**/*.spec.js` there. Do not introduce Jest, React Testing Library, TypeScript test files, or co-located `*.test.ts`.
+
+Two jobs:
+
+1. **Write specs** — patterns below; detail in [references/web-realness.md](references/web-realness.md)
+2. **Prioritize** — `npm run test:risk` before refactors; not a blind chase for 100%
 
 ## When to use
 
+- Adding or extending specs for `src/**`
+- Mocking `@/use/*`, Firebase, `idb-keyval`, or browser APIs
+- Mounting Vue components; fixing failing `vp test`
 - User asks what to test, what to refactor, or where risk is highest
 - `test:coverage` or coverage thresholds fail CI / pre-commit
 - After `npx fallow` reports cycles, complexity, or unused files
-- Before breaking import cycles or extracting large functions
 
-## Prerequisites
+## Stack
 
-From the **project root** (where `vite.config` / `package.json` lives):
+| Piece | What we use |
+| --- | --- |
+| Runner | Vite Plus — `vp test`, `import … from 'vite-plus/test'` |
+| Engine | Vitest (`vite-plus-test` alias) |
+| DOM | `happy-dom` |
+| Vue | `@vue/test-utils` — prefer `shallowMount` |
+| Language | JavaScript + JSDoc |
+| Coverage | V8, 80% global, `all: true` |
+
+## Commands
 
 ```bash
-npm run test:risk
+vp test run --reporter=dot          # npm run test
+vp test watch                       # npm run test:watch
+vp test run --coverage              # npm run test:coverage
+vp test run --bail=1 --reporter=dot # npm run test:fail-fast
+npm run test:risk                   # coverage + fallow + risk report
 ```
 
-Or step by step:
+Pre-commit: `vp check --fix && vp run type && vp test run`.
 
-```bash
-npm run test:coverage    # coverage/coverage-final.json
-npx fallow             # fallow-report.json (Vitest plugin + health)
-npm run test:risk:report
+## Writing specs
+
+### Layout
+
+- All specs in `tests/**/*.spec.js` mirroring `src/` (not co-located)
+- `describe('@/utils/itemid', …)` or view/component name
+- `@/` → `src/`; `@@/` → `tests/mocks/`
+- Config: `vite.config.js` → `test` block; setup: `tests/setup.js`, `tests/mocks/`
+
+### Skeleton
+
+```javascript
+import { describe, it, expect, vi, beforeEach } from 'vite-plus/test'
+import { fn_under_test } from '@/utils/example'
+
+describe('@/utils/example', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('describes behavior in plain language', () => {
+    expect(fn_under_test('input')).toBe('output')
+  })
+})
 ```
 
-## Workflow
+`snake_case`, no semicolons, test behavior not internals.
+
+### Key patterns
+
+| Pattern | Approach | Reference spec |
+| --- | --- | --- |
+| Pure utils | Input/output, nested `describe` | `tests/utils/itemid.spec.js` |
+| Module mocks | Top-level `vi.mock()`; `vi.clearAllMocks()` in `beforeEach` | `tests/utils/itemid.spec.js` |
+| Vue components | `shallowMount`, stubs, semantic queries | `tests/components/account/as-notifications.spec.js` |
+| Composable mocks | `vi.hoisted()` refs for `vi.mock` closures | `tests/views/Account.spec.js` |
+| Composables | `with_setup()` + `mount(defineComponent(...))` | `tests/use/poster.spec.js` |
+| Async errors | `await expect(…).rejects.toThrow()` | `tests/utils/itemid.spec.js` |
+
+**Hoisted mocks** (reset `.value` in `beforeEach`):
+
+```javascript
+const { mock_status, mock_enable } = vi.hoisted(() => {
+  const create_ref = value => ({ value, __v_isRef: true })
+  return {
+    mock_status: create_ref('off'),
+    mock_enable: vi.fn().mockResolvedValue(true)
+  }
+})
+
+vi.mock('@/use/push', () => ({
+  use_push: () => ({ status: mock_status, enable: mock_enable })
+}))
+```
+
+Global mocks: `tests/mocks/default.js`, `tests/mocks/browser/*`. Per-spec mocks only when behavior differs.
+
+`mockReset: false` in config — mocks keep implementations; clear call history each test.
+
+### What we do not do
+
+| Avoid | Use instead |
+| --- | --- |
+| Jest / React Testing Library | `vite-plus/test` + `@vue/test-utils` |
+| TypeScript test files | `.spec.js` + JSDoc |
+| `@faker-js/faker` | Domain fixtures (item IDs, directories) |
+| supertest / live DB | Mock `idb-keyval`, `serverless` |
+| `data-testid` | Semantic DOM queries |
+| 100% coverage | 80% gate + risk report |
+
+Full patterns, templates, file map: [references/web-realness.md](references/web-realness.md)
+
+## Coverage workflow
 
 ### 1. Risk report (start here)
 
@@ -40,7 +128,7 @@ npm run test:risk
 npm run test:risk:report
 ```
 
-Runs `scripts/prioritize-refactor-risk.js` (skill path via package.json).
+Runs `scripts/prioritize-refactor-risk.js`.
 
 - **Delete or wire** — fallow `unused-files`; do not add tests
 - **Test before refactor** — ranked by coverage gap + CRAP + fan-in + hotspots + P0/P1
@@ -55,45 +143,36 @@ node skills/test-coverage/scripts/summarize-coverage.js --root .
 
 ### 3. HTML + line detail
 
-Open `coverage/index.html` for uncovered lines inside a file.
+Open `coverage/index.html` for uncovered lines.
 
 ### 4. Fallow detail
 
 ```bash
-npx fallow health --targets    # refactoring recommendations
-npx fallow health --hotspots   # churn + complexity
-npx fallow --format json       # full machine output
+npx fallow health --targets
+npx fallow health --hotspots
+npx fallow --format json
 ```
 
-### 5. Project context
-
-1. Nearest spec: `tests/**` mirroring `src/**`
-2. `.cursorrules`, `AGENTS.md`
-3. **realness web:** [references/web-realness.md](references/web-realness.md)
-4. **Fallow config:** [references/fallow-integration.md](references/fallow-integration.md)
-
-Classify each item:
+### 5. Classify each item
 
 | Verdict | Meaning |
 | --- | --- |
 | **test-first** | Add/extend specs before refactor |
-| **refactor-with-tests** | Some coverage; add tests around hot paths then refactor |
+| **refactor-with-tests** | Some coverage; shore up hot paths then refactor |
 | **delete-or-wire** | Fallow unused file — entry point or delete |
 | **defer** | Low product risk |
 
-### 6. Evolving Fallow config
+Priority: **P0** IDs/auth/sync/payments, **P1** posters/potrace/3D, **P2** rest.
 
-When this skill changes behavior, update:
-
-1. Project `.fallowrc.json` (see fallow-integration.md sections)
-2. Changelog table in [references/fallow-integration.md](references/fallow-integration.md)
-3. This SKILL.md if workflow or scripts change
-
-### 7. Optional: implement tests
+### 6. Implement tests
 
 Only when the user asks. Re-run `npm run test:risk` after changes.
 
-## Output format
+### 7. Evolving Fallow config
+
+When behavior changes, update `.fallowrc.json`, [references/fallow-integration.md](references/fallow-integration.md), and this file if needed.
+
+## Output format (risk reports)
 
 ```markdown
 # Refactor risk (coverage + fallow)
@@ -107,15 +186,14 @@ Only when the user asks. Re-run `npm run test:risk` after changes.
 ## Workflow
 ```
 
-Priority labels: **P0** IDs/auth/sync/payments, **P1** posters/potrace/3D, **P2** rest.
-
 ## Judgment principles
 
 - Unused in fallow graph → **delete or wire**, not test
 - High complexity + low coverage + high fan-in → **test-first**
-- Cycles (`itemid` ↔ `serverless`, `Directory`) → characterize with tests, then break cycle
+- Cycles (`itemid` ↔ `serverless`, `Directory`) → characterize with tests, then break
 - Nuclear triad: typecheck + lint + tests; coverage supports refactors
-- Match existing spec style; prefer extending specs over new files
+- Match existing spec style; extend specs over new files
+- Excluded from coverage: `src/main.js`, `src/router.js`, `src/wasm/**`
 
 ## Scripts
 
@@ -125,7 +203,9 @@ Priority labels: **P0** IDs/auth/sync/payments, **P1** posters/potrace/3D, **P2*
 | `scripts/prioritize-refactor-risk.js` | Coverage + fallow merge |
 | `scripts/lib/coverage-metrics.js` | Shared Istanbul parsing |
 
-## Related skills
+## References
 
-- `test-javascript-patterns` — Vitest/Vue tests
-- [Fallow integration](references/fallow-integration.md) — `.fallowrc.json` ownership
+- [web-realness.md](references/web-realness.md) — stack, patterns, file map, judgment
+- [fallow-integration.md](references/fallow-integration.md) — `.fallowrc.json`
+- Vitest: https://vitest.dev/
+- Vue Test Utils: https://test-utils.vuejs.org/

@@ -1,7 +1,3 @@
----
-name: hyperframes-typegpu
-description: TypeGPU and raw WebGPU adapter patterns for HyperFrames. Use when creating GPU-rendered compositions with TypeGPU, raw WebGPU, WGSL fragment shaders, compute pipelines, liquid glass effects, particle systems, or any canvas layer driven by navigator.gpu that responds to HyperFrames hf-seek events.
----
 
 # TypeGPU / WebGPU for HyperFrames
 

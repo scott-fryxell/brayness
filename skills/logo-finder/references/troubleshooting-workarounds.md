@@ -4,7 +4,7 @@
 
 **Symptom:** `No SVGL match for: Final Cut Pro`
 
-**Fix:** Try shorter query (`final cut`), `--search` to inspect titles, browse https://svgl.app/. Then run `missing-from-about.sh` or `commons.sh --search final`. Add a Commons row if you find an SVG on https://commons.wikimedia.org/. Otherwise official press kit or keep `logo: null`.
+**Fix:** Try shorter query (`final cut`), `--search` to inspect titles, browse https://svgl.app/. Then run `commons.sh --search final`. Add a Commons row if you find an SVG on https://commons.wikimedia.org/. Otherwise use the official press kit or leave the logo out.
 
 ## Commons not in manifest
 
@@ -56,7 +56,7 @@
 
 **Symptom:** Writing `figma.svg` without folder fails mkdir.
 
-**Fix:** Pass path with directory: `work/web/public/brands/figma.svg`
+**Fix:** Pass path with directory: `public/brands/figma.svg`
 
 ## Duplicate titles in search
 

@@ -4,12 +4,12 @@ description: Writes and reviews semantic, accessible HTML and template markup th
 metadata:
   category: Frontend & Accessibility
   pairs-with:
-  - skill: realness-design
-    reason: Element-first CSS architecture — the HTML element choice is the CSS selector
-  - skill: typography
-    reason: Element choice carries typographic meaning before CSS touches it
-  - skill: css-ux-interface-design
-    reason: Clarity and affordance start with the right element
+    - skill: realness-design
+      reason: Element-first CSS architecture — the HTML element choice is the CSS selector
+    - skill: typography
+      reason: Element choice carries typographic meaning before CSS touches it
+    - skill: user-interface
+      reason: Clarity and affordance start with the right element
   tags:
     - html
     - semantics
@@ -30,6 +30,7 @@ Use the most appropriate HTML element for the content and interaction. Do not ap
 ## When to Use This Skill
 
 Use this skill when:
+
 - writing raw HTML or template markup
 - refactoring noisy or wrapper-heavy markup
 - improving semantics, landmarks, or heading structure
@@ -39,6 +40,7 @@ Use this skill when:
 - cleaning up Svelte component markup without changing its behavior
 
 Do not use this skill for:
+
 - pure CSS architecture decisions
 - JavaScript behavior design unless the HTML choice is the root issue
 - marketing copy or content strategy
@@ -47,6 +49,7 @@ Do not use this skill for:
 ## Decision Order
 
 When writing or reviewing markup:
+
 1. choose the element that best matches the content or interaction
 2. prefer native HTML behavior before custom behavior
 3. remove wrappers that add no structural value
@@ -56,6 +59,7 @@ When writing or reviewing markup:
 ## Template Safety
 
 When the markup lives inside Svelte or another HTML-like template language:
+
 - treat the file as template markup, not as a plain standalone HTML document
 - preserve framework syntax such as `{#if}`, `{#each}`, `{:else}`, `{@html}`, `bind:`, `class`, `style:`, event attributes, and special elements like `<svelte:head>`
 - do not replace components or capitalized tags with native elements unless the task explicitly asks for that change
@@ -66,6 +70,7 @@ When the markup lives inside Svelte or another HTML-like template language:
 ## Rules
 
 ### 1. Prefer Semantic Elements
+
 - Use semantic tags whenever they accurately match the content:
   - `header`
   - `main`
@@ -81,17 +86,20 @@ When the markup lives inside Svelte or another HTML-like template language:
 - Do not force a semantic element where a plain container is more accurate
 
 ### 2. Structure Content by Meaning
+
 - HTML should describe content structure, not visual appearance
 - Choose elements based on what the content is
 - Do not choose elements based on default browser styles
 - Do not invent extra structure just to satisfy a rule
 
 ### 3. Keep Nesting Shallow
+
 - Avoid unnecessary wrappers
 - Prefer flatter, easier-to-read markup
 - Every extra layer should have a real structural, behavioral, or styling purpose
 
 ### 4. Heading Hierarchy Must Make Sense
+
 - Use one clear `h1` for the page or main view
 - Follow a logical heading order:
   - `h1`
@@ -101,6 +109,7 @@ When the markup lives inside Svelte or another HTML-like template language:
 - Do not use headings just to create large text
 
 ### 5. Accessibility Is Required
+
 - Always use proper labels for form controls
 - Use `button` for actions and `a` for navigation
 - Add meaningful `alt` text to informative images
@@ -108,6 +117,7 @@ When the markup lives inside Svelte or another HTML-like template language:
 - Do not add unnecessary ARIA
 
 ### 6. Prefer Native HTML Behavior
+
 - Use built-in HTML features before custom solutions
 - Prefer:
   - `button`
@@ -119,29 +129,38 @@ When the markup lives inside Svelte or another HTML-like template language:
   - `fieldset`
   - `table`
 - Avoid rebuilding native controls with generic elements
-- Native boolean attributes (`open`, `disabled`, `checked`, `hidden`) are application state — CSS reads them directly without JavaScript: `details[open]`, `body:has(dialog[open])`, `input:disabled`
+- Native boolean attributes (`open`, `disabled`, `checked`, `hidden`) carry application state — prefer them over JS-managed classes. CSS reads them directly without JavaScript (see **realness-design** for the selector patterns)
 
 ### 7. Write Readable Markup
+
 - Keep formatting consistent
 - Use clear indentation
 - Keep attributes readable
 - Break lines when markup becomes hard to scan
 - Optimize for humans reading the source
 
-### 8. Keep Class Names Purposeful
-- Add classes only when needed for styling or scripting
+### 8. Avoid Class Names - Reach for the Element First
+
+Class names are a last resort, not a default. Before adding a class, ask whether a semantic element, an attribute, or microdata already gives you the hook you need.
+
 - Do not add classes to every element by default
-- Prefer simple, meaningful class names
-- Avoid naming based only on presentation when possible
-- Prefer element + attribute selectors over classes where the attribute is already meaningful: `address[itemscope]`, `time[datetime]`, `article[itemtype]` — the microdata attribute is doing double duty as CSS hook
+- Reach for the right semantic element or attribute before any selector: `<address>`, `<time>`, `<figure>`, `<nav>`, `<details>`, `<dialog>`
+- Prefer element + attribute selectors over classes: `address[itemscope]`, `time[datetime]`, `article[itemtype]`, `input[required]`, `details[open]`, `[aria-*]` - the attribute is already doing real work, let it double as the CSS hook
+- Native boolean attributes (`open`, `disabled`, `checked`, `hidden`) carry application state - prefer them over JS-managed classes
+- If a class is truly necessary, keep it simple and meaningful - name it after content or function, never presentation alone
+- When a no-class design system is in play (e.g. **realness-design**), follow it - no classes at all; the element IS the selector
+
+You should feel resistance before adding a class. If you reach for one, you are usually reaching for the wrong element or missing an existing attribute.
 
 ### 9. Avoid Div Soup
+
 - Do not create long chains of anonymous `div` elements
 - If many wrappers appear, reconsider the structure
 - Simplify before adding more containers
 - A plain `div` is fine when no stronger semantic exists
 
 ### 10. Forms Must Be Explicit
+
 - Every input needs an associated label
 - Use `type` values correctly
 - Use `name` for submitted fields
@@ -150,6 +169,7 @@ When the markup lives inside Svelte or another HTML-like template language:
 - Do not rely on placeholder text as the label
 
 ### 11. Use Lists Only When Content Is Truly a List
+
 - Use `ul` / `ol` / `li` when the content is actually a list:
   - steps
   - menu items
@@ -159,26 +179,31 @@ When the markup lives inside Svelte or another HTML-like template language:
 - Repetition alone is not list semantics
 
 #### Use `article` when:
+
 - each repeated item can stand on its own
 - each item has its own heading, metadata, or actions
 - the repeated content is more like cards, posts, results, stories, or entries
 
 #### Use `section` when:
+
 - content is grouped by theme or purpose
 - the group benefits from its own heading
 - the point is thematic grouping, not list membership
 
 #### Use plain containers when:
+
 - the markup is mainly for layout
 - there is no stronger semantic meaning
 - list or landmark semantics would be artificial
 
 #### Avoid:
+
 - wrapping card grids in `ul` / `li` by default
 - using `li` for any repeated component pattern
 - forcing semantics onto layout-only structures
 
 ### 12. Keep Content and Behavior Separate
+
 - HTML defines structure
 - CSS defines presentation
 - JavaScript defines behavior
@@ -186,18 +211,21 @@ When the markup lives inside Svelte or another HTML-like template language:
 - In template languages, do not mistake framework event attributes for plain inline JS
 
 ### 13. Links and Buttons Are Not Interchangeable
+
 - Use `a` when going somewhere
 - Use `button` when doing something
 - Never use a clickable `div` or `span` instead of a button
 - Never use a button for plain navigation unless there is a real app-style reason
 
 ### 14. Images Need Intentional Handling
+
 - Use `alt=""` for decorative images
 - Use descriptive `alt` for informative images
 - Provide width and height when possible to reduce layout shift
 - Use `figure` and `figcaption` when the caption is part of the content
 
 ### 15. Metadata Matters
+
 - For full HTML documents, include:
   - `<!doctype html>`
   - `lang` on `html`
@@ -208,17 +236,20 @@ When the markup lives inside Svelte or another HTML-like template language:
 - Add other metadata only when it serves a clear purpose
 
 ### 16. Avoid Semantic Overfitting
+
 - Do not apply rules mechanically
 - “Semantic HTML” does not mean using the most specialized element possible everywhere
 - The best element is the one that most accurately reflects the content and interaction
 - A simple structure with a few plain containers is better than incorrect semantics
 
 ### 17. Landmarks Should Be Meaningful
+
 - Use landmarks like `main`, `nav`, `header`, `footer`, and `aside` where they help define page structure
 - Do not wrap every small subsection in landmark elements
 - Landmarks should help orientation, not create noise
 
 ### 18. Prefer Minimal Honest Markup
+
 - Start with the smallest correct structure
 - Add elements only when they improve meaning, accessibility, or maintainability
 - Do not add wrappers, labels, or semantics just in case
@@ -241,8 +272,12 @@ Microdata attributes (`itemscope`, `itemtype`, `itemprop`, `itemid`) extend HTML
 
 ```css
 /* selects on the attribute that already exists — no extra class needed */
-address[itemscope] { font-style: normal; }
-article[itemtype] { /* ... */ }
+address[itemscope] {
+  font-style: normal;
+}
+article[itemtype] {
+  /* ... */
+}
 ```
 
 Use `itemprop` to name values that have schema meaning: `name`, `headline`, `datePublished`, `description`, `author`. Use `datetime` on `<time>` — it carries machine-readable data while the element displays the human-readable form.
@@ -251,7 +286,7 @@ Use `itemprop` to name values that have schema meaning: `name`, `headline`, `dat
 
 - **realness-design**: the element you choose IS the CSS selector — coordinate element choice with the CSS architecture
 - **typography**: element choice carries typographic meaning before CSS — `<time>`, `<address>`, `<blockquote>`, `<h1>`–`<h6>` all have typographic implications
-- **css-ux-interface-design**: affordance and clarity start here — the right element often makes the UX obvious without any additional design work
+- **user-interface**: affordance and clarity start here — the right element often makes the UX obvious without any additional design work
 
 ## Anti-Patterns
 
@@ -289,6 +324,7 @@ Use `itemprop` to name values that have schema meaning: `name`, `headline`, `dat
 ## Output Guidelines
 
 When writing HTML:
+
 - start with semantic structure first
 - keep the markup minimal
 - prefer native elements and native behavior
@@ -302,6 +338,7 @@ When writing HTML:
 ## Example Preferences
 
 ### Good
+
 - semantic landmarks where they help
 - shallow nesting
 - explicit labels
@@ -313,6 +350,7 @@ When writing HTML:
 - plain containers when semantics are minimal
 
 ### Bad
+
 - div soup
 - clickable non-interactive elements
 - vague structure

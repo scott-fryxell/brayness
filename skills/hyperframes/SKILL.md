@@ -1,6 +1,6 @@
 ---
 name: hyperframes
-description: Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML. Use when asked to build any HTML-based video content, add captions or subtitles synced to audio, generate text-to-speech narration, create audio-reactive animation (beat sync, glow, pulse driven by music), add animated text highlighting (marker sweeps, hand-drawn circles, burst lines, scribble, sketchout), or add transitions between scenes (crossfades, wipes, reveals, shader transitions). Covers composition authoring, timing, media, and the full video production workflow. For dev-loop CLI commands (init, lint, inspect, preview, render) see the hyperframes-cli skill; for asset preprocessing commands (tts, transcribe, remove-background) see the hyperframes-media skill.
+description: Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML. Use when asked to build any HTML-based video content, add captions or subtitles synced to audio, generate text-to-speech narration, create audio-reactive animation, add animated text highlighting, add transitions between scenes, run the dev loop (init, lint, inspect, preview, render), preprocess assets (tts, transcribe, remove-background), or install/contribute registry blocks and components. Covers composition authoring, timing, media, the CLI dev loop, and the full video production workflow.
 ---
 
 # HyperFrames
@@ -114,13 +114,29 @@ Position every element where it should be at its **most visible moment** — the
 ```js
 // Step 3: Animate INTO those positions
 tl.from(".title", { y: 60, opacity: 0, duration: 0.6, ease: "power3.out" }, 0);
-tl.from(".subtitle", { y: 40, opacity: 0, duration: 0.5, ease: "power3.out" }, 0.2);
-tl.from(".logo", { scale: 0.8, opacity: 0, duration: 0.4, ease: "power2.out" }, 0.3);
+tl.from(
+  ".subtitle",
+  { y: 40, opacity: 0, duration: 0.5, ease: "power3.out" },
+  0.2,
+);
+tl.from(
+  ".logo",
+  { scale: 0.8, opacity: 0, duration: 0.4, ease: "power2.out" },
+  0.3,
+);
 
 // Step 4: Animate OUT from those positions
 tl.to(".title", { y: -40, opacity: 0, duration: 0.4, ease: "power2.in" }, 3);
-tl.to(".subtitle", { y: -30, opacity: 0, duration: 0.3, ease: "power2.in" }, 3.1);
-tl.to(".logo", { scale: 0.9, opacity: 0, duration: 0.3, ease: "power2.in" }, 3.2);
+tl.to(
+  ".subtitle",
+  { y: -30, opacity: 0, duration: 0.3, ease: "power2.in" },
+  3.1,
+);
+tl.to(
+  ".logo",
+  { scale: 0.9, opacity: 0, duration: 0.3, ease: "power2.in" },
+  3.2,
+);
 ```
 
 ### When elements share space across time
@@ -340,11 +356,23 @@ tl.to("#s1-subtitle", { opacity: 0, duration: 0.3 }, 6.7);
 
 ```js
 // Scene 1 entrance animations
-tl.from("#s1-title", { y: 50, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.3);
-tl.from("#s1-subtitle", { y: 30, opacity: 0, duration: 0.5, ease: "power2.out" }, 0.6);
+tl.from(
+  "#s1-title",
+  { y: 50, opacity: 0, duration: 0.7, ease: "power3.out" },
+  0.3,
+);
+tl.from(
+  "#s1-subtitle",
+  { y: 30, opacity: 0, duration: 0.5, ease: "power2.out" },
+  0.6,
+);
 // NO exit tweens — transition at 7.2s handles the scene change
 // Scene 2 entrance animations
-tl.from("#s2-heading", { x: -40, opacity: 0, duration: 0.6, ease: "expo.out" }, 8.0);
+tl.from(
+  "#s2-heading",
+  { x: -40, opacity: 0, duration: 0.6, ease: "expo.out" },
+  8.0,
+);
 ```
 
 ## Animation Guardrails
@@ -464,6 +492,33 @@ Skip on small edits (fixing a color, adjusting one duration). Run on new composi
 
 ---
 
+## Runtime Adapters (loaded on demand)
+
+Animation runtimes besides GSAP. Each is a reference file with the adapter contract and code patterns. Read when the composition uses that runtime.
+
+- **[references/adapters/waapi.md](references/adapters/waapi.md)** — Web Animations API (`element.animate()`, `currentTime` seek).
+- **[references/adapters/lottie.md](references/adapters/lottie.md)** — Lottie / dotLottie (`window.__hfLottie`).
+- **[references/adapters/three.md](references/adapters/three.md)** — Three.js / WebGL (3D scenes, `AnimationMixer`, `hf-seek`).
+- **[references/adapters/animejs.md](references/adapters/animejs.md)** — Anime.js (`window.__hfAnime`).
+- **[references/adapters/css-animations.md](references/adapters/css-animations.md)** — CSS keyframes (`animation-delay` / `play-state` / `fill-mode`).
+- **[references/adapters/typegpu.md](references/adapters/typegpu.md)** — TypeGPU / WebGPU (`navigator.gpu`, WGSL, compute pipelines).
+
+## Dev Loop (loaded on demand)
+
+- **[references/cli.md](references/cli.md)** — `npx hyperframes` commands: scaffolding (`init`), validation (`lint`, `inspect`), preview, render, and environment troubleshooting. Read when running any CLI command or troubleshooting the build/render environment.
+
+## Media Preprocessing (loaded on demand)
+
+- **[references/media.md](references/media.md)** — Asset preprocessing: text-to-speech narration (Kokoro), audio/video transcription (Whisper), and background removal for transparent overlays (u2net). Read when generating voiceover from text, transcribing speech for captions, or removing a video/image background.
+
+## Website to Video (loaded on demand)
+
+- **[references/from-website.md](references/from-website.md)** — Capture a website and turn it into a HyperFrames video. Step-by-step workflow with per-step references under `references/from-website/`.
+
+## Registry and Contributing (loaded on demand)
+
+- **[references/registry.md](references/registry.md)** — Install and wire registry blocks and components (`hyperframes add`), discover the catalog, and author a new block/component to contribute upstream. Sub-references under `references/registry/`.
+
 ## References (loaded on demand)
 
 - **[references/captions.md](references/captions.md)** — Captions, subtitles, lyrics, karaoke synced to audio. Tone-adaptive style detection, per-word styling, text overflow prevention, caption exit guarantees, word grouping. Read when adding any text synced to audio timing.
@@ -480,7 +535,7 @@ Skip on small edits (fixing a color, adjusting one duration). Run on new composi
 - **[house-style.md](house-style.md)** — Default motion, sizing, and color palettes when no design.md is specified.
 - **[patterns.md](patterns.md)** — PiP, title cards, slide show patterns.
 - **[data-in-motion.md](data-in-motion.md)** — Data, stats, and infographic patterns.
-- **[references/transcript-guide.md](references/transcript-guide.md)** — Caption-side transcript handling: input formats, mandatory quality check, cleaning JS, OpenAI/Groq API fallback, "if no transcript exists" flow. (For the `transcribe` CLI invocation, model selection rules, and the `.en` gotcha, see the `hyperframes-media` skill.)
+- **[references/transcript-guide.md](references/transcript-guide.md)** — Caption-side transcript handling: input formats, mandatory quality check, cleaning JS, OpenAI/Groq API fallback, "if no transcript exists" flow. (For the `transcribe` CLI invocation, model selection rules, and the `.en` gotcha, see [references/media.md](references/media.md).)
 - **[references/dynamic-techniques.md](references/dynamic-techniques.md)** — Dynamic caption animation techniques (karaoke, clip-path, slam, scatter, elastic, 3D).
 
 - **[references/transitions.md](references/transitions.md)** — Scene transitions: crossfades, wipes, reveals, shader transitions. Energy/mood selection, CSS vs WebGL guidance. **Always read for multi-scene compositions** — scenes without transitions feel like jump cuts.

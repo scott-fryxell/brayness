@@ -1,25 +1,19 @@
 # Common use cases
 
-## 1. About page (`work/web`)
+## 1. Integration row on a landing page
 
-Brand list: `About.vue` `integration_tools` or `skills/logo-finder/assets/realness-integrations.txt`.
+Brand list: build one from the page you are wiring, or start from `skills/logo-finder/examples/sample-brands.txt`.
 
 ```bash
 bash skills/logo-finder/scripts/batch.sh \
-  skills/logo-finder/assets/realness-integrations.txt \
-  work/web/public/brands
+  skills/logo-finder/examples/sample-brands.txt \
+  public/brands
 ```
 
-After batch misses, fill gaps from Commons and `About.vue` nulls:
-
-```bash
-bash skills/logo-finder/scripts/missing-from-about.sh work/web/src/views/About.vue work/web/public/brands
-```
-
-Markup (static paths in `About.vue`):
+Markup (static paths, product name visible beside the logo):
 
 ```html
-<img class="integration-logo" src="/brands/figma.svg" alt="" width="24" height="24" />
+<img src="/brands/figma.svg" alt="" width="24" height="24" />
 <strong>Figma</strong>
 ```
 
@@ -28,7 +22,7 @@ Empty `alt` when the product name is visible beside the logo.
 ## 2. One-off fetch
 
 ```bash
-bash skills/logo-finder/scripts/logo.sh Canva work/web/public/brands/canva.svg
+bash skills/logo-finder/scripts/logo.sh Canva public/brands/canva.svg
 ```
 
 ## 3. Inspect before save
@@ -37,28 +31,28 @@ bash skills/logo-finder/scripts/logo.sh Canva work/web/public/brands/canva.svg
 bash skills/logo-finder/scripts/logo.sh "Premiere Pro" --search
 ```
 
-## 5. Commit for deploy
+## 4. Commit for deploy
 
 ```bash
-git -C work/web add public/brands/
+git add public/brands/
 ```
 
 Files must be in git or production 404s on `/brands/*.svg`.
 
-## 6. Verify locally
+## 5. Verify locally
 
-With dev server running, visit `https://realness.local/brands/canva.svg` (or `http://localhost:5173/brands/canva.svg`).
+With dev server running, visit `http://localhost:5173/brands/canva.svg` (or your framework's served prefix).
 
-## 7. Refresh one logo
+## 6. Refresh one logo
 
 Re-run `logo.sh` to the same path; commit the diff.
 
-## 8. Slug map
+## 7. Slug map
 
-| Display name | File slug |
-|--------------|-----------|
-| Premiere Pro | `premiere-pro` |
-| After Effects | `after-effects` |
-| Unreal Engine | `unreal-engine` |
+| Display name      | File slug           |
+| ----------------- | ------------------- |
+| Premiere Pro      | `premiere-pro`      |
+| After Effects     | `after-effects`     |
+| Unreal Engine     | `unreal-engine`     |
 | Affinity Designer | `affinity-designer` |
-| Affinity Photo | `affinity-photo` |
+| Affinity Photo    | `affinity-photo`    |

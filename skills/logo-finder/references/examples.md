@@ -3,7 +3,7 @@
 ## Happy path - one integration logo
 
 ```bash
-bash skills/logo-finder/scripts/logo.sh Figma work/web/public/brands/figma.svg
+bash skills/logo-finder/scripts/logo.sh Figma public/brands/figma.svg
 ```
 
 ```html
@@ -16,20 +16,16 @@ bash skills/logo-finder/scripts/logo.sh Figma work/web/public/brands/figma.svg
 SVGL often has no Resolve entry. Use the manifest row sourced from [Commons](https://commons.wikimedia.org/wiki/File:DaVinci_Resolve_17_logo.svg):
 
 ```bash
-bash skills/logo-finder/scripts/commons.sh "DaVinci Resolve" work/web/public/brands/davinci-resolve.svg
+bash skills/logo-finder/scripts/commons.sh "DaVinci Resolve" public/brands/davinci-resolve.svg
 ```
 
-## About.vue - fetch all `logo: null` tools
+## Fill gaps in an existing page
 
-```bash
-bash skills/logo-finder/scripts/missing-from-about.sh work/web/src/views/About.vue work/web/public/brands
-```
+Read the target file, find logo references that are empty or use a placeholder icon, then feed those names to `batch.sh` or `logo.sh`. There is no format-specific script - read the markup yourself.
 
-Expect `ok (commons)` for DaVinci Resolve, Inkscape, Procreate (SVG), and Final Cut Pro (PNG from Commons).
+## Batch a brand list
 
-## Batch for About integrations
-
-`assets/realness-integrations.txt`:
+`examples/sample-brands.txt`:
 
 ```
 Illustrator
@@ -50,7 +46,7 @@ Canva
 ```
 
 ```bash
-bash skills/logo-finder/scripts/batch.sh skills/logo-finder/assets/realness-integrations.txt work/web/public/brands
+bash skills/logo-finder/scripts/batch.sh skills/logo-finder/examples/sample-brands.txt public/brands
 ```
 
 ## Anti-pattern - hotlink SVGL in production
@@ -63,7 +59,7 @@ bash skills/logo-finder/scripts/batch.sh skills/logo-finder/assets/realness-inte
 ## Corrected - vendored asset
 
 ```bash
-bash skills/logo-finder/scripts/logo.sh Figma work/web/public/brands/figma.svg
+bash skills/logo-finder/scripts/logo.sh Figma public/brands/figma.svg
 ```
 
 ```html

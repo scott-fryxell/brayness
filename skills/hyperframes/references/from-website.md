@@ -1,8 +1,3 @@
----
-name: hyperframes-from-website
-description: |
-  Capture a website and create a HyperFrames video from it. Use when: (1) a user provides a URL and wants a video, (2) someone says "capture this site", "turn this into a video", "make a promo from my site", (3) the user wants a social ad, product tour, or any video based on an existing website, (4) the user shares a link and asks for any kind of video content. Even if the user just pastes a URL — this is the skill to use.
----
 
 # Website to HyperFrames
 
@@ -16,7 +11,6 @@ Users say things like:
 
 The workflow has 7 steps. Each produces an artifact that gates the next.
 
----
 
 ## Step 1: Capture & Understand
 
@@ -26,7 +20,6 @@ Run the capture, read the extracted data, and build a working summary using the 
 
 **Gate:** Print your site summary (name, top colors, fonts, key assets, one-sentence vibe).
 
----
 
 ## Step 2: Write DESIGN.md
 
@@ -36,7 +29,6 @@ Write a simple brand reference for the captured website. 6 sections, ~90 lines. 
 
 **Gate:** `DESIGN.md` exists in the project directory.
 
----
 
 ## Step 3: Write SCRIPT
 
@@ -46,7 +38,6 @@ Write the narration script. The story backbone. Scene durations come from the na
 
 **Gate:** `SCRIPT.md` exists in the project directory.
 
----
 
 ## Step 4: Write STORYBOARD
 
@@ -56,7 +47,6 @@ Write per-beat creative direction: mood, camera, animations, transitions, assets
 
 **Gate:** `STORYBOARD.md` exists with beat-by-beat direction and an asset audit table.
 
----
 
 ## Step 5: Generate VO + Map Timing
 
@@ -66,7 +56,6 @@ Generate TTS audio, transcribe for word-level timestamps, and map timestamps to 
 
 **Gate:** `narration.wav` (or .mp3) + `transcript.json` exist. Beat timings in STORYBOARD.md updated.
 
----
 
 ## Step 6: Build Compositions
 
@@ -77,7 +66,6 @@ Build each composition following the storyboard. After each one: self-review for
 
 **Gate:** Every composition has been self-reviewed. No overlapping elements, no misplaced assets, no static images without motion.
 
----
 
 ## Step 7: Validate & Deliver
 
@@ -90,7 +78,6 @@ handoff link; it is source-code context only.
 
 **Gate:** `npx hyperframes lint` and `npx hyperframes validate` pass with zero errors, and the final response includes the active Studio project URL.
 
----
 
 ## Quick Reference
 

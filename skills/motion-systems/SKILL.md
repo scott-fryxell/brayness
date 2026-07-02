@@ -1,12 +1,12 @@
 ---
-name: css-motion-systems
+name: motion-systems
 description: Use when designing or implementing motion for web interfaces, including CSS transitions and keyframes, `linear()` easing design, transform strategy (`translate`/`rotate` vs `transform`/`translate3d()`), and deep View Transitions API patterns for route and state continuity.
 metadata:
   category: Design & Frontend
   pairs-with:
-  - skill: css-motion-choreography-patterns
+  - skill: motion-choreography-patterns
     reason: Sibling skill — this covers mechanism selection and tokens; choreography covers multi-element sequencing
-  - skill: css-ux-interface-design
+  - skill: user-interface
     reason: UX decides what state changes need motion; this skill decides how they move
   - skill: html
     reason: Native HTML attributes (open, disabled) drive state changes that CSS transitions respond to

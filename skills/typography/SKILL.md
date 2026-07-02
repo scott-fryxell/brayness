@@ -9,7 +9,7 @@ metadata:
     reason: Settled type decisions for realness projects; proven patterns to draw from for client work
   - skill: html
     reason: Semantic elements carry typographic meaning
-  - skill: css-ux-interface-design
+  - skill: user-interface
     reason: Readability and clarity decisions
   tags:
   - typography
@@ -157,17 +157,14 @@ Match fallback x-height to prevent CLS on swap:
 - Line spacing: at least 1.5× font size
 - Prose max-width: 65ch is the sweet spot — never let lines run past 75ch
 
-## Realness system decisions (settled, don't re-open for realness projects)
+## Same method, client-specific values
 
-- **Font**: Lato 300/400/800, self-hosted woff2 subsets, `font-display: swap`
-- **Scale**: fluid 1.25 → 1.414 across viewport
-- **Baseline**: `1.333rem`
-- **Headings**: `font-weight: 300`, `letter-spacing: -0.02em`, `line-height: 1`
-- **Prose width**: `max-width: page-width` (≈ 65ch)
-- **Fluid implementation**: slope-intercept `between` mixin
+The method here — baseline rhythm, fluid modular scale, element-first type — is the same one **realness-design** documents, and it applies to every project, clients included. What changes per client is the *values*: the baseline number, the ratio, the font.
+
+`realness-design` holds realness's own settled values (font, scale, baseline, headings, prose width, fluid implementation). Reuse them as a reference; don't copy them onto a client whose voice differs.
 
 ## Integration
 
-- **realness-design**: for realness projects, defer entirely — decisions above are already made
+- **realness-design**: the shared method (rhythm, fluid scale, element-first) plus realness's reference values — apply the method everywhere, adapt the values per client
 - **html**: element choice is type choice — `<time>`, `<address>`, `<blockquote>`, `<h1>`–`<h6>` carry typographic meaning before CSS touches them
-- **css-ux-interface-design**: readability and clarity decisions when type and UX intersect
+- **user-interface**: readability and clarity decisions when type and UX intersect
