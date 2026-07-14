@@ -25,8 +25,7 @@
   "scripts": {
     "brain": "./bin/pi",
     "start": "npm run brain",
-    "pi:update": "./bin/pi update --extensions",
-    "pi:update-self": "./bin/pi update --self",
+    "pi:update": "npm update @earendil-works/pi-coding-agent && ./bin/pi update --extensions",
     "pi:list": "./bin/pi list",
     "feeds": "./skills/vault/rebuild-feeds.sh"
   },

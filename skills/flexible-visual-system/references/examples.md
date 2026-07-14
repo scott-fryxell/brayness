@@ -1,12 +1,14 @@
 # Worked Examples
 
-Three examples: a minimal happy path, the same system made robust, and an anti-pattern with its fix.
+Three examples: a minimal happy path, the same system made robust, and an
+anti-pattern with its fix.
 
 ---
 
 ## 1. Happy path: half-disc poster system
 
-A 3-rule system. Module = half-disc. Grid = 10x10. Transform = quantized random rotation. Color = 2-tone with seeded accent.
+A 3-rule system. Module = half-disc. Grid = 10x10. Transform = quantized random
+rotation. Color = 2-tone with seeded accent.
 
 ```js
 function rng(seed) {
@@ -43,7 +45,8 @@ const palette = { bg: "#0e0e10", fg: "#f2f2f2", accent: "#ff4d2e" };
 // sweep seeds 1..16 into a contact sheet, pick keepers
 ```
 
-Why it works: tiny rule set, fully seeded, produces a coherent family with real variety. Each seed is a distinct, reproducible poster.
+Why it works: tiny rule set, fully seeded, produces a coherent family with real
+variety. Each seed is a distinct, reproducible poster.
 
 ---
 
@@ -89,9 +92,12 @@ function generate({
 What hardened it:
 
 - **Validates the seed** so output stays reproducible.
-- **Exposes knobs as params** (`accent_p`, `cols`) instead of magic numbers, so the playground can sweep them.
-- **Embeds provenance** in `<desc>` (seed + params) so any exported file traces back to its rules.
-- **Accessible**: `role`, `aria-label`, `<title>` for screen readers and design-tool import.
+- **Exposes knobs as params** (`accent_p`, `cols`) instead of magic numbers, so
+  the playground can sweep them.
+- **Embeds provenance** in `<desc>` (seed + params) so any exported file traces
+  back to its rules.
+- **Accessible**: `role`, `aria-label`, `<title>` for screen readers and
+  design-tool import.
 - Palette comes from outside, so project tokens drive color.
 
 ---
@@ -127,7 +133,8 @@ Why this is wrong:
 
 Decide what the hand-edit was really telling you, then encode it as a rule.
 
-"That disc should point the other way" was actually "I want more 270-rotations near the edges". Make it a rule:
+"That disc should point the other way" was actually "I want more 270-rotations
+near the edges". Make it a rule:
 
 ```js
 const deg =
@@ -136,7 +143,8 @@ const deg =
     : rotations[Math.floor(rand() * rotations.length)];
 ```
 
-"Make this one blue" was "I want an occasional cool accent". Make it a seeded gate:
+"Make this one blue" was "I want an occasional cool accent". Make it a seeded
+gate:
 
 ```js
 const fill =
@@ -147,4 +155,5 @@ const fill =
       : palette.fg;
 ```
 
-Now the intent lives in the rules. Re-render any seed and the behavior persists, scales, and stays on-system. Tune the rule, never the output.
+Now the intent lives in the rules. Re-render any seed and the behavior persists,
+scales, and stays on-system. Tune the rule, never the output.

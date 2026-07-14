@@ -1,0 +1,128 @@
+/*
+ * Portable starter for the realness-design method: one spacing unit, a
+ * fluid modular type scale, and the reset that makes whole-multiple
+ * vertical rhythm mean anything. Copy this file, then tune the six
+ * inputs below (unit, two ratios, two viewport thresholds) for your
+ * own project. Everything past that point is derived math you should
+ * recompute if you change an input - see TYPE_SCALE_RECIPE.md.
+ *
+ * Defaults here are NOT realness's own numbers (see realness-instance.md
+ * for those) - they're a gentle, safe starting pair so this file works
+ * out of the box without reading like a mandate.
+ */
+
+/* ---------------------------------------------------------------------
+ * 1. Reset - the precondition for vertical harmony. Whole-multiple
+ * margins only produce a clean baseline grid if every element starts
+ * from zero, not a browser default that varies by element/user-agent.
+ * ------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------------
+ * 2. Spacing unit + horizontal values.
+ *   --unit           the one number everything else derives from.
+ *   --measure        prose width (~65-75ch line length).
+ *   --gate           breakpoint threshold - a value a @media/@container
+ *                    condition checks against, not a max-width.
+ *   --limit          content-width ceiling for wide, grid-heavy layouts.
+ * Name a new one of these before inlining a fresh magic number - see the
+ * "Horizontal harmony" section of SKILL.md for why.
+ * ------------------------------------------------------------------- */
+:root {
+  --unit: 1rem;
+  --measure: calc(var(--unit) * 22);  /* ≈ 22rem, tune to your font */
+  --gate: calc(var(--unit) * 32);
+  --limit: calc(var(--unit) * 48);
+}
+
+/* ---------------------------------------------------------------------
+ * 3. Fluid modular type scale.
+ * Two ratios (min, max) and two viewport thresholds (small, large)
+ * drive every heading. Each bound below is `unit * ratio^step`,
+ * precomputed for the defaults declared above:
+ *   min-ratio = 1.2, max-ratio = 1.333
+ *   small-viewport = 20rem, large-viewport = 60rem
+ * If you change any of those four inputs, recompute every value below
+ * - see TYPE_SCALE_RECIPE.md for the formula and a worked example.
+ * ------------------------------------------------------------------- */
+:root {
+  /* body text - its own pair, independent of the heading scale below */
+  --min-font: 1rem;
+  --max-font: 1.125rem;
+
+  --h1-min: 2.074rem;
+  --h1-max: 3.157rem;
+  --h2-min: 1.728rem;
+  --h2-max: 2.369rem;
+  --h3-min: 1.44rem;
+  --h3-max: 1.777rem;
+  --h4-min: 1.2rem;
+  --h4-max: 1.333rem;
+  --h5-min: 1rem;
+  --h5-max: 1rem;
+  /* h6 divides by the ratio instead of multiplying, so its "min" bound
+     (small viewport) is numerically LARGER than its "max" bound (large
+     viewport) - the one case where that's true. See the clamp() rules
+     below: the var() args are swapped for h6 only. Get this wrong and
+     clamp() silently collapses to a constant - see TYPE_SCALE_RECIPE.md. */
+  --h6-min: 0.833rem;
+  --h6-max: 0.75rem;
+}
+
+html {
+  font-size: clamp(
+    var(--min-font),
+    calc(1rem + (1.125 - 1) * (100dvw - 20rem) / (60 - 20)),
+    var(--max-font)
+  );
+}
+h1 {
+  font-size: clamp(var(--h1-min), calc(2.074rem + (3.157 - 2.074) * (100dvw - 20rem) / (60 - 20)), var(--h1-max));
+}
+h2 {
+  font-size: clamp(var(--h2-min), calc(1.728rem + (2.369 - 1.728) * (100dvw - 20rem) / (60 - 20)), var(--h2-max));
+}
+h3 {
+  font-size: clamp(var(--h3-min), calc(1.44rem + (1.777 - 1.44) * (100dvw - 20rem) / (60 - 20)), var(--h3-max));
+}
+h4 {
+  font-size: clamp(var(--h4-min), calc(1.2rem + (1.333 - 1.2) * (100dvw - 20rem) / (60 - 20)), var(--h4-max));
+}
+h5 {
+  font-size: var(--h5-min);
+}
+h6 {
+  /* bounds swapped - see the --h6-min/--h6-max comment above */
+  font-size: clamp(var(--h6-max), calc(0.833rem + (0.75 - 0.833) * (100dvw - 20rem) / (60 - 20)), var(--h6-min));
+}
+
+/* ---------------------------------------------------------------------
+ * 4. Vertical rhythm - whole multiples of --unit only. margin-bottom is
+ * one unit for every text block; margin-top on headings compensates for
+ * the font's own line-height so headings land an integer number of
+ * units below the previous block, never a fraction.
+ * ------------------------------------------------------------------- */
+p, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: var(--unit);
+}
+h1, h2, h3, h4 {
+  /* four units high, minus the font's own leading */
+  margin-top: calc((var(--unit) - 1em) + var(--unit) * 2);
+}
+h5 {
+  /* three units high */
+  margin-top: calc((var(--unit) - 1em) + var(--unit) * 1);
+}
+h6 {
+  /* two units high */
+  margin-top: calc(var(--unit) - 1em);
+}
+p, textarea, input, blockquote, form {
+  max-width: var(--measure);
+}

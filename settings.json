@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.80.2",
+  "lastChangelogVersion": "0.80.3",
   "defaultProvider": "openrouter",
   "defaultModel": "z-ai/glm-5.2",
-  "defaultThinkingLevel": "medium",
+  "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-mono-btw",
     "npm:pi-mono-auto-fix",
@@ -10,7 +10,8 @@
     "npm:pi-mono-loop",
     "npm:pi-mono-usage",
     "npm:pi-rewind-hook",
-    "npm:pi-autoresearch"
+    "npm:pi-autoresearch",
+    "npm:pi-mcp-adapter"
   ],
   "enabledModels": [
     "openrouter/openrouter/free",

@@ -1,6 +1,7 @@
 # Playground Workflow
 
-The playground exists to see the _family_, not a single output. Build a contact sheet, judge it, tune the rules, repeat.
+The playground exists to see the _family_, not a single output. Build a contact
+sheet, judge it, tune the rules, repeat.
 
 ## Contact sheet
 
@@ -33,16 +34,21 @@ const html = contact_sheet({ seeds, generate, params: { palette } });
 await writeFile("out/sheet.html", html);
 ```
 
-Open `out/sheet.html` in a browser (or via the agent-browser skill) to read the family.
+Open `out/sheet.html` in a browser (or via the agent-browser skill) to read the
+family.
 
 ## The tuning loop
 
 1. **Render 12-16 seeds.** Always look at a batch first.
 2. **Read two axes:**
-   - _Coherence_: do they feel like one family? If not, you have too many free rules.
-   - _Variety_: are they distinct enough to be worth a system? If not, add one knob.
-3. **Adjust a rule, not an output.** Change a range, a probability, a quantization set. Never hand-edit a single SVG.
-4. **Re-render the same seeds.** Comparing the same seeds across rule changes isolates the effect of the change.
+   - _Coherence_: do they feel like one family? If not, you have too many free
+     rules.
+   - _Variety_: are they distinct enough to be worth a system? If not, add one
+     knob.
+3. **Adjust a rule, not an output.** Change a range, a probability, a
+   quantization set. Never hand-edit a single SVG.
+4. **Re-render the same seeds.** Comparing the same seeds across rule changes
+   isolates the effect of the change.
 5. **Stop when the sheet reads as one coherent, varied family.**
 
 ## Diagnosing a sheet
@@ -65,15 +71,19 @@ const tiles = accent_rates.map((p) =>
 );
 ```
 
-Same seed, varying `accent_p`, shows exactly what that knob does. Do this for each knob you are unsure about.
+Same seed, varying `accent_p`, shows exactly what that knob does. Do this for
+each knob you are unsure about.
 
 ## From playground to assets
 
 When the sheet has keepers:
 
-1. Record the **exact params + seeds** of the winners (e.g. `seed 12, accent_p 0.2, cols 10`).
+1. Record the **exact params + seeds** of the winners (e.g.
+   `seed 12, accent_p 0.2, cols 10`).
 2. Re-render each keeper at final size.
 3. Export as standalone SVG with the seed in the filename.
-4. If the project needs tokens, lift the palette and grid constants into the project's design tokens so future assets stay on-system.
+4. If the project needs tokens, lift the palette and grid constants into the
+   project's design tokens so future assets stay on-system.
 
-The keepers are not the deliverable; the _rules that produced them_ are. Save both.
+The keepers are not the deliverable; the _rules that produced them_ are. Save
+both.
