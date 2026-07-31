@@ -83,7 +83,7 @@ npx hyperframes transcribe openai-response.json
 | `medium`   | 1.5 GB | Slow     | Important content, noisy audio, music |
 | `large-v3` | 3.1 GB | Slowest  | Production quality                    |
 
-Music with vocals: start at `medium` minimum; produced tracks often need manual SRT/VTT import. For caption-quality checks (mandatory after every transcription), the cleaning JS, retry rules, and the OpenAI/Groq API import path, see [hyperframes/references/transcript-guide.md](../hyperframes/references/transcript-guide.md).
+Music with vocals: start at `medium` minimum; produced tracks often need manual SRT/VTT import. For caption-quality checks (mandatory after every transcription), the cleaning JS, retry rules, and the OpenAI/Groq API import path, see [hyperframes/references/transcript-guide.md](transcript-guide.md).
 
 ### Output Shape
 

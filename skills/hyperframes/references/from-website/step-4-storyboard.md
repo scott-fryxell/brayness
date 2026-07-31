@@ -4,7 +4,7 @@
 
 - **DESIGN.md** — your color palette, font rules, components, Do's/Don'ts. Every creative decision must be grounded in this brand identity. If it says "white backgrounds with purple accent" — plan light scenes, not dark moody ones.
 - **`capture/extracted/asset-descriptions.md`** — read EVERY line. This is your menu of available visuals. Each line describes what the image actually shows (e.g., "translucent ribbons in orange, pink, and purple on white background" or "a high-speed train under a dark starry sky"). Use these descriptions to decide which assets belong in which beat. Assets you don't understand from the description — view them directly before assigning.
-- **[techniques.md](../../hyperframes/references/techniques.md)** — 11 visual techniques (SVG path drawing, Canvas 2D art, CSS 3D, per-word typography, Lottie, video compositing, typing effect, variable fonts, MotionPath, velocity transitions, audio-reactive). Pick 2-3 per beat and specify them in the storyboard.
+- **[techniques.md](../techniques.md)** — 11 visual techniques (SVG path drawing, Canvas 2D art, CSS 3D, per-word typography, Lottie, video compositing, typing effect, variable fonts, MotionPath, velocity transitions, audio-reactive). Pick 2-3 per beat and specify them in the storyboard.
 
 The storyboard is the creative north star. It tells the engineer exactly what to build for each beat — mood, camera, animations, transitions, assets, sound. Write it as if you're briefing a motion designer who's never seen the website.
 
@@ -24,7 +24,7 @@ Apple keynote register — economy of words, silence between sentences is a feat
 **Style basis:** DESIGN.md (brand colors, fonts, components from the captured site)
 ```
 
-**Global guardrails** — read [video-composition.md](../../hyperframes/references/video-composition.md) first. It defines the medium rules: density, color presence, scale, frame composition, and how design.md is brand truth not layout spec. Then apply these capture-specific additions:
+**Global guardrails** — read [video-composition.md](../video-composition.md) first. It defines the medium rules: density, color presence, scale, frame composition, and how design.md is brand truth not layout spec. Then apply these capture-specific additions:
 
 - Use as many captured assets as the creative vision allows. Scatter framework icons around a dashboard. Layer enterprise photos behind stats. Use product screenshots as floating cards. The assets exist — use them generously.
 - Use at least 2-3 different techniques from techniques.md per beat — not across the whole video, per beat. Don't default to basic fade/scale/opacity — mix in SVG path drawing, CSS 3D transforms, typing effects, counter animations, canvas procedural art. Each beat should feel like its own visual world.
@@ -60,7 +60,7 @@ Before writing any beats, audit every captured asset. Print this table:
 
 ## Per-Beat Direction
 
-Read [beat-direction.md](../../hyperframes/references/beat-direction.md) for the general beat template: concept, mood, animation choreography (energy verbs), transitions (shader vs CSS vs hard cut decision matrix), depth layers, SFX cues, rhythm planning, and velocity-matched transitions.
+Read [beat-direction.md](../beat-direction.md) for the general beat template: concept, mood, animation choreography (energy verbs), transitions (shader vs CSS vs hard cut decision matrix), depth layers, SFX cues, rhythm planning, and velocity-matched transitions.
 
 In the capture pipeline, each beat also includes:
 

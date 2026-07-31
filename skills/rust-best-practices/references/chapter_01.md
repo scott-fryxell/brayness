@@ -488,7 +488,7 @@ When deeper justification is needed, prefer to:
 * **Link to a Design Doc or an ADR**, business logic lives well in design docs while performance tradeoffs live well in ADRs.
 * Move runtime example and usage docs into Rust Docs, `/// doc comment`, where they can be tested and kept up-to-date by tools like `cargo doc`.
 
-> Doc-comments and Doc-testing, `///` and `//!` in [Chapter 8 - Comments vs Documentation](./chapter_08.md)
+> Doc-comments and Doc-testing, `///` and `//!` in Chapter 8 of the [upstream handbook](https://github.com/apollographql/rust-best-practices) (not vendored here)
 
 ## 1.7 Use Declarations - "imports"
 

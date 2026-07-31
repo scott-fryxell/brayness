@@ -6,4 +6,4 @@ The script is the backbone. Everything downstream — scene durations, animation
 
 Save as `SCRIPT.md` in the project directory.
 
-Read [../../hyperframes/references/narration.md](../../hyperframes/references/narration.md) for the full narration guide.
+Read [../narration.md](../narration.md) for the full narration guide.

@@ -45,7 +45,7 @@ These paths are configurable in `hyperframes.json`:
 }
 ```
 
-See [install-locations.md](./references/install-locations.md) for full details.
+See [install-locations.md](registry/install-locations.md) for full details.
 
 ## Wiring blocks
 
@@ -72,7 +72,7 @@ Key attributes:
 - `data-width` / `data-height` — block canvas dimensions
 - `data-track-index` — layer ordering (higher = in front)
 
-See [wiring-blocks.md](./references/wiring-blocks.md) for full details.
+See [wiring-blocks.md](registry/wiring-blocks.md) for full details.
 
 ## Wiring components
 
@@ -84,7 +84,7 @@ Components are snippets — paste their HTML into your composition's markup, the
 4. Copy any `<script>` content into your composition's script (before your timeline code)
 5. If the component exposes GSAP timeline integration (see the comment block in the snippet), add those calls to your timeline
 
-See [wiring-components.md](./references/wiring-components.md) for full details.
+See [wiring-components.md](registry/wiring-components.md) for full details.
 
 ## Discovery
 
@@ -97,4 +97,4 @@ curl -s https://raw.githubusercontent.com/heygen-com/hyperframes/main/registry/r
 
 Each item's `registry-item.json` contains: name, type, title, description, tags, dimensions (blocks only), duration (blocks only), and file list.
 
-See [discovery.md](./references/discovery.md) for details on filtering by type and tags.
+See [discovery.md](registry/discovery.md) for details on filtering by type and tags.
