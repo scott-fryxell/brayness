@@ -46,23 +46,15 @@ Skills live in `skills/` (source of truth: one folder per skill, each with a
 
 ## Preferences
 
-### Dyslexia and reading load
-
-- Word bloat is a real problem, not a style preference.
-- Prefer scannable structure: bullets, short chunks, clear headings, tables when
-  they carry information.
-- Say each thing once; no synonyms, recap paragraphs, or repetition.
-- Shorter correct wording beats longer "complete" wording unless depth is
-  requested.
-
 ### Output and length
 
 - Answers start on line 1; reasoning follows only when it helps.
 - Substance first; no filler openers or sign-offs.
-- When the task is clear, proceed; restate only when it clarifies scope.
-- Default to bullets, tables, code blocks; prose when depth is wanted.
+- When the task is clear, proceed; restate only to clarify scope.
+- Default to bullets, tables, short chunks, clear headings; prose when depth is
+  wanted.
 - About two to six sentences unless asked to go deeper.
-- Trim everything that does not change meaning or accuracy.
+- Say each thing once; trim anything that does not change meaning or accuracy.
 
 ### Typography (ASCII only)
 
