@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.83.0",
   "defaultProvider": "openrouter",
-  "defaultModel": "deepseek/deepseek-v4-flash",
+  "defaultModel": "deepseek/deepseek-v4-pro",
   "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-mono-btw",
@@ -20,7 +20,8 @@
     "openrouter/deepseek/deepseek-v4-pro",
     "anthropic/claude-fable-5",
     "openrouter/thinkingmachines/inkling",
-    "openrouter/moonshotai/kimi-k3"
+    "openrouter/moonshotai/kimi-k3",
+    "openrouter/deepseek/deepseek-v4-flash-0731"
   ],
   "theme": "dark"
 }
