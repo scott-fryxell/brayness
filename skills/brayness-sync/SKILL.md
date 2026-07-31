@@ -45,24 +45,6 @@ You review and approve before copying.
 
 Agent copies the following from `/brayness/` → `/brayness/work/brayness/`:
 
-`AGENTS.md` is **not** copied verbatim. Strip local-only blocks first:
-
-```bash
-python3 -c "
-import re
-src=open('AGENTS.md',encoding='utf-8').read()
-out=re.sub(r'<!-- local-only:start -->.*?<!-- local-only:end -->\n*','',src,flags=re.S)
-open('work/brayness/AGENTS.md','w',encoding='utf-8').write(out)
-"
-```
-
-Anything between `<!-- local-only:start -->` and `<!-- local-only:end -->`
-stays in dev. The published repo is public, so personal context must not
-reach it. Verify after copying that the published `AGENTS.md` lost the
-block and nothing else changed.
-
-Everything else copies as-is:
-
 - `skills/` (entire directory)
 - `extensions/` (entire directory)
 - `bin/pi`

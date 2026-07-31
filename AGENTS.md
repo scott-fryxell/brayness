@@ -46,6 +46,13 @@ Skills live in `skills/` (source of truth: one folder per skill, each with a
 
 ## Preferences
 
+### Dyslexia and reading load
+
+Word bloat is a real problem, not a style preference. Long or repetitive
+output costs real effort to read, so the rules below are a hard constraint,
+not a stylistic lean. No synonyms, recap paragraphs, or restating a point in
+different words.
+
 ### Output and length
 
 - Answers start on line 1; reasoning follows only when it helps.
