@@ -1,6 +1,6 @@
 ---
 name: logo-finder
-description: Find and install brand SVG logos via SVGL (https://svgl.app/) and Wikimedia Commons fallbacks into any project's static asset folder. Use for company logos, integration rows, social proof, or refreshing a brands directory. Pair with copywriting for social-proof copy.
+description: Find and install brand SVG logos via SVGL (https://svgl.app/) and Wikimedia Commons fallbacks into any project's static asset folder. Use for company logos, integration rows, social proof, or refreshing a brands directory.
 ---
 
 # Logo Finder (SVGL + Commons)

@@ -133,7 +133,6 @@ Do not use this skill for:
 
 ## Integration
 
-- **realness-design** (markup): native elements are their own affordances — `<details>` discloses, `<dialog>` is modal, `<button>` communicates action. The right element often makes explicit UX design unnecessary.
-- **realness-design**: HTML boolean attributes (`open`, `disabled`, `checked`) are application state CSS reads directly — UI clarity without JS class toggling
+- **realness-design**: native elements are their own affordances — `<details>` discloses, `<dialog>` is modal, `<button>` communicates action. The right element often makes explicit UX design unnecessary. Its boolean attributes (`open`, `disabled`, `checked`) are application state CSS reads directly — UI clarity without JS class toggling. See its markup reference for element choice.
 - **motion-systems**: when a state change needs motion, defer there — this skill decides *what* changes, motion-systems decides *how* it moves
 

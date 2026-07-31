@@ -2,21 +2,21 @@
 
 ## Happy path: Routine sync with new skill
 
-**Scenario**: You created a new skill `brayness-sync` and updated `copywriting` extension. Ready to release.
+**Scenario**: You created a new skill `brayness-sync` and updated `personal-context` extension. Ready to release.
 
 **Agent detects**:
 
 ```
 Changes found:
 - New skill: skills/brayness-sync/SKILL.md (+ references/, ...)
-- Modified: extensions/copywriting/index.js
+- Modified: extensions/personal-context/index.ts
 - No changes to bin/, settings.json, AGENTS.md
 ```
 
 **Plan**:
 
 ```
-Will copy: skills/ (new brayness-sync included), extensions/ (copywriting updated)
+Will copy: skills/ (new brayness-sync included), extensions/ (personal-context updated)
 Excluding: .git/, .env, node_modules/, etc.
 Impact: 15 files added, 3 modified, 0 deleted
 ```
@@ -29,17 +29,17 @@ Impact: 15 files added, 3 modified, 0 deleted
 skills/brayness-sync/SKILL.md                  | 150 ++++++++
 skills/brayness-sync/references/validation.md  | 60 +++
 skills/brayness-sync/references/workflow.md    | 200 +++++++++
-extensions/copywriting/index.js             | 25 +-
+extensions/personal-context/index.ts             | 25 +-
 4 files changed, 434 insertions(+), 10 deletions(-)
 ```
 
 **Proposed commit**:
 
 ```
-Release: brayness-sync + copywriting update
+Release: brayness-sync + personal-context update
 
 - Added: brayness-sync skill (copy changes, validate, commit to work/brayness/)
-- Updated: copywriting extension (improved tone detection)
+- Updated: personal-context extension
 - Synced: dev → work/brayness/ for release
 
 Ready to tag v1.2.0
