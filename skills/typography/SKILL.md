@@ -6,9 +6,7 @@ metadata:
   category: Design & Creative
   pairs-with:
   - skill: realness-design
-    reason: Settled type decisions for realness projects; proven patterns to draw from for client work
-  - skill: html
-    reason: Semantic elements carry typographic meaning
+    reason: Settled type decisions for realness projects; proven patterns to draw from for client work. Semantic elements carry typographic meaning before CSS touches them
   - skill: user-interface
     reason: Readability and clarity decisions
   tags:
@@ -166,5 +164,5 @@ The method here — baseline rhythm, fluid modular scale, element-first type —
 ## Integration
 
 - **realness-design**: the shared method (rhythm, fluid scale, element-first) plus realness's reference values — apply the method everywhere, adapt the values per client
-- **html**: element choice is type choice — `<time>`, `<address>`, `<blockquote>`, `<h1>`–`<h6>` carry typographic meaning before CSS touches them
+- **realness-design** (markup): element choice is type choice — `<time>`, `<address>`, `<blockquote>`, `<h1>`–`<h6>` carry typographic meaning before CSS touches them
 - **user-interface**: readability and clarity decisions when type and UX intersect

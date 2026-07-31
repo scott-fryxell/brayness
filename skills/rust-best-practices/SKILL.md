@@ -29,10 +29,14 @@ Before reviewing, familiarize yourself with Apollo's Rust best practices. Read A
 - [Chapter 3 - Performance Mindset](references/chapter_03.md): Profiling, avoiding redundant clones, stack vs heap, zero-cost abstractions
 - [Chapter 4 - Error Handling](references/chapter_04.md): Result vs panic, thiserror vs anyhow, error hierarchies
 - [Chapter 5 - Automated Testing](references/chapter_05.md): Test naming, one assertion per test, snapshot testing
-- [Chapter 6 - Generics and Dispatch](references/chapter_06.md): Static vs dynamic dispatch, trait objects
-- [Chapter 7 - Type State Pattern](references/chapter_07.md): Compile-time state safety, when to use it
-- [Chapter 8 - Comments vs Documentation](references/chapter_08.md): When to comment, doc comments, rustdoc
-- [Chapter 9 - Understanding Pointers](references/chapter_09.md): Thread safety, Send/Sync, pointer types
+
+Trimmed to the chapters that apply here. The only Rust in this workspace is
+`work/realness/tracer`, a ~300-line WASM `cdylib` with no threads, no `unsafe`,
+no trait objects, and no published rustdoc API. Apollo's chapters 6-9 (generics
+and dispatch, type state, comments vs documentation, pointers and `Send`/`Sync`)
+were dropped as inapplicable. Pull them from the
+[upstream handbook](https://github.com/apollographql/rust-best-practices) if a
+future crate needs them.
 
 ## Quick Reference
 
@@ -70,25 +74,6 @@ Use `#[expect(clippy::lint)]` over `#[allow(...)]` with justification comment.
 - Use doc tests (`///`) for public API examples
 - Consider `cargo insta` for snapshot testing generated output
 
-### Generics & Dispatch
-- Prefer generics (static dispatch) for performance-critical code
-- Use `dyn Trait` only when heterogeneous collections are needed
-- Box at API boundaries, not internally
-
-### Type State Pattern
-Encode valid states in the type system to catch invalid operations at compile time:
-```rust
-struct Connection<State> { /* ... */ _state: PhantomData<State> }
-struct Disconnected;
-struct Connected;
-
-impl Connection<Connected> {
-    fn send(&self, data: &[u8]) { /* only connected can send */ }
-}
-```
-
-### Documentation
+### Comments
 - `//` comments explain *why* (safety, workarounds, design rationale)
-- `///` doc comments explain *what* and *how* for public APIs
 - Every `TODO` needs a linked issue: `// TODO(#42): ...`
-- Enable `#![deny(missing_docs)]` for libraries

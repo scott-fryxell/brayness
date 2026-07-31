@@ -37,9 +37,6 @@ find /brayness/work/brayness/ -type d -name '.git'
 ```bash
 test -d /brayness/work/brayness/skills && \
 test -d /brayness/work/brayness/extensions && \
-test -d /brayness/work/brayness/themes && \
-test -d /brayness/work/brayness/prompts && \
-test -d /brayness/work/brayness/sessions && \
 test -d /brayness/work/brayness/bin && \
 test -f /brayness/work/brayness/package.json
 # All should exist

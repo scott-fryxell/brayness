@@ -1,6 +1,6 @@
 ---
 name: realness-design
-description: Design system for building web applications — typography, layout, color, and Vue component conventions covering both CSS and script style. CSS selectors come from semantic HTML elements, microdata, and ARIA attributes, not classes or invented data-* hooks; reject wrappers that exist only to hang a styling hook — prefer a real element, multi-root, or existing landmark. Components avoid Vue's scoped styles and Transition/TransitionGroup in favor of the global cascade. Provides a fluid modular type scale, base-line grid spacing, standard colors, OS-native dark mode, and script conventions (script setup, snake_case). Use when writing or reviewing CSS or Vue components, implementing the type scale or spacing, structuring a stylesheet, choosing HTML element selectors, deciding when a class or data-* is allowed, questioning a wrapper div or data-* shell, or deciding between scoped and global styles. Pairs with the html, typography, and user-interface skills.
+description: Design system for building web applications — typography, layout, color, and Vue component conventions covering both CSS and script style. CSS selectors come from semantic HTML elements, microdata, and ARIA attributes, not classes or invented data-* hooks; reject wrappers that exist only to hang a styling hook — prefer a real element, multi-root, or existing landmark. Components avoid Vue's scoped styles and Transition/TransitionGroup in favor of the global cascade. Provides a fluid modular type scale, base-line grid spacing, standard colors, OS-native dark mode, and script conventions (script setup, snake_case). Also covers writing and reviewing the markup itself: element choice, heading and landmark structure, form labeling, lists vs article vs section, links vs buttons, images, and cleaning up div soup. Use when writing or reviewing CSS, HTML, or Vue components, refactoring wrapper-heavy markup, fixing heading or form structure, replacing custom controls with native HTML, implementing the type scale or spacing, structuring a stylesheet, choosing HTML element selectors, deciding when a class or data-* is allowed, questioning a wrapper div or data-* shell, or deciding between scoped and global styles. Pairs with the typography and user-interface skills.
 metadata:
   category: Design & Frontend
   tags:
@@ -17,7 +17,7 @@ Semantic HTML first. Style the platform. Not components — elements.
 
 This skill is a method, demonstrated through one project's answer to it. That project is realness (`work/realness`): a rotoscoping tool that traces photos into layered SVG posters — mosaics, shadows, gradients, all on-device. Every section below pairs the two: a general rule any web project can adopt, plus a "realness's instance" callout showing that project's own numbers/names as one application of it. When you bring this to a different project, keep the method and re-derive the specifics — a client's unit, ratio, and palette are not this project's.
 
-**In this skill**: selectors (below) · [No invented wrappers](#no-invented-wrappers) · [Architecture](#architecture) · [Spacing](#spacing-one-unit-two-axes) · [Type](#type-fluid-modular-scale) · [Color](#color-materials-and-roles) · [Dark mode](#dark-mode) · [Links](#links) · [HTML attributes as state](#html-attributes-as-application-state) · [Markup over map()](#markup-over-map) · [HTML as the data model](#html-as-the-data-model-workrealness) _(realness-only)_ · [Custom reset](#custom-reset) · [Cascade over scoping](#cascade-over-scoping) · [Vue script style](#vue-sfc-script-style-workrealness) _(realness-only)_
+**In this skill**: selectors (below) · [Markup](references/markup.md) _(elements, headings, forms, lists)_ · [No invented wrappers](#no-invented-wrappers) · [Architecture](#architecture) · [Spacing](#spacing-one-unit-two-axes) · [Type](#type-fluid-modular-scale) · [Color](#color-materials-and-roles) · [Dark mode](#dark-mode) · [Links](#links) · [HTML attributes as state](#html-attributes-as-application-state) · [Markup over map()](#markup-over-map) · [HTML as the data model](#html-as-the-data-model-workrealness) _(realness-only)_ · [Custom reset](#custom-reset) · [Cascade over scoping](#cascade-over-scoping) · [Vue script style](#vue-sfc-script-style-workrealness) _(realness-only)_
 
 ## Semantic selectors, not invented ones
 
@@ -66,7 +66,7 @@ time {
 }
 ```
 
-Correct semantics reduce the selectors you need; microdata gives you structural hooks without extra classes; element-based CSS rewards using the right element. When you style `time` properly, you use `<time>` properly. For the markup side (`itemscope`, `itemprop`, `datetime`), see the **html** skill.
+Correct semantics reduce the selectors you need; microdata gives you structural hooks without extra classes; element-based CSS rewards using the right element. When you style `time` properly, you use `<time>` properly. For the markup side - element choice, headings, forms, lists vs article - see [references/markup.md](references/markup.md).
 
 realness's instance — the two live carve-outs (exceptions, not patterns to extend): `preference.vue`'s `.compact` and `working-border.vue`'s `.working-border` (a decorative overlay teleported to `<body>`, with no matching element and no natural attribute host). Before adding a third, run the decision order above first — see [HTML attributes as application state](#html-attributes-as-application-state).
 
@@ -275,7 +275,6 @@ realness's instance:
 
 ## Integration
 
-- **html**: choose the right element first — semantics drive the CSS selectors
 - **user-interface**: clarity, affordance, and interaction decisions
 - **typography**: same method (rhythm, fluid scale), different values — use it to re-pick the unit, ratios, and font for a client's voice
 - **motion-systems**: all animation decisions — defer entirely
@@ -284,6 +283,7 @@ Every numbered value in this skill — the base unit, the type ratios, the break
 
 ## Reference files
 
+- [references/markup.md](references/markup.md) — the element side: element choice, headings, landmarks, forms, lists vs article vs section, links vs buttons, images, anti-patterns.
 - [references/BASELINE_STARTER.css](references/BASELINE_STARTER.css) — copy-paste starter: reset, spacing unit, horizontal values, fluid type scale.
 - [references/TYPE_SCALE_RECIPE.md](references/TYPE_SCALE_RECIPE.md) — the ratio math, the `clamp()` formula, and the below-body-size bound-order gotcha.
 - [references/COLOR_RECIPE.md](references/COLOR_RECIPE.md) — materials-and-roles method plus a worked example of adding a material.

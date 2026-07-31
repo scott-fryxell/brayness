@@ -4,10 +4,8 @@ description: Designs or reviews user interfaces that are self-evident, low-frict
 metadata:
   category: Design & UX
   pairs-with:
-  - skill: html
-    reason: Native elements carry affordance before CSS — the right element often makes the UX obvious without additional design work
   - skill: realness-design
-    reason: HTML attributes as state (details[open], dialog[open], input:disabled) are affordances CSS reads directly — no JS class toggling needed
+    reason: Native elements carry affordance before CSS, and HTML attributes as state (details[open], dialog[open], input:disabled) are affordances CSS reads directly — no JS class toggling needed
   - skill: motion-systems
     reason: Feedback and state change are UX decisions first; motion implements them
   tags:
@@ -135,7 +133,7 @@ Do not use this skill for:
 
 ## Integration
 
-- **html**: native elements are their own affordances — `<details>` discloses, `<dialog>` is modal, `<button>` communicates action. The right element often makes explicit UX design unnecessary.
+- **realness-design** (markup): native elements are their own affordances — `<details>` discloses, `<dialog>` is modal, `<button>` communicates action. The right element often makes explicit UX design unnecessary.
 - **realness-design**: HTML boolean attributes (`open`, `disabled`, `checked`) are application state CSS reads directly — UI clarity without JS class toggling
 - **motion-systems**: when a state change needs motion, defer there — this skill decides *what* changes, motion-systems decides *how* it moves
 

@@ -34,15 +34,12 @@ Show the user what will happen:
 - New skill: `skills/example-skill/`
 - Modified: `skills/existing-skill/SKILL.md`
 - Updated: `extensions/my-extension/`
-- No changes to: themes/, prompts/, sessions/
+- No changes to: bin/, settings.json, AGENTS.md
 
 ## What will be copied
 
 - Source: /brayness/skills/ → Destination: /brayness/work/brayness/skills/
 - Source: /brayness/extensions/ → Destination: /brayness/work/brayness/extensions/
-- Source: /brayness/themes/ → Destination: /brayness/work/brayness/themes/
-- Source: /brayness/prompts/ → Destination: /brayness/work/brayness/prompts/
-- Source: /brayness/sessions/ → Destination: /brayness/work/brayness/sessions/
 - Source: /brayness/bin/pi → Destination: /brayness/work/brayness/bin/pi
 - Source: /brayness/package.json → Destination: /brayness/work/brayness/package.json
 
@@ -85,10 +82,8 @@ rsync -av \
   --exclude='.DS_Store' \
   /brayness/extensions/ /brayness/work/brayness/extensions/
 
-# Themes, prompts, sessions (same pattern)
-rsync -av --delete /brayness/themes/ /brayness/work/brayness/themes/
-rsync -av --delete /brayness/prompts/ /brayness/work/brayness/prompts/
-rsync -av --delete /brayness/sessions/ /brayness/work/brayness/sessions/
+# NOTE: never rsync sessions/ - conversation transcripts may contain secrets
+# or personal info, and the published repo gitignores the directory.
 
 # Individual files
 cp /brayness/bin/pi /brayness/work/brayness/bin/pi

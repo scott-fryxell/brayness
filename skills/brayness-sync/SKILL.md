@@ -1,6 +1,6 @@
 ---
 name: brayness-sync
-description: Sync changes from dev brayness/ to published brayness/work/brayness/ git repo. Copies skills, extensions, themes, prompts, sessions, and bin while excluding .git (from nested projects), .env (secrets), node_modules, and build artifacts. Validates the sync is clean (no secrets, no orphaned .git dirs, structure intact), shows git diffs, and proposes commits. Use when preparing releases, before tagging versions, or after major skill/extension changes. Triggers include "sync brayness", "prepare release", "push changes to work/brayness", or when the agent detects new skill commits and asks if you want to propagate them.
+description: Sync changes from dev brayness/ to published brayness/work/brayness/ git repo. Copies skills, extensions, bin, and top-level config while excluding .git (from nested projects), .env (secrets), sessions/ (conversation transcripts), node_modules, and build artifacts. Validates the sync is clean (no secrets, no orphaned .git dirs, structure intact), shows git diffs, and proposes commits. Use when preparing releases, before tagging versions, or after major skill/extension changes. Triggers include "sync brayness", "prepare release", "push changes to work/brayness", or when the agent detects new skill commits and asks if you want to propagate them.
 ---
 
 # Brayness Sync
@@ -27,7 +27,7 @@ This skill copies changes one direction: dev → published, excluding secrets an
 Agent scans `/brayness/` for what's different since the last sync:
 
 - New/modified skill or extension folders
-- Changes to themes, prompts, sessions
+- Changes to bin/, models.json, settings.json, AGENTS.md, README.md
 - Updates to bin/ or package.json
 - Files that should never be synced (secrets, nested .git dirs)
 
@@ -47,9 +47,6 @@ Agent copies the following from `/brayness/` → `/brayness/work/brayness/`:
 
 - `skills/` (entire directory)
 - `extensions/` (entire directory)
-- `themes/` (entire directory)
-- `prompts/` (entire directory)
-- `sessions/` (entire directory)
 - `bin/pi`
 - `models.json`
 - `settings.json`
@@ -101,9 +98,8 @@ Over time: Agent can execute commits directly after validation passes and you've
 | ------------------------- | --------- | ------------------------------------- |
 | `skills/`                 | ✓         | Core skill catalog                    |
 | `extensions/`             | ✓         | Core extensions                       |
-| `themes/`                 | ✓         | UI themes                             |
-| `prompts/`                | ✓         | Prompt templates                      |
-| `sessions/`               | ✓         | Session configs                       |
+| `sessions/`               | ✗         | Conversation transcripts - may contain secrets or personal info. Gitignored in the published repo; keep them in dev only. |
+| `themes/`, `prompts/`     | ✗         | Do not exist in dev. Add here only if they are created. |
 | `bin/pi`                  | ✓         | Agent CLI                             |
 | `package.json`            | ✓         | Dependencies and metadata             |
 | `README.md`               | ✓         | Repo overview and setup               |

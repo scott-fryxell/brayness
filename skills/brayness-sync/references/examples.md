@@ -10,7 +10,7 @@
 Changes found:
 - New skill: skills/brayness-sync/SKILL.md (+ references/, ...)
 - Modified: extensions/copywriting/index.js
-- No changes to themes/, prompts/, sessions/
+- No changes to bin/, settings.json, AGENTS.md
 ```
 
 **Plan**:
