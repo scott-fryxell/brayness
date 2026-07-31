@@ -8,16 +8,16 @@ Before syncing, understand what changed in dev since the last sync.
 
 ```bash
 # List new/modified skills
-ls -la /brain/skills/ | head -20
+ls -la /brayness/skills/ | head -20
 
 # List new/modified extensions
-ls -la /brain/extensions/ | head -20
+ls -la /brayness/extensions/ | head -20
 
 # Check if bin/pi changed
-ls -la /brain/bin/pi
+ls -la /brayness/bin/pi
 
 # Check if package.json changed
-git -C /brain/work/brain/ diff HEAD -- package.json | head -30
+git -C /brayness/work/brayness/ diff HEAD -- package.json | head -30
 ```
 
 **Output for agent**: List the major changes detected (new skills, updated extensions, etc).
@@ -38,13 +38,13 @@ Show the user what will happen:
 
 ## What will be copied
 
-- Source: /brain/skills/ → Destination: /brain/work/brain/skills/
-- Source: /brain/extensions/ → Destination: /brain/work/brain/extensions/
-- Source: /brain/themes/ → Destination: /brain/work/brain/themes/
-- Source: /brain/prompts/ → Destination: /brain/work/brain/prompts/
-- Source: /brain/sessions/ → Destination: /brain/work/brain/sessions/
-- Source: /brain/bin/pi → Destination: /brain/work/brain/bin/pi
-- Source: /brain/package.json → Destination: /brain/work/brain/package.json
+- Source: /brayness/skills/ → Destination: /brayness/work/brayness/skills/
+- Source: /brayness/extensions/ → Destination: /brayness/work/brayness/extensions/
+- Source: /brayness/themes/ → Destination: /brayness/work/brayness/themes/
+- Source: /brayness/prompts/ → Destination: /brayness/work/brayness/prompts/
+- Source: /brayness/sessions/ → Destination: /brayness/work/brayness/sessions/
+- Source: /brayness/bin/pi → Destination: /brayness/work/brayness/bin/pi
+- Source: /brayness/package.json → Destination: /brayness/work/brayness/package.json
 
 ## What will be excluded
 
@@ -75,7 +75,7 @@ rsync -av \
   --exclude='dist' \
   --exclude='.next' \
   --exclude='build' \
-  /brain/skills/ /brain/work/brain/skills/
+  /brayness/skills/ /brayness/work/brayness/skills/
 
 rsync -av \
   --delete \
@@ -83,16 +83,16 @@ rsync -av \
   --exclude='.env' \
   --exclude='node_modules' \
   --exclude='.DS_Store' \
-  /brain/extensions/ /brain/work/brain/extensions/
+  /brayness/extensions/ /brayness/work/brayness/extensions/
 
 # Themes, prompts, sessions (same pattern)
-rsync -av --delete /brain/themes/ /brain/work/brain/themes/
-rsync -av --delete /brain/prompts/ /brain/work/brain/prompts/
-rsync -av --delete /brain/sessions/ /brain/work/brain/sessions/
+rsync -av --delete /brayness/themes/ /brayness/work/brayness/themes/
+rsync -av --delete /brayness/prompts/ /brayness/work/brayness/prompts/
+rsync -av --delete /brayness/sessions/ /brayness/work/brayness/sessions/
 
 # Individual files
-cp /brain/bin/pi /brain/work/brain/bin/pi
-cp /brain/package.json /brain/work/brain/package.json
+cp /brayness/bin/pi /brayness/work/brayness/bin/pi
+cp /brayness/package.json /brayness/work/brayness/package.json
 ```
 
 **Output for agent**: "Files copied. Running validation..."
@@ -110,7 +110,7 @@ If all checks pass, continue to Step 5.
 Display what changed in the published repo:
 
 ```bash
-cd /brain/work/brain/
+cd /brayness/work/brayness/
 
 # Short summary
 git diff --stat
@@ -132,7 +132,7 @@ For large diffs, show:
 Analyze the changes and suggest a commit:
 
 ```bash
-cd /brain/work/brain/
+cd /brayness/work/brayness/
 
 # Count changes by type
 git diff --stat | tail -1  # shows total files/lines
@@ -144,13 +144,13 @@ grep '"version"' package.json
 **Suggested commit format:**
 
 ```
-Release: brain-sync update [date]
+Release: brayness-sync update [date]
 
 - Added: list new skills/extensions
 - Updated: list modified skills/extensions
 - Changed: package.json or config updates
 
-Synced from dev /brain/ → published work/brain/
+Synced from dev /brayness/ → published work/brayness/
 ```
 
 **Ask the user** to review and approve the message before committing.
@@ -160,7 +160,7 @@ Synced from dev /brain/ → published work/brain/
 When user approves:
 
 ```bash
-cd /brain/work/brain/
+cd /brayness/work/brayness/
 git add -A
 git commit -m "your approved message"
 ```
@@ -168,7 +168,7 @@ git commit -m "your approved message"
 **Output for agent**:
 
 ```
-[main abc1234] Release: brain-sync update...
+[main abc1234] Release: brayness-sync update...
  X files changed, Y insertions(+), Z deletions(-)
 ```
 
@@ -179,11 +179,11 @@ Show the commit hash and summary.
 After successful commit:
 
 ```bash
-cd /brain/work/brain/
+cd /brayness/work/brayness/
 git log --oneline -5  # Show recent commits
 ```
 
-**Output for agent**: "Sync complete. work/brain/ is now up to date and ready to tag/release."
+**Output for agent**: "Sync complete. work/brayness/ is now up to date and ready to tag/release."
 
 ## Troubleshooting steps
 
@@ -191,7 +191,7 @@ If any step fails, show the error clearly and suggest:
 
 1. Check the file system (does the source exist?)
 2. Review the exclude patterns (is something being filtered by accident?)
-3. Check git status in work/brain/ (are there conflicts?)
+3. Check git status in work/brayness/ (are there conflicts?)
 4. Ask user if they want to skip this sync or fix and retry
 
 Never proceed if validation fails.

@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.80.3",
+  "lastChangelogVersion": "0.83.0",
   "defaultProvider": "openrouter",
-  "defaultModel": "z-ai/glm-5.2",
+  "defaultModel": "deepseek/deepseek-v4-flash",
   "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-mono-btw",
@@ -16,14 +16,11 @@
   "enabledModels": [
     "openrouter/openrouter/free",
     "openrouter/z-ai/glm-5.2",
-    "openrouter/moonshotai/kimi-k2.6",
     "openrouter/deepseek/deepseek-v4-flash",
     "openrouter/deepseek/deepseek-v4-pro",
-    "anthropic/claude-opus-4-8",
-    "anthropic/claude-sonnet-4-6",
-    "openrouter/auto",
-    "openrouter/google/gemma-4-26b-a4b-it:free",
-    "openrouter/openai/gpt-5.5"
+    "anthropic/claude-fable-5",
+    "openrouter/thinkingmachines/inkling",
+    "openrouter/moonshotai/kimi-k3"
   ],
   "theme": "dark"
 }

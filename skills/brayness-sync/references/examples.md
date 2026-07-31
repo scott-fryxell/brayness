@@ -1,14 +1,14 @@
-# Brain Sync Examples
+# Brayness Sync Examples
 
 ## Happy path: Routine sync with new skill
 
-**Scenario**: You created a new skill `brain-sync` and updated `copywriting` extension. Ready to release.
+**Scenario**: You created a new skill `brayness-sync` and updated `copywriting` extension. Ready to release.
 
 **Agent detects**:
 
 ```
 Changes found:
-- New skill: skills/brain-sync/SKILL.md (+ references/, ...)
+- New skill: skills/brayness-sync/SKILL.md (+ references/, ...)
 - Modified: extensions/copywriting/index.js
 - No changes to themes/, prompts/, sessions/
 ```
@@ -16,7 +16,7 @@ Changes found:
 **Plan**:
 
 ```
-Will copy: skills/ (new brain-sync included), extensions/ (copywriting updated)
+Will copy: skills/ (new brayness-sync included), extensions/ (copywriting updated)
 Excluding: .git/, .env, node_modules/, etc.
 Impact: 15 files added, 3 modified, 0 deleted
 ```
@@ -26,9 +26,9 @@ Impact: 15 files added, 3 modified, 0 deleted
 **Git diff**:
 
 ```
-skills/brain-sync/SKILL.md                  | 150 ++++++++
-skills/brain-sync/references/validation.md  | 60 +++
-skills/brain-sync/references/workflow.md    | 200 +++++++++
+skills/brayness-sync/SKILL.md                  | 150 ++++++++
+skills/brayness-sync/references/validation.md  | 60 +++
+skills/brayness-sync/references/workflow.md    | 200 +++++++++
 extensions/copywriting/index.js             | 25 +-
 4 files changed, 434 insertions(+), 10 deletions(-)
 ```
@@ -36,11 +36,11 @@ extensions/copywriting/index.js             | 25 +-
 **Proposed commit**:
 
 ```
-Release: brain-sync + copywriting update
+Release: brayness-sync + copywriting update
 
-- Added: brain-sync skill (copy changes, validate, commit to work/brain/)
+- Added: brayness-sync skill (copy changes, validate, commit to work/brayness/)
 - Updated: copywriting extension (improved tone detection)
-- Synced: dev → work/brain/ for release
+- Synced: dev → work/brayness/ for release
 
 Ready to tag v1.2.0
 ```
@@ -57,13 +57,13 @@ Ready to tag v1.2.0
 
 ```
 ✗ SECURITY: .env file found
-  Location: /brain/work/brain/skills/my-skill/.env
+  Location: /brayness/work/brayness/skills/my-skill/.env
 
 Action: STOP - Do not commit. Secret file was copied.
 
 Steps:
-1. Fix: Delete work/brain/skills/my-skill/.env
-2. Delete: dev /brain/skills/my-skill/.env
+1. Fix: Delete work/brayness/skills/my-skill/.env
+2. Delete: dev /brayness/skills/my-skill/.env
 3. Commit secret removal to dev history
 4. Retry sync
 ```
@@ -74,7 +74,7 @@ Steps:
 ERROR: Secret file detected. Sync aborted.
 
 You have a .env in dev that should never be synced.
-Fix it in /brain/skills/my-skill/.env, then we'll retry.
+Fix it in /brayness/skills/my-skill/.env, then we'll retry.
 ```
 
 ---
@@ -87,7 +87,7 @@ Fix it in /brain/skills/my-skill/.env, then we'll retry.
 
 ```
 ✗ Git corruption: .git directory found
-  Location: /brain/work/brain/extensions/my-submodule/.git
+  Location: /brayness/work/brayness/extensions/my-submodule/.git
 ```
 
 **Agent suggests**:
@@ -96,11 +96,11 @@ Fix it in /brain/skills/my-skill/.env, then we'll retry.
 Nested repo detected in extensions/. This is expected for submodules in dev.
 The rsync command should have excluded it, but something went wrong.
 
-Check: ls -la /brain/extensions/my-submodule/
+Check: ls -la /brayness/extensions/my-submodule/
 If it has .git/, the exclude pattern didn't work.
 
 Options:
-1. Manually remove .git: rm -rf /brain/work/brain/extensions/my-submodule/.git
+1. Manually remove .git: rm -rf /brayness/work/brayness/extensions/my-submodule/.git
 2. Retry sync with stricter exclusion
 3. Skip this extension and investigate dev setup
 ```
@@ -161,7 +161,7 @@ Skills:
 Extensions:
 - html: semantic element detection improvements
 
-Synced from dev → work/brain/
+Synced from dev → work/brayness/
 ```
 
 **User approves** → **Commit executes** → Git log shows:
@@ -174,7 +174,7 @@ def5678 Previous release v1.1.0
 **Ready to tag and npm publish**:
 
 ```bash
-cd /brain/work/brain/
+cd /brayness/work/brayness/
 git tag v1.2.0
 npm publish
 ```

@@ -1,4 +1,6 @@
-# Brain
+# Brayness
+
+*A harness for your anxious digital brain.*
 
 Personal workspace for [pi](https://github.com/earendil-works/pi-coding-agent): skills, extensions, and agent config.
 
@@ -16,7 +18,7 @@ Requires Node >= 22.19.
 Most folders here are things you edit. Two folders are auto-generated - ignore them.
 
 ```
-brain/
+brayness/
 ├── skills/              your skills (edit)
 ├── extensions/          your extensions (edit)
 ├── settings.json        pi config (edit)
@@ -42,7 +44,7 @@ Update them: `./bin/pi update --extensions`
 
 The name is misleading. It is **not** the npm program.
 
-pi always stores downloaded add-ons in a folder called `npm/`. Because this repo *is* pi's home directory, that folder sits at the brain root.
+pi always stores downloaded add-ons in a folder called `npm/`. Because this repo *is* pi's home directory, that folder sits at the brayness root.
 
 Think of it as **the add-on cupboard**, not "npm".
 
@@ -60,4 +62,4 @@ Think of it as **the add-on cupboard**, not "npm".
 
 - Agent instructions: `AGENTS.md`
 - New machine setup: `docs/local-setup.md`
-- Published mirror: `work/brain/`
+- Published mirror: `work/brayness/`

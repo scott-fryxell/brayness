@@ -12,10 +12,10 @@ The Anotht vault is a PARA-structured Obsidian brain.
 The vault lives in the work directory:
 
 ```bash
-VAULT=/Users/scott/Desktop/brain/work/Anotht
+VAULT=/Users/scott/Desktop/brayness/work/Anotht
 ```
 
-Or relative from brain root:
+Or relative from brayness root:
 
 ```bash
 VAULT=./work/Anotht
@@ -48,7 +48,7 @@ rg -l "cowpunk" "$VAULT"
 cat "$VAULT/02 Areas/Music/:feed.md"
 ```
 
-Or from brain root:
+Or from brayness root:
 
 ```bash
 ls ./work/Anotht/Clippings/
@@ -67,7 +67,7 @@ For semantic search ("what notes feel related to X"), use the embeddings skill:
 When asked "what's been happening recently in my vault" or "what's new":
 
 ```bash
-VAULT=/Users/scott/Desktop/brain/work/Anotht
+VAULT=/Users/scott/Desktop/brayness/work/Anotht
 
 # 1. Current journal -- newest entries at the bottom
 read "$VAULT/05 journal/Journal.md"

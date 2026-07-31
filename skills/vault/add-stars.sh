@@ -12,7 +12,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-VAULT="/Users/scott/Desktop/brain/work/Anotht"
+VAULT="/Users/scott/Desktop/brayness/work/Anotht"
 GITHUB_USER="scott-fryxell"
 DEFAULT_DIR="03 Resources/GitHub Stars"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

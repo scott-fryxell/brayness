@@ -1,15 +1,15 @@
 ---
-name: brain-sync
-description: Sync changes from dev brain/ to published brain/work/brain/ git repo. Copies skills, extensions, themes, prompts, sessions, and bin while excluding .git (from nested projects), .env (secrets), node_modules, and build artifacts. Validates the sync is clean (no secrets, no orphaned .git dirs, structure intact), shows git diffs, and proposes commits. Use when preparing releases, before tagging versions, or after major skill/extension changes. Triggers include "sync brain", "prepare release", "push changes to work/brain", or when the agent detects new skill commits and asks if you want to propagate them.
+name: brayness-sync
+description: Sync changes from dev brayness/ to published brayness/work/brayness/ git repo. Copies skills, extensions, themes, prompts, sessions, and bin while excluding .git (from nested projects), .env (secrets), node_modules, and build artifacts. Validates the sync is clean (no secrets, no orphaned .git dirs, structure intact), shows git diffs, and proposes commits. Use when preparing releases, before tagging versions, or after major skill/extension changes. Triggers include "sync brayness", "prepare release", "push changes to work/brayness", or when the agent detects new skill commits and asks if you want to propagate them.
 ---
 
-# Brain Sync
+# Brayness Sync
 
-Keeps dev `/brain/` in sync with published `/brain/work/brain/` (the git-tracked mirror for releases).
+Keeps dev `/brayness/` in sync with published `/brayness/work/brayness/` (the git-tracked mirror for releases).
 
 ## Concept
 
-You develop in `/brain/` with full flexibility - nested git repos, temporary files, secrets, all the working chaos. The published version lives in `/brain/work/brain/` - clean, version controlled, ready to npm publish.
+You develop in `/brayness/` with full flexibility - nested git repos, temporary files, secrets, all the working chaos. The published version lives in `/brayness/work/brayness/` - clean, version controlled, ready to npm publish.
 
 This skill copies changes one direction: dev → published, excluding secrets and build cruft, then validates the result is git-clean and safe to commit.
 
@@ -24,7 +24,7 @@ This skill copies changes one direction: dev → published, excluding secrets an
 
 ### Step 1: Detect changes
 
-Agent scans `/brain/` for what's different since the last sync:
+Agent scans `/brayness/` for what's different since the last sync:
 
 - New/modified skill or extension folders
 - Changes to themes, prompts, sessions
@@ -43,7 +43,7 @@ You review and approve before copying.
 
 ### Step 3: Execute copy
 
-Agent copies the following from `/brain/` → `/brain/work/brain/`:
+Agent copies the following from `/brayness/` → `/brayness/work/brayness/`:
 
 - `skills/` (entire directory)
 - `extensions/` (entire directory)
@@ -67,13 +67,13 @@ Agent validates the copy is safe:
 - ✓ No `.env` files present (secrets stayed in dev)
 - ✓ No `node_modules/` or build artifacts
 - ✓ Required folder structure exists
-- ✓ `work/brain/` is git-ready (no git errors)
+- ✓ `work/brayness/` is git-ready (no git errors)
 
 If validation fails, agent shows what went wrong and suggests fixes.
 
 ### Step 5: Review git diff
 
-Agent runs `git diff` in `work/brain/` and shows:
+Agent runs `git diff` in `work/brayness/` and shows:
 
 - Files added, modified, deleted
 - Line-level changes for key files (package.json, SKILL.md's)
@@ -158,29 +158,29 @@ Over time: Agent can execute commits directly after validation passes and you've
 - Revert the copy, never commit
 - Agent will prevent this and alert
 
-**Git conflict in work/brain/**
+**Git conflict in work/brayness/**
 
-- If you've edited work/brain/ manually, git diff may show conflicts
-- Agent alerts you to resolve in work/brain/ before syncing again
+- If you've edited work/brayness/ manually, git diff may show conflicts
+- Agent alerts you to resolve in work/brayness/ before syncing again
 - Or, sync runs `git status` to warn about uncommitted changes first
 
 ## Commands the agent uses
 
 ```bash
 # Detect what changed
-diff -r /brain/ /brain/work/brain/ --exclude-dir=.git --exclude-dir=node_modules [...]
+diff -r /brayness/ /brayness/work/brayness/ --exclude-dir=.git --exclude-dir=node_modules [...]
 
 # Validate the copy
-find /brain/work/brain/ -type d -name '.git' -o -type f -name '.env'
+find /brayness/work/brayness/ -type d -name '.git' -o -type f -name '.env'
 
 # Show git diff
-cd /brain/work/brain/ && git diff --stat && git diff
+cd /brayness/work/brayness/ && git diff --stat && git diff
 
 # Propose commit
-cd /brain/work/brain/ && git add -A && git commit --dry-run [...]
+cd /brayness/work/brayness/ && git add -A && git commit --dry-run [...]
 
 # Execute commit (with approval)
-cd /brain/work/brain/ && git add -A && git commit -m "message"
+cd /brayness/work/brayness/ && git add -A && git commit -m "message"
 ```
 
 ## Next steps
@@ -190,4 +190,4 @@ When ready to sync:
 - Tell the agent "sync brain" or "prepare a release"
 - Agent will walk through the workflow above
 - Review each step, approve diffs, and commits
-- Result: `/brain/work/brain/` updated, committed, and ready to tag/publish
+- Result: `/brayness/work/brayness/` updated, committed, and ready to tag/publish

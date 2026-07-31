@@ -1,7 +1,7 @@
 #!/bin/bash
 # Fix frontmatter for files with wrong [[self]] author but external cardlink content
 
-cd /Users/scott/Desktop/brain/work/Anotht
+cd /Users/scott/Desktop/brayness/work/Anotht
 
 count=0
 

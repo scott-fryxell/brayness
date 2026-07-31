@@ -1,6 +1,6 @@
 ---
 name: realness-design
-description: Design system for building web applications — typography, layout, color, and Vue component conventions covering both CSS and script style. CSS selectors come from semantic HTML elements, microdata, and ARIA attributes, not class names or invented data-* hooks; components avoid Vue's scoped styles and Transition/TransitionGroup in favor of the global cascade. Provides a fluid modular type scale, base-line grid spacing, design system standard colors, OS-native dark mode, and script conventions (script setup, snake_case identifiers). Use when writing or reviewing CSS or Vue components, implementing the type scale or spacing system, structuring a stylesheet, choosing HTML element selectors, deciding when a class or data-* attribute is allowed, or deciding between scoped and global styles. Pairs with the html, typography, and user-interface skills.
+description: Design system for building web applications — typography, layout, color, and Vue component conventions covering both CSS and script style. CSS selectors come from semantic HTML elements, microdata, and ARIA attributes, not classes or invented data-* hooks; reject wrappers that exist only to hang a styling hook — prefer a real element, multi-root, or existing landmark. Components avoid Vue's scoped styles and Transition/TransitionGroup in favor of the global cascade. Provides a fluid modular type scale, base-line grid spacing, standard colors, OS-native dark mode, and script conventions (script setup, snake_case). Use when writing or reviewing CSS or Vue components, implementing the type scale or spacing, structuring a stylesheet, choosing HTML element selectors, deciding when a class or data-* is allowed, questioning a wrapper div or data-* shell, or deciding between scoped and global styles. Pairs with the html, typography, and user-interface skills.
 metadata:
   category: Design & Frontend
   tags:
@@ -15,72 +15,46 @@ metadata:
 
 Semantic HTML first. Style the platform. Not components — elements.
 
-This skill is a method, demonstrated through one project's answer to it. That project is realness (`work/realness`): a rotoscoping tool that traces photos into layered SVG posters — mosaics, shadows, gradients, all on-device. Every section below separates the two: a general rule any web project can adopt, and a "realness's instance" callout showing that project's own numbers/names as one application of it. When you bring this to a different project, keep the method and re-derive the specifics — a client's unit, ratio, and palette are not this project's.
+This skill is a method, demonstrated through one project's answer to it. That project is realness (`work/realness`): a rotoscoping tool that traces photos into layered SVG posters — mosaics, shadows, gradients, all on-device. Every section below pairs the two: a general rule any web project can adopt, plus a "realness's instance" callout showing that project's own numbers/names as one application of it. When you bring this to a different project, keep the method and re-derive the specifics — a client's unit, ratio, and palette are not this project's.
 
-**No invented selectors for real things. Semantic HTML is your selector.**
+**In this skill**: selectors (below) · [No invented wrappers](#no-invented-wrappers) · [Architecture](#architecture) · [Spacing](#spacing-one-unit-two-axes) · [Type](#type-fluid-modular-scale) · [Color](#color-materials-and-roles) · [Dark mode](#dark-mode) · [Links](#links) · [HTML attributes as state](#html-attributes-as-application-state) · [Markup over map()](#markup-over-map) · [HTML as the data model](#html-as-the-data-model-workrealness) _(realness-only)_ · [Custom reset](#custom-reset) · [Cascade over scoping](#cascade-over-scoping) · [Vue script style](#vue-sfc-script-style-workrealness) _(realness-only)_
 
-We write selectors against semantic HTML elements and their attributes — `<time>`, `[itemprop]`, `[itemscope]`, `:has()`, `[aria-*]`. Not `.card`, `.author-block`, `.date-display`, or any other invented name. The element you pick **is** the selector you style, and the schema attribute **is** the structural hook.
+## Semantic selectors, not invented ones
 
-The entire system rests on one conviction: **reach for the right semantic element before you reach for any selector.** `<address>` for contact info, `<time>` for dates, `<figure>` for media, `<nav>` for navigation — the browser ships a rich vocabulary. Use it.
+**Method**: write every CSS selector against something real — an element, native state, microdata, or ARIA. Never invent a name (a class, or a `data-*` that exists only to be a selector) for something that already has an honest attribute. `<address>` for contact info, `<time>` for dates, `<figure>` for media — the browser ships a rich vocabulary; reach for it before reaching for a selector.
 
-**Mantra**: no invented selectors for real things. Classes (and invented `data-*` hooks) are for anonymous chrome and rare visual machinery only.
+- **Real** = something a human, crawler, or the data layer (`get_item`, Schema) should already recognize.
+- **Anonymous** = a node with no meaning outside one widget's internals (spinner spoke, measurement ghost).
 
-- **Real** = something a human, crawler, or the data layer (`get_item`, Schema) should recognize.
-- **Anonymous** = a node with no meaning outside one widget's internals (spinner spoke, measurement ghost, decorative sub-part).
-
-### Selector decision order
-
-Every time you need a style hook, walk this list and stop at the first honest fit:
+Walk this list and stop at the first honest fit:
 
 1. Wrong element? Fix the tag.
-2. Native state already exists? Use it (`[open]`, `:checked`, `:invalid`, `:has(dialog[open])`, `[hidden]`, `[disabled]`).
-3. Meaning for SEO/data already needs microdata? Style that (`[itemprop]`, `[itemscope]`, `[itemid]`, `[itemtype]`).
-4. Meaning for a11y already needs ARIA? Style that (`[aria-*]`, `[role]`).
-5. Global preference / mode that is not an element? One attribute on a high node (e.g. `html[data-aspect-ratio='16/9']`), not a class or `data-*` tree on every region.
-6. Still stuck on anonymous chrome? Then a class — or rarely a `data-*` that reflects real app state — is allowed. See [When a class is allowed](#when-a-class-is-allowed).
+2. Native state exists? Use it — `[open]`, `:checked`, `:invalid`, `[hidden]`, `[disabled]`, `:has(dialog[open])`.
+3. Meaning for data already needs microdata? Style that — `[itemprop]`, `[itemscope]`, `[itemid]`, `[itemtype]`.
+4. Meaning for a11y already needs ARIA? Style that — `[aria-*]`, `[role]`.
+5. Global mode, not an element? One attribute on a high node (`html[data-aspect-ratio='16/9']`) — not a class or a `data-*` tree on every region.
+6. Still anonymous chrome? A class is allowed — see below.
 
-Microdata and ARIA aren't accessibility/SEO add-ons bolted on afterward — they're load-bearing CSS selectors here, so adding them is never wasted work; it's writing the selector you'll style against next.
+Microdata and ARIA aren't accessibility/SEO add-ons bolted on afterward — they're load-bearing CSS selectors here, so adding them is never wasted work. If you reach for a class or a new `data-*` for a **region or product thing** (page shell, poster, days feed, delete button), you're reaching for the wrong element or missing an existing attribute — prefer `id` + landmark, parent/child structure, `figure:has(svg[itemtype='/posters'])`, `[itemid]`, or an accessible name instead.
 
-If you reach for a class or a new `data-*` for a **region or product thing** (page shell, poster, days feed, delete button), you're reaching for the wrong element or missing an existing attribute. Prefer `id` + landmark, parent/child structure, `figure:has(svg[itemtype='/posters'])`, `[itemid]`, or accessible names instead.
+**A `data-*` attribute is a class with different punctuation** unless it earns its keep:
 
-### `data-*` is not a class substitute
+| Earns its keep                                                           | Does not                                                                        |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| Real app/document state CSS must read (`html[data-aspect-ratio='16/9']`) | Renaming a section so you can style it (`data-page` ≈ `.page`)                  |
+| Bridging JS ↔ CSS for boolean state with no native home                  | Product nouns invented for CSS (`data-poster`, `data-days`)                     |
+|                                                                          | Widget catalogs that should be element + accessible name (`data-icon='camera'`) |
 
-CSS does not care whether the hook is `.poster` or `[data-poster]`. An attribute that exists **only** so a selector can find it is a class with different punctuation.
+**A class is allowed only when all of these hold:**
 
-| Earns its keep | Does not |
-| --- | --- |
-| Real app/document state CSS must read (`html[data-aspect-ratio='16/9']`) | Renaming a section so you can style it (`data-page` ≈ `.page`) |
-| Bridging JS ↔ CSS for boolean state with no native home | Product nouns invented for CSS (`data-poster`, `data-days`) |
-| | Widget catalogs that should be element + accessible name (`data-icon='camera'`) |
-
-Do not add new `data-*` for CSS. When touching markup, ask: does this attribute carry meaning JS, a11y, or Schema already need? If no, delete it and select by element / `id` / microdata / ARIA.
-
-### When a class is allowed
-
-Use a class only when **all** of these are true:
-
-- The node is not a meaningful element (spinner chrome, measurement ghost, layout scrap with no schema).
+- The node isn't a meaningful element (spinner chrome, measurement ghost, layout scrap with no schema).
 - No native / ARIA / microdata attribute honestly fits.
-- The name is local to one component's `<style>` block, not a shared app vocabulary.
-- You would be ashamed to put that same string on `data-*` for the whole app.
+- The name is local to one component's `<style>` block, not shared app vocabulary.
+- You'd be ashamed to put that same string on `data-*` for the whole app.
 
 If allowed: BEM-flavored (`block__part`, `is-state`), scoped to that one component — never a bare reusable name like `.card`.
 
-realness carve-outs today (exceptions, not patterns to extend): `preference.vue`'s `.compact`, `working-border.vue`'s `.working-border__spin` and `.is-active`. Before adding another, re-run the decision order — prefer `[aria-expanded]`, `[hidden]`, or real reflected state — see [HTML attributes as application state](#html-attributes-as-application-state).
-
-### Mid-refactor honesty check
-
-When you type `class=` or invent a `data-*`:
-
-- "Anonymous chrome for X" → keep, localize
-- "Handle for styling region Y" → stop; pick element / `id` / microdata instead
-- "Reflect state Z" → prefer native / ARIA / document-level attr; invent a hook only if none exist
-
-If most new hooks are the second case, the refrain is drifting.
-
-## The Virtuous Cycle
-
-Semantic element, CSS selector, and microdata attribute all converge on the same thing. No invented class vocabulary. No utility classes. No `.author-block` or `.date-display`. The element IS the selector IS the schema.
+This is the whole system: element, selector, and microdata attribute converge on the same thing.
 
 ```css
 address[itemscope] {
@@ -92,7 +66,34 @@ time {
 }
 ```
 
-The element you pick is the selector you style — for the markup side (`itemscope`, `itemprop`, `datetime`), see the **html** skill. Each layer reinforces the others: correct semantics reduce CSS selectors needed; microdata attributes provide structural hooks without extra classes; element-based CSS rewards using the right element. When you style `time` properly, you use `<time>` properly.
+Correct semantics reduce the selectors you need; microdata gives you structural hooks without extra classes; element-based CSS rewards using the right element. When you style `time` properly, you use `<time>` properly. For the markup side (`itemscope`, `itemprop`, `datetime`), see the **html** skill.
+
+realness's instance — the two live carve-outs (exceptions, not patterns to extend): `preference.vue`'s `.compact` and `working-border.vue`'s `.working-border` (a decorative overlay teleported to `<body>`, with no matching element and no natural attribute host). Before adding a third, run the decision order above first — see [HTML attributes as application state](#html-attributes-as-application-state).
+
+Known mid-refactor drift (rename was not the fix — remove when touching): page/product shells still carrying invented hooks such as `data-page`, `data-days`, `data-thought` where `#id`, structure, or microdata should win. Do not add more of these.
+
+## No invented wrappers
+
+**Method**: a node that exists only so CSS (or JS) can target "this group" is usually the wrong shape. Prefer no wrapper, a real element, or the attribute you already need for meaning — not `<div data-thing>` / `<div class="thing">`.
+
+When you reach for a wrapper, ask what job it does and stop at the first honest fit:
+
+1. **Only one meaningful child?** Delete the wrapper. Style/select the child (`textarea#wat`, `figure:has([itemtype='/posters'])`).
+2. **Two siblings that must stay adjacent for CSS** (`nav + section`)? Vue multi-root — no shell. realness: `support-layout.vue` is just `<site-nav />` + `<router-view />`.
+3. **Grouping form controls?** Use `<fieldset>` (or `<form>` when submit is the action). Style `fieldset:has(> #wat)`, not `data-posting-input`.
+4. **ARIA / landmark role belonging to the region?** Put the role on the region you already have — `section[data-days][role='feed']` — not a child `<div role="feed">` whose only job is the role.
+5. **Parent needs to reflect child meaning?** Prefer `:has()` on something real (`figure:has([itemtype='/posters'])`) over inventing `data-poster` on the parent. Keep JS `closest` / `querySelector` on the same hooks; leaving `closest('figure.poster')` after deleting `.poster` is a silent break.
+6. **Still need a host with no honest element?** Only then: local class for anonymous chrome (see class carve-out above) — never a shared `data-*` product noun.
+
+| Smell                                               | Prefer                                                                                                       |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `<div data-support-layout>` around nav + view       | Multi-root fragment                                                                                          |
+| `<div data-posting-input>` around textarea + button | `<fieldset>` / `<form>`                                                                                      |
+| `<div role="feed">` around day articles             | `role="feed"` on the existing section                                                                        |
+| `figure[data-poster]` / `.poster`                   | `figure:has([itemtype='/posters'])` (processing figure may carry `itemtype` on itself when no child SVG yet) |
+| `data-*` renamed from a former class                | Re-run the selector decision order — punctuation is not progress                                             |
+
+If a wrapper stays, its **element** must earn the keep (fieldset, form, dialog, nav). An attribute hung on a meaningless `div` so the stylesheet can see it does not.
 
 ## Architecture
 
@@ -113,11 +114,11 @@ Known drift to fix opportunistically: `icon.vue` and `preference.vue` (under `sr
 
 The unit governs two axes differently, because they mean different things physically:
 
-**Vertical harmony is non-negotiable: vertical measurements are whole multiples.** Margin-top, margin-bottom, padding-top, padding-bottom, line-height — anything that decides where the *next* line lands — must be `unit × 1`, `× 2`, `× 4`, never `× 0.35` or `× 0.5`. A fractional vertical multiple isn't a smaller version of the same rhythm — it's off the grid entirely, and it shifts every block beneath it out of phase with the page's baseline. That drift compounds down the page and breaks alignment between columns that don't happen to share the same fractional offset. Worked example of what this catches: [references/examples/vertical-rhythm-cleanup.md](references/examples/vertical-rhythm-cleanup.md).
+**Vertical harmony is non-negotiable: vertical measurements are whole multiples.** Margin-top, margin-bottom, padding-top, padding-bottom, line-height — anything that decides where the _next_ line lands — must be `unit × 1`, `× 2`, `× 4`, never `× 0.35` or `× 0.5`. A fractional vertical multiple isn't a smaller version of the same rhythm — it's off the grid entirely, and it shifts every block beneath it out of phase with the page's baseline. That drift compounds down the page and breaks alignment between columns that don't happen to share the same fractional offset. Worked example of what this catches: [references/examples/vertical-rhythm-cleanup.md](references/examples/vertical-rhythm-cleanup.md).
 
-**Horizontal harmony is looser on small values, stricter on named ones.** Gap in a row and padding-left/right aren't part of the baseline grid — they don't move where a line of text sits vertically — so they can use whatever fraction of the unit looks right (`× 0.35`, `× 0.5`) without breaking anything. But the *big* horizontal decisions — a prose measure, a breakpoint gate, a content-width ceiling — recur across a codebase, and an untracked project ends up with three different components each inventing their own "wide container" number. Keep those as a small closed set of named custom properties derived from the unit (a measure, a gate, a limit), and reach for an existing one before minting a new magic number. If nothing fits, name the new one — don't inline a fresh multiple and let it drift. A gate and a limit look interchangeable and aren't: [references/examples/gate-vs-limit.md](references/examples/gate-vs-limit.md).
+**Horizontal harmony is looser on small values, stricter on named ones.** Gap in a row and padding-left/right aren't part of the baseline grid — they don't move where a line of text sits vertically — so they can use whatever fraction of the unit looks right (`× 0.35`, `× 0.5`) without breaking anything. But the _big_ horizontal decisions — a prose measure, a breakpoint gate, a content-width ceiling — recur across a codebase, and an untracked project ends up with three different components each inventing their own "wide container" number. Keep those as a small closed set of named custom properties derived from the unit (a measure, a gate, a limit), and reach for an existing one before minting a new magic number. If nothing fits, name the new one — don't inline a fresh multiple and let it drift. A gate and a limit look interchangeable and aren't: [references/examples/gate-vs-limit.md](references/examples/gate-vs-limit.md).
 
-When something feels off, check three things: is it a multiple of the unit; if it's vertical, is it a *whole* one; and if it's a big horizontal number, does a name for it already exist?
+When something feels off, check three things: is it a multiple of the unit; if it's vertical, is it a _whole_ one; and if it's a big horizontal number, does a name for it already exist?
 
 A copy-paste starter implementing the reset, the unit, and these categories: [references/BASELINE_STARTER.css](references/BASELINE_STARTER.css). realness's own current values: [references/realness-instance.md](references/realness-instance.md).
 
@@ -128,14 +129,17 @@ A copy-paste starter implementing the reset, the unit, and these categories: [re
 ```css
 font-size: clamp(
   min,
-  calc(min + (max - min) * (100dvw - small-viewport) / (large-viewport - small-viewport)),
+  calc(
+    min + (max - min) * (100dvw - small-viewport) /
+      (large-viewport - small-viewport)
+  ),
   max
 );
 ```
 
-Because both bounds are plain CSS values, `clamp()` needs no build step to *render* — only to *compute* the slope constants, which is arithmetic a preprocessor (or a one-time script) does once, not something the browser needs to re-derive per frame. That's the whole reason this replaced the older three-media-query technique: same math, the browser does the interpolation instead of three discrete jumps.
+Because both bounds are plain CSS values, `clamp()` needs no build step to _render_ — only to _compute_ the slope constants, which is arithmetic a preprocessor (or a one-time script) does once, not something the browser needs to re-derive per frame. That's the whole reason this replaced the older three-media-query technique: same math, the browser does the interpolation instead of three discrete jumps.
 
-One step needs a specific warning: whichever heading falls *below* your body size (dividing by the ratio instead of multiplying) gets its min/max bounds in reverse numeric order, and handing `clamp()` bounds out of order silently collapses it to a constant rather than erroring. Full formula, the ratio math, and this gotcha worked through in detail: [references/TYPE_SCALE_RECIPE.md](references/TYPE_SCALE_RECIPE.md).
+One step needs a specific warning: whichever heading falls _below_ your body size (dividing by the ratio instead of multiplying) gets its min/max bounds in reverse numeric order, and handing `clamp()` bounds out of order silently collapses it to a constant rather than erroring. Full formula, the ratio math, and this gotcha worked through in detail: [references/TYPE_SCALE_RECIPE.md](references/TYPE_SCALE_RECIPE.md).
 
 realness's instance — ratios 1.25 (min) and 1.414 (max), thresholds at 35rem/80rem:
 
@@ -218,7 +222,7 @@ body:has(dialog[open]) {
 }
 ```
 
-Prefer native boolean attributes (`open`, `disabled`, `checked`, `hidden`) over JS-managed classes or invented `data-*` style hooks. Prefer `<details>`/`<summary>` for disclosure, `<dialog>` for modals, `<input type="checkbox">` for toggles — each carries state the browser and CSS already understand. If a reflected attribute is required for non-native app/document state, keep it rare and high on the tree (see [Selector decision order](#selector-decision-order)).
+Prefer native boolean attributes (`open`, `disabled`, `checked`, `hidden`) over JS-managed classes or invented `data-*` style hooks. Prefer `<details>`/`<summary>` for disclosure, `<dialog>` for modals, `<input type="checkbox">` for toggles — each carries state the browser and CSS already understand. If a reflected attribute is required for non-native app/document state, keep it rare and high on the tree (see [Semantic selectors, not invented ones](#semantic-selectors-not-invented-ones)).
 
 ## Markup over map()
 
