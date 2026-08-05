@@ -5,9 +5,9 @@
       "api": "anthropic-messages",
       "compat": {}
     },
-    "ollama": {
-      "baseUrl": "http://localhost:11434/v1",
-      "apiKey": "ollama",
+    "mlx": {
+      "baseUrl": "http://127.0.0.1:8080/v1",
+      "apiKey": "mlx",
       "api": "openai-completions",
       "compat": {
         "supportsDeveloperRole": false,
@@ -15,22 +15,12 @@
       },
       "models": [
         {
-          "id": "gemma4:e4b"
-        },
-        {
-          "id": "gemma4:e2b"
-        },
-        {
-          "id": "gemma4:12b-mlx"
-        },
-        {
-          "id": "llama3.2"
-        },
-        {
-          "id": "qwen2.5-coder:7b"
-        },
-        {
-          "id": "gemma3:4b"
+          "id": "/Users/scott/mlx-vlm/model-e2b",
+          "name": "Gemma 4 E2B (local MLX)",
+          "input": ["text", "image"],
+          "contextWindow": 131072,
+          "maxTokens": 8192,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
         }
       ]
     },

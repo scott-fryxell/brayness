@@ -1,18 +1,18 @@
 /**
- * Describe Image — pi extension
+ * Describe Image - pi extension
  *
- * Automatically describes attached images using local ollama vision models.
- * Works with any LLM, including text-only models. No API costs.
+ * Automatically describes attached images using a local MLX vision model
+ * (mlx_vlm.server). Works with any LLM, including text-only models. No API costs.
  *
  * How it works:
  * - Intercepts the `input` event: when images are attached to a user message,
- *   describes them with local vision AI and injects the descriptions as text.
- *   The LLM sees "Attached image: screenshot.png — shows a login form..."
+ *   describes them with local MLX vision AI and injects the descriptions as text.
+ *   The LLM sees "Attached image: screenshot.png - shows a login form..."
  *   instead of raw image data it can't process.
  * - Registers a `describe_image` tool for manual use (path/URL based).
  *
- * Setup: ollama must be running (ollama serve).
- * Models used: gemma4:e2b (fast, default) or gemma4:e4b (high detail).
+ * Setup: mlx_vlm.server must be running on port 8080 (launchd: com.scott.mlx-vlm).
+ * Model: gemma-4-e2b-it (MLX, 4-bit).
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent"
@@ -20,9 +20,9 @@ import { Type } from "typebox"
 import { existsSync } from "node:fs"
 import { readFile } from "node:fs/promises"
 
-const OLLAMA_URL = "http://localhost:11434/api/generate"
-const DEFAULT_MODEL = "gemma4:e2b"
-const DETAIL_MODEL = "gemma4:e4b"
+const MLX_URL = "http://127.0.0.1:8080/v1/chat/completions"
+// The MLX server expects the local model path as the model id.
+const MODEL = "/Users/scott/mlx-vlm/model-e2b"
 
 interface ImageAttachment {
 	path?: string
@@ -37,7 +37,7 @@ export default function describeImageExtension(pi: ExtensionAPI) {
 		if (!images || images.length === 0) return
 
 		// Check if the current model already supports images natively.
-		// If so, let it handle them directly — no need for ollama.
+		// If so, let it handle them directly - no need for MLX.
 		const modelSupportsImages = ctx.model?.input?.includes("image")
 		if (modelSupportsImages) return
 
@@ -52,16 +52,17 @@ export default function describeImageExtension(pi: ExtensionAPI) {
 				descriptions.push(`[${label}: could not read image]`)
 				continue
 			}
+			const mime = img.mimeType || guessMime(label)
 			try {
 				ctx.ui.setStatus("vision", `Describing ${label}...`)
-				const text = await queryOllama(DEFAULT_MODEL, uiPrompt, base64, ctx.signal)
+				const text = await queryMLX(uiPrompt, base64, mime, ctx.signal)
 				descriptions.push(`[${label}: ${text}]`)
 			} catch (err: unknown) {
 				const msg = err instanceof Error ? err.message : String(err)
-				// If ollama isn't running, let the message pass through unchanged
+				// If the MLX server isn't running, let the message pass through unchanged
 				if (msg.includes("fetch") || msg.includes("connect") || msg.includes("ECONNREFUSED")) {
 					ctx.ui.setStatus("vision", "")
-					ctx.ui.notify("ollama not running — images passed through as-is", "warn")
+					ctx.ui.notify("MLX vision server not running - images passed through as-is", "warn")
 					return
 				}
 				descriptions.push(`[${label}: vision error: ${msg}]`)
@@ -81,8 +82,8 @@ export default function describeImageExtension(pi: ExtensionAPI) {
 	pi.registerTool({
 		name: "describe_image",
 		label: "Describe Image",
-		description: "Describe an image or screenshot using local vision AI. Pass a file path or URL. Use when the current model cannot read images directly.",
-		promptSnippet: "Describe images and screenshots using local vision AI",
+		description: "Describe an image or screenshot using local MLX vision AI. Pass a file path or URL. Use when the current model cannot read images directly.",
+		promptSnippet: "Describe images and screenshots using local MLX vision AI",
 		promptGuidelines: [
 			"Use describe_image when the user shares an image you cannot see.",
 			"Pass the file path the user provided, or a screenshot path from ~/Desktop/.",
@@ -92,17 +93,16 @@ export default function describeImageExtension(pi: ExtensionAPI) {
 			detail: Type.Optional(Type.Union([
 				Type.Literal("low"),
 				Type.Literal("high"),
-			], { description: "low = gemma4:e2b (fast). high = gemma4:e4b (detailed). Default: low" })),
+			], { description: "Model runs locally via MLX; detail is accepted but both map to the same model." })),
 			focus: Type.Optional(Type.String({
 				description: 'Optional focus area. Examples: "UI layout", "colors", "spacing", "accessibility", "visual hierarchy", "text content"',
 			})),
 		}),
 
 		async execute(_toolCallId, params, signal, onUpdate, _ctx) {
-			const { path, detail = "low", focus } = params
-			const model = detail === "high" ? DETAIL_MODEL : DEFAULT_MODEL
+			const { path, focus } = params
 
-			onUpdate?.({ content: [{ type: "text", text: `Analyzing with ${model}...` }] })
+			onUpdate?.({ content: [{ type: "text", text: `Analyzing with ${MODEL}...` }] })
 
 			let base64: string
 			try {
@@ -112,17 +112,19 @@ export default function describeImageExtension(pi: ExtensionAPI) {
 				return { content: [{ type: "text", text: `Error: ${msg}` }], isError: true }
 			}
 
+			const mime = guessMime(path)
+
 			const prompt = focus
 				? `Analyze this image with focus on: ${focus}. Be specific and concise.`
 				: uiPrompt
 
 			try {
-				const text = await queryOllama(model, prompt, base64, signal)
-				return { content: [{ type: "text", text }], details: { model } }
+				const text = await queryMLX(prompt, base64, mime, signal)
+				return { content: [{ type: "text", text }], details: { model: MODEL } }
 			} catch (err: unknown) {
 				const msg = err instanceof Error ? err.message : String(err)
 				return {
-					content: [{ type: "text", text: `Vision analysis failed: ${msg}.\nIs ollama running? (ollama serve)` }],
+					content: [{ type: "text", text: `Vision analysis failed: ${msg}.\nIs the MLX vision server running? (launchctl start com.scott.mlx-vlm)` }],
 					isError: true,
 				}
 			}
@@ -140,6 +142,16 @@ const uiPrompt =
 	"lighting, visible text. Be specific and concise."
 
 // --- Helpers ---
+
+function guessMime(name: string): string {
+	const lower = name.toLowerCase()
+	if (lower.endsWith(".png")) return "image/png"
+	if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg"
+	if (lower.endsWith(".gif")) return "image/gif"
+	if (lower.endsWith(".webp")) return "image/webp"
+	if (lower.endsWith(".bmp")) return "image/bmp"
+	return "image/png"
+}
 
 async function imageToBase64(img: ImageAttachment): Promise<string | null> {
 	if (img.data) {
@@ -179,10 +191,10 @@ function pathToBase64(path: string, signal?: AbortSignal): Promise<string> {
 	})
 }
 
-async function queryOllama(
-	model: string,
+async function queryMLX(
 	prompt: string,
 	imageBase64: string,
+	mime: string,
 	signal?: AbortSignal,
 ): Promise<string> {
 	const timeout = AbortSignal.timeout(120_000)
@@ -190,17 +202,34 @@ async function queryOllama(
 		? AbortSignal.any([signal, timeout])
 		: timeout
 
-	const res = await fetch(OLLAMA_URL, {
+	const dataUri = `data:${mime};base64,${imageBase64}`
+
+	const res = await fetch(MLX_URL, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ model, prompt, images: [imageBase64], stream: false }),
+		body: JSON.stringify({
+			model: MODEL,
+			messages: [
+				{
+					role: "user",
+					content: [
+						{ type: "text", text: prompt },
+						{ type: "image_url", image_url: { url: dataUri } },
+					],
+				},
+			],
+			stream: false,
+		}),
 		signal: combined,
 	})
 
 	if (!res.ok) {
-		throw new Error(`Ollama ${res.status}: ${res.statusText}`)
+		throw new Error(`MLX ${res.status}: ${res.statusText}`)
 	}
 
-	const data = (await res.json()) as { response?: string; error?: string }
-	return data.response ?? data.error ?? "No response"
+	const data = (await res.json()) as {
+		choices?: { message?: { content?: string } }[]
+		error?: string
+	}
+	return data.choices?.[0]?.message?.content ?? data.error ?? "No response"
 }
