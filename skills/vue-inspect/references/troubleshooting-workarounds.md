@@ -7,14 +7,14 @@ definitely holds a value and the component renders correctly.
 
 **Cause:** Vue auto-unwraps top-level refs in the `setupState` proxy so templates can
 write `{{ some_ref }}` instead of `{{ some_ref.value }}`. The unwrapping happens for
-*any* binding returned directly from `<script setup>` or `setup()`'s return object —
+*any* binding returned directly from `<script setup>` or `setup()`'s return object -
 not just the ones the template happens to use.
 
 **Fix:** Read the property directly, no `.value`:
 
 ```js
-setup.icon_index          // 0  — correct
-setup.icon_index?.value   // undefined — wrong, this is what bit us
+setup.icon_index          // 0  - correct
+setup.icon_index?.value   // undefined - wrong, this is what bit us
 ```
 
 Check `typeof setup.some_binding` first if you're not sure whether something is a
@@ -22,28 +22,28 @@ plain value, a function, or (rarely) a non-unwrapped nested ref.
 
 ## 2. Nested refs inside a returned object keep `.value`
 
-**Symptom:** Inconsistent — some properties need `.value`, some don't, on the same
+**Symptom:** Inconsistent - some properties need `.value`, some don't, on the same
 component.
 
 **Cause:** Auto-unwrapping is shallow and only applies to the top level of what
 `setup()` returns. `const state = reactive({ count: ref(0) })` unwraps automatically
 (reactive() unwraps refs), but `const state = { count: ref(0) }` (plain object, not
-`reactive()`) does **not** — `setup.state.count.value` is required there.
+`reactive()`) does **not** - `setup.state.count.value` is required there.
 
 **Fix:** Don't assume a pattern; check the actual shape:
 
 ```js
 typeof setup.state          // 'object'
-typeof setup.state.count    // 'object' means it's still a ref — use .value
+typeof setup.state.count    // 'object' means it's still a ref - use .value
 ```
 
-## 3. `find()` returns the first match only — repeated components (`v-for`) get lost
+## 3. `find()` returns the first match only - repeated components (`v-for`) get lost
 
 **Symptom:** Looking for one instance of a component that's rendered many times
 (e.g. six icon swatches) only ever returns the first one, and its state doesn't
 match the instance you actually care about.
 
-**Fix:** Use `findAll` (collect instead of early-return) — see
+**Fix:** Use `findAll` (collect instead of early-return) - see
 [common-use-cases.md #3](common-use-cases.md#3-inspecting-one-instance-out-of-a-v-for-list).
 Disambiguate by `props` (each `v-for` instance usually has a distinguishing prop like
 `key` or an index) rather than by name alone.
@@ -53,11 +53,11 @@ Disambiguate by `props` (each `v-for` instance usually has a distinguishing prop
 **Symptom:** The tree walker silently skips a component you know is in the template.
 
 **Cause:** Functional components (`(props) => h(...)`, or SFCs marked
-`functional: true` in Options API — rare in Vue 3) don't get a full component
+`functional: true` in Options API - rare in Vue 3) don't get a full component
 instance; their vnode has no `.component`, so `collect()` never pushes them and their
 children get attributed to the parent instead.
 
-**Fix:** There's no instance to inspect for a functional component itself — walk past
+**Fix:** There's no instance to inspect for a functional component itself - walk past
 it to its rendered children by inspecting the vnode's own `.children` instead of
 expecting a `.component`. Usually not worth chasing; check if the *parent's*
 `setupState` already has what you need.
@@ -88,7 +88,7 @@ won't appear in the live `subTree` at all (they're cached, not rendered).
 
 **Fix:** For Suspense-heavy trees, check `vnode.ssContent` explicitly in the
 collector. For KeepAlive, understand that an "inspectable" instance only exists while
-that branch is the active one — you can't introspect a cached-but-inactive instance
+that branch is the active one - you can't introspect a cached-but-inactive instance
 this way.
 
 ## 7. Component names are missing or mangled in production builds
@@ -128,7 +128,7 @@ whatever selector matches your actual mount call).
 **Symptom:** `el.__vue_app__` is `undefined`, `instance.setupState` is `undefined`,
 nothing here returns useful data.
 
-**Cause:** Vue 2's internals are structurally different — there is no Composition API
+**Cause:** Vue 2's internals are structurally different - there is no Composition API
 instance shape by default (Vue 2.7 added `setup()` support but the underlying
 instance still isn't `ComponentInternalInstance`-shaped). Vue 2 uses:
 
@@ -141,7 +141,7 @@ instance still isn't `ComponentInternalInstance`-shaped). Vue 2 uses:
 | `instance.props` | `instance.$props` |
 
 **Fix:** Confirm the version first (`el.__vue__ ? '2.x' : (el.__vue_app__ ? '3.x' : 'not vue')`)
-before applying any snippet from this skill. Don't port the tree walker as-is — Vue 2
+before applying any snippet from this skill. Don't port the tree walker as-is - Vue 2
 needs `$children` traversal, not vnode/subTree walking.
 
 ## 10. Reading `eval` output silently truncates functions and circular refs
@@ -150,11 +150,11 @@ needs `$children` traversal, not vnode/subTree walking.
 values and can throw on circular structures (e.g. a `ref` that points back to a
 component instance, or a Vue Router route object).
 
-**Fix:** Don't return the raw `setupState` object from `eval` — pick specific
+**Fix:** Don't return the raw `setupState` object from `eval` - pick specific
 primitive fields:
 
 ```js
-// bad: agent-browser eval "(() => setup)()"  — likely truncated/circular
+// bad: agent-browser eval "(() => setup)()"  - likely truncated/circular
 // good:
 agent-browser eval "(() => ({ icon_index: setup.icon_index, preview_icon: setup.preview_icon }))()"
 ```

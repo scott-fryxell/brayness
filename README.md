@@ -1,42 +1,51 @@
 # Brayness
 
-*A harness for your anxious digital brain.*
+_A harness for your anxious digital brain._
 
-Personal workspace for [pi](https://github.com/earendil-works/pi-coding-agent): skills, extensions, and agent config.
+A personal workspace for [pi](https://github.com/earendil-works/pi-coding-agent): skills, extensions, and agent config.
 
-## Start pi
-
-```bash
-npm install    # installs the app (first time only)
-npm start      # runs pi
-```
-
-Requires Node >= 22.19.
+This is a **starter**. Fork it, then make it yours. Every skill and extension you find here is yours to keep or rewrite - none of it is sacred. The pieces are a first pass for you to reshape as you work.
 
 ## Where things live
 
-Most folders here are things you edit. Two folders are auto-generated - ignore them.
+Two folders are auto-generated - everything else is yours to edit.
 
 ```
 brayness/
 ├── skills/              your skills (edit)
 ├── extensions/          your extensions (edit)
-├── settings.json        pi config (edit)
 │
-├── node_modules/        THE APP  (auto-generated - do not edit)
-└── npm/                 ADD-ON STORAGE  (auto-generated - do not edit)
-    └── node_modules/    THE ADD-ONS
+└── .pi/agent/           PI'S HOME - all agent state in one place
+    ├── settings.json    pi config (edit)
+    ├── models.json      model catalog (edit)
+    └── npm/             ADD-ON CUPBOARD  (auto-generated - do not edit)
+        └── node_modules/  THE ADD-ONS (loop, btw, autoresearch, ...)
 ```
+
+`bin/pi` points pi's home at `.pi/agent/` and refuses to run if a stray
+`~/.pi` ever appears, so no agent state leaks outside the repo.
+
+`skills/` and `extensions/` are the heart of the harness - they're where you teach the agent to work the way you do. Start with the ones you have, then build more as the need shows up.
+
+`skills/` is the single source of truth. Each harness reads it without a symlink:
+
+- **pi** loads it directly via `--skill "$root/skills"` in `bin/pi`.
+- **Cursor** and **Claude Code** read it through the `.cursor/skills` and `.claude/skills` symlinks (both tools have no native way to point at an arbitrary skills folder).
+
+Write a skill once in `skills/`, and it is available in every harness.
 
 ### The app
 
-`node_modules/` at the repo root holds **pi itself**.
+There is **no `node_modules/` to install here.** Pi itself is fetched on demand
+by `bin/pi` through [`npx`](https://docs.npmjs.com/cli/v10/commands/npx): the
+first run downloads it into the npx cache (`~/.npm/_npx`), later runs are fast
+and offline. Nothing is vendored in this repo.
 
-Update it: `npm install` (from the repo root)
+Refresh the cached pi: `npm run pi:update`
 
 ### The add-ons
 
-`npm/node_modules/` holds **extra pi packages** listed in `settings.json` (loop, btw, autoresearch, etc.).
+`.pi/agent/npm/node_modules/` holds **extra pi packages** listed in `.pi/agent/settings.json` (loop, btw, autoresearch, etc.).
 
 Update them: `./bin/pi update --extensions`
 
@@ -44,19 +53,40 @@ Update them: `./bin/pi update --extensions`
 
 The name is misleading. It is **not** the npm program.
 
-pi always stores downloaded add-ons in a folder called `npm/`. Because this repo *is* pi's home directory, that folder sits at the brayness root.
+pi always stores downloaded add-ons in a folder called `npm/` inside its home directory - here, `.pi/agent/npm/`.
 
 Think of it as **the add-on cupboard**, not "npm".
 
 ## What to edit vs ignore
 
-| You edit | Auto-generated (ignore) |
-| --- | --- |
-| `skills/` | `node_modules/` |
-| `extensions/` | `npm/` |
-| `settings.json` | `npm/node_modules/` |
-| `AGENTS.md` | |
-| `AGENTS.local.md` (personal, gitignored) | |
+| You edit                                 | Auto-generated (ignore)   |
+| ---------------------------------------- | ------------------------- |
+| `skills/`                                | `.pi/agent/npm/`          |
+| `extensions/`                            | everything else in `.pi/` |
+| `.pi/agent/settings.json`                |                           |
+| `AGENTS.md`                              |                           |
+| `AGENTS.local.md` (personal, gitignored) |                           |
+
+`AGENTS.local.md` is the one file that's purely yours - it holds your preferences and quirks, and stays out of git. It's where the agent picks up on who you are.
+
+## How conversations go
+
+Default to **discussion**: prose, talking it through, no question forms, no jumping to planning.
+As we near the planning phase, shift to questions. Plans get written to the `plans/` directory.
+
+## Start pi
+
+```bash
+npm start      # fetches pi via npx on the first run, then runs it
+```
+
+No install step needed - this repo has no `node_modules/`. Requires Node >= 22.19.
+
+## Scratch space
+
+Everything the agent writes stays inside brayness - never `/tmp`, never outside the harness.
+Scratch and one-off experiment files go in the project's gitignored dir under `work/<project>/artifacts/`.
+Use it, then leave it - Scott deletes it himself so he can check the work first.
 
 ## More
 

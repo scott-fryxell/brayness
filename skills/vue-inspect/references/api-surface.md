@@ -1,10 +1,10 @@
 # API surface
 
 Vue 3 internals used here are undocumented/private but stable across the 3.x line
-(verified on 3.5.32). They are not part of Vue's public API — don't ship code that
+(verified on 3.5.32). They are not part of Vue's public API - don't ship code that
 depends on them, this is for interactive debugging only.
 
-Run everything through `agent-browser eval "(() => { ...code... })()"` — wrap in an
+Run everything through `agent-browser eval "(() => { ...code... })()"` - wrap in an
 IIFE so the return value serializes cleanly to JSON.
 
 ## 1. Finding the app and root instance
@@ -19,12 +19,12 @@ Relevant properties:
 | Property | What it is |
 |---|---|
 | `app.version` | Vue version string, e.g. `"3.5.32"` |
-| `app._instance` | Root component instance — starting point for tree walks |
+| `app._instance` | Root component instance - starting point for tree walks |
 | `app._container` | The mount container (usually same element `__vue_app__` is on) |
 | `app.config.globalProperties` | Anything registered via `app.config.globalProperties.x = ...` |
 
 If multiple Vue apps are mounted on one page (micro-frontends, widgets), each mount
-root has its own `__vue_app__` — you have to find each container separately.
+root has its own `__vue_app__` - you have to find each container separately.
 
 ## 2. Component instance shape
 
@@ -35,14 +35,14 @@ Every component instance (root or descendant) has:
 | `instance.type.name` | Component name if set via `defineOptions({ name: ... })` or Options API `name:` |
 | `instance.type.__name` | Component name inferred from filename by `<script setup>` SFC compilation (this is usually what you actually get) |
 | `instance.type.__file` | Absolute source file path (dev builds only) |
-| `instance.subTree` | The rendered vnode tree for this component — walk this to find child components |
-| `instance.setupState` | Everything returned from `<script setup>` or `setup()`, **with top-level refs auto-unwrapped** — see gotcha below |
+| `instance.subTree` | The rendered vnode tree for this component - walk this to find child components |
+| `instance.setupState` | Everything returned from `<script setup>` or `setup()`, **with top-level refs auto-unwrapped** - see gotcha below |
 | `instance.props` | Resolved props passed to this component |
 | `instance.provides` | Values this instance provides via `provide()` (inherited from ancestors, then extended) |
 | `instance.parent` | Parent component instance (walk upward instead of down) |
-| `instance.proxy` | The public instance proxy (`$props`, `$emit`, etc. — same shape as Options API `this`) |
+| `instance.proxy` | The public instance proxy (`$props`, `$emit`, etc. - same shape as Options API `this`) |
 
-## 3. Tree walker — build the whole component tree
+## 3. Tree walker - build the whole component tree
 
 ```js
 const walk = (instance, depth) => {
@@ -67,10 +67,10 @@ walk(app._instance, 0)
 ```
 
 Raise `depth > 6` for deeply nested apps; this caps runaway recursion, not tree
-correctness. Output is a plain nested `{ name, children }` object — safe to
+correctness. Output is a plain nested `{ name, children }` object - safe to
 `JSON.stringify` directly from `eval`.
 
-## 4. Name-finder — locate one component anywhere in the tree
+## 4. Name-finder - locate one component anywhere in the tree
 
 ```js
 const find = (instance, name, depth) => {
@@ -97,11 +97,11 @@ const find = (instance, name, depth) => {
 ```
 
 Depth-first, returns the *first* match. For `v-for` lists with N instances of the
-same component, this only finds one — see
+same component, this only finds one - see
 [common-use-cases.md](common-use-cases.md#3-inspecting-one-instance-out-of-a-v-for-list)
 for collecting all of them instead.
 
-## 5. State reader — read what's actually in scope
+## 5. State reader - read what's actually in scope
 
 ```js
 const setup = componentInstance.setupState
@@ -110,6 +110,6 @@ setup.some_ref               // the live value (auto-unwrapped if it was a top-l
 componentInstance.props      // resolved props object
 ```
 
-`setupState` is a reactive Proxy — reading a property here is a real reactive read,
+`setupState` is a reactive Proxy - reading a property here is a real reactive read,
 same as templates do. There is no meaningful cost to reading it from `eval`; it
 doesn't trigger extra renders on its own.

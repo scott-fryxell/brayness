@@ -16,25 +16,16 @@ Prepares a target company/role end-to-end: research, fit, behavioral prep, techn
 3. **Explore the fit.** Read `references/fit-and-story-bank.md`. Work through why this is actually interesting (not generic enthusiasm), cross-check the vault for existing related interests, and draft 2-3 tailored questions to ask interviewers.
 
 4. **Prep for the format.** Determine what rounds are coming (or likely, from research/role type):
-   - Behavioral round → `references/fit-and-story-bank.md` STAR story bank.
-   - Technical/DSA round → `references/technical-prep.md`, including `work/kata-machine` for hands-on practice.
-   - System design or take-home → same file, relevant section.
+   - Behavioral round -> `references/fit-and-story-bank.md` STAR story bank.
+   - Technical/DSA round -> `references/technical-prep.md`, including `work/kata-machine` for hands-on practice.
+   - System design or take-home -> same file, relevant section.
 
 5. **Track through the process.** Read `references/process-and-tracker.md`. Update `tracker.md` and the company note's hiring-process table as stages happen. Log post-interview notes right after each round while it's fresh.
 
 6. **Offer stage.** When an offer lands, use the negotiation section of `references/process-and-tracker.md` before any number gets discussed live.
 
-## Reference index
-
-| Need | Read |
-|------|------|
-| Company research checklist, sourcing rules | `references/research.md` |
-| Why-this-company exploration, questions to ask, STAR story bank | `references/fit-and-story-bank.md` |
-| DSA/kata-machine practice, role-specific focus, system design, take-homes | `references/technical-prep.md` |
-| Vault layout, tracker, hiring stages, follow-up, negotiation, rejection | `references/process-and-tracker.md` |
-
 ## Notes
 
 - Don't fabricate company facts (funding numbers, headcount, exec names) when research doesn't turn up a confident source -- state what's unknown instead.
 - Keep the STAR story bank and DSA study notes reusable across companies; keep research and process notes per-company.
-- If the user drops an external resource (a video, article) for a DSA topic, file it into that topic's study note (`references/technical-prep.md`) rather than losing it in conversation.
+- If the user drops an external resource (a video, article) for a DSA topic, file it into that topic's vault study note (`02 Areas/Job Hunt/Study/<topic>.md` - see `references/technical-prep.md`) rather than losing it in conversation.

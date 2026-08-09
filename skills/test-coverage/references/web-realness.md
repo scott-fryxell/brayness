@@ -1,4 +1,4 @@
-# realness — tests + coverage reference
+# realness - tests + coverage reference
 
 Project: `work/realness` (`@realness.online/web`).
 
@@ -7,7 +7,7 @@ Read the nearest existing spec under `tests/**` before adding a new one.
 ## Thresholds (vite.config.js)
 
 - Global gate: **80%** lines, branches, statements, functions
-- `all: true` — untested `src/**` files count against you
+- `all: true` - untested `src/**` files count against you
 - Excluded: `src/main.js`, `src/router.js`, `src/wasm/**`
 
 ## Architecture map (coverage priority)
@@ -27,10 +27,10 @@ Read the nearest existing spec under `tests/**` before adding a new one.
 
 | Piece | What we use |
 | --- | --- |
-| Runner | Vite Plus — `vp test`, imports from `vite-plus/test` |
+| Runner | Vite Plus - `vp test`, imports from `vite-plus/test` |
 | Engine | Vitest (via `vite-plus-test` alias) |
 | DOM | `happy-dom` |
-| Vue | `@vue/test-utils` — prefer `shallowMount` |
+| Vue | `@vue/test-utils` - prefer `shallowMount` |
 | Language | JavaScript + JSDoc |
 | Matchers | `@testing-library/jest-dom` (in setup) |
 
@@ -60,10 +60,10 @@ work/realness/
 
 Rules:
 
-- `*.spec.js` only — not `.test.ts`, not `__tests__/`, not co-located with `src/`
+- `*.spec.js` only - not `.test.ts`, not `__tests__/`, not co-located with `src/`
 - Path mirrors `src/` under `tests/`
 - `describe('@/utils/itemid', () => { ... })` or view/component name
-- `@/` → `src/`; `@@/` → `tests/mocks/`
+- `@/` -> `src/`; `@@/` -> `tests/mocks/`
 
 ## vite.config.js test block
 
@@ -110,7 +110,7 @@ Global helpers from `tests/setup.js`: `resolve_mock_path`, `read_mock_file`.
 
 Mocks: `vue-router`, Firebase, `idb-keyval`, heavy async SFCs (`as-dialog-preferences`, `as-dialog-documentation`).
 
-Do not mock `as-fps` globally — `tests/components/fps.spec.js` mounts the real component.
+Do not mock `as-fps` globally - `tests/components/fps.spec.js` mounts the real component.
 
 ## Spec file map
 
@@ -157,7 +157,7 @@ vi.mock('@/utils/serverless', () => ({
 }))
 ```
 
-`mockReset: false` — clear call history in `beforeEach`, not implementations.
+`mockReset: false` - clear call history in `beforeEach`, not implementations.
 
 ### vi.hoisted (components + composables)
 
@@ -206,7 +206,7 @@ function with_setup(composable) {
 }
 ```
 
-**Ref:** `poster.spec.js`. Pure exported helpers — call directly.
+**Ref:** `poster.spec.js`. Pure exported helpers - call directly.
 
 ### Async / errors
 
@@ -219,14 +219,14 @@ url.mockRejectedValue(
 
 ### Browser / persistence
 
-- `localStorage` — `tests/mocks/browser/localStorage.js`; `localStorage.me = id`
-- `idb-keyval` — `get.mockImplementation(...)`
-- `fetch` — per-test or `tests/mocks/browser/fetch.js`
+- `localStorage` - `tests/mocks/browser/localStorage.js`; `localStorage.me = id`
+- `idb-keyval` - `get.mockImplementation(...)`
+- `fetch` - per-test or `tests/mocks/browser/fetch.js`
 
 ### Workers / 3D
 
 - Worker exclusions in `vite.config.js` `test.exclude`
-- 3D: scene factories and settings under `tests/3d/` — not every render branch
+- 3D: scene factories and settings under `tests/3d/` - not every render branch
 
 ## itemid fixtures
 
@@ -261,7 +261,7 @@ Person prop: `{ id, name, type: 'person' }`.
 
 - `src/main.js`, `src/router.js`, `src/wasm/**`
 - Generated or vendor-adjacent code
-- Fallow `unused-files` — delete or wire, not test
+- Fallow `unused-files` - delete or wire, not test
 
 ## What we do not do
 
@@ -278,10 +278,10 @@ Person prop: `{ id, name, type: 'person' }`.
 
 ## Fallow
 
-- `npm run test:risk` — coverage + fallow + merged report
-- `.fallowrc.json` — [fallow-integration.md](fallow-integration.md)
+- `npm run test:risk` - coverage + fallow + merged report
+- `.fallowrc.json` - [fallow-integration.md](fallow-integration.md)
 
 ## Docs before recommending work
 
-- `work/realness/AGENTS.md` — vp test, check commands
+- `work/realness/AGENTS.md` - vp test, check commands
 - Nearest `tests/**` mirror for the uncovered file

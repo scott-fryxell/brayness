@@ -1,7 +1,7 @@
 
 # HyperFrames Media Preprocessing
 
-Three CLI commands that produce assets for compositions: `tts` (speech), `transcribe` (timestamps), and `remove-background` (transparent video). Each downloads a model on first run and caches it under `~/.cache/hyperframes/`. Drop the output into the project, then reference it from the composition HTML — see the `hyperframes` skill for the audio/video element conventions.
+Three CLI commands that produce assets for compositions: `tts` (speech), `transcribe` (timestamps), and `remove-background` (transparent video). Each downloads a model on first run and caches it under `~/.cache/hyperframes/`. Drop the output into the project, then reference it from the composition HTML - see the `hyperframes` skill for the audio/video element conventions.
 
 ## Text-to-Speech (`tts`)
 
@@ -27,7 +27,7 @@ Match voice to content. Default is `af_heart`.
 
 ### Multilingual
 
-Voice IDs encode language in the first letter: `a`=American English, `b`=British English, `e`=Spanish, `f`=French, `h`=Hindi, `i`=Italian, `j`=Japanese, `p`=Brazilian Portuguese, `z`=Mandarin. The CLI auto-detects the phonemizer locale from the prefix — no `--lang` needed when the voice matches the text.
+Voice IDs encode language in the first letter: `a`=American English, `b`=British English, `e`=Spanish, `f`=French, `h`=Hindi, `i`=Italian, `j`=Japanese, `p`=Brazilian Portuguese, `z`=Mandarin. The CLI auto-detects the phonemizer locale from the prefix - no `--lang` needed when the voice matches the text.
 
 ```bash
 npx hyperframes tts "La reunión empieza a las nueve" --voice ef_dora --output es.wav
@@ -38,10 +38,10 @@ Use `--lang` only to override auto-detection (stylized accents). Valid codes: `e
 
 ### Speed
 
-- `0.7-0.8` — tutorial, complex content, accessibility
-- `1.0` — natural pace (default)
-- `1.1-1.2` — intros, transitions, upbeat content
-- `1.5+` — rarely appropriate; test carefully
+- `0.7-0.8` - tutorial, complex content, accessibility
+- `1.0` - natural pace (default)
+- `1.1-1.2` - intros, transitions, upbeat content
+- `1.5+` - rarely appropriate; test carefully
 
 ### Long Scripts
 
@@ -67,9 +67,9 @@ npx hyperframes transcribe openai-response.json
 
 **Never use `.en` models unless the user explicitly states the audio is English.** `.en` models (`small.en`, `medium.en`) **translate** non-English audio into English instead of transcribing it. This silently destroys the original language.
 
-1. Language known and non-English → `--model small --language <code>` (no `.en` suffix)
-2. Language known and English → `--model small.en`
-3. Language unknown → `--model small` (no `.en`, no `--language`) — whisper auto-detects
+1. Language known and non-English -> `--model small --language <code>` (no `.en` suffix)
+2. Language known and English -> `--model small.en`
+3. Language unknown -> `--model small` (no `.en`, no `--language`) - whisper auto-detects
 
 **Default model is `small`, not `small.en`.**
 
@@ -79,7 +79,7 @@ npx hyperframes transcribe openai-response.json
 | ---------- | ------ | -------- | ------------------------------------- |
 | `tiny`     | 75 MB  | Fastest  | Quick previews, testing pipeline      |
 | `base`     | 142 MB | Fast     | Short clips, clear audio              |
-| `small`    | 466 MB | Moderate | **Default** — most content            |
+| `small`    | 466 MB | Moderate | **Default** - most content            |
 | `medium`   | 1.5 GB | Slow     | Important content, noisy audio, music |
 | `large-v3` | 3.1 GB | Slowest  | Production quality                    |
 
@@ -98,7 +98,7 @@ Compositions consume a flat array of word objects. The `id` field (`w0`, `w1`, .
 
 ## Background Removal (`remove-background`)
 
-Remove the background from a video or image so the subject (typically a person — avatar, presenter, talking head) sits as a transparent overlay in a composition.
+Remove the background from a video or image so the subject (typically a person - avatar, presenter, talking head) sits as a transparent overlay in a composition.
 
 ```bash
 npx hyperframes remove-background subject.mp4 -o transparent.webm  # default: VP9 alpha WebM
@@ -114,23 +114,23 @@ Uses `u2net_human_seg` (MIT). First run downloads ~168 MB of weights to `~/.cach
 
 ### Layer separation (`--background-output`)
 
-Pass `--background-output` (or `-b`) to emit a **second** transparent video alongside the cutout: same source RGB, alpha is `255 − mask` instead of `mask`. The cutout is the subject with a transparent background; the plate is the original surroundings with a transparent hole where the subject was.
+Pass `--background-output` (or `-b`) to emit a **second** transparent video alongside the cutout: same source RGB, alpha is `255 - mask` instead of `mask`. The cutout is the subject with a transparent background; the plate is the original surroundings with a transparent hole where the subject was.
 
-| File                             | Alpha is…                                                 | Use it for                                                      |
+| File                             | Alpha is...                                                 | Use it for                                                      |
 | -------------------------------- | --------------------------------------------------------- | --------------------------------------------------------------- |
-| `-o subject.webm`                | The mask — subject opaque, background transparent         | Foreground layer, place on top                                  |
-| `--background-output plate.webm` | Inverse — surroundings opaque, subject region transparent | Bottom layer; put text or graphics between this and the subject |
+| `-o subject.webm`                | The mask - subject opaque, background transparent         | Foreground layer, place on top                                  |
+| `--background-output plate.webm` | Inverse - surroundings opaque, subject region transparent | Bottom layer; put text or graphics between this and the subject |
 
-Both outputs share the same `--quality` preset and run from a single inference pass — encode cost roughly doubles, segmentation cost stays the same. Only valid for video inputs and `.webm`/`.mov` outputs.
+Both outputs share the same `--quality` preset and run from a single inference pass - encode cost roughly doubles, segmentation cost stays the same. Only valid for video inputs and `.webm`/`.mov` outputs.
 
-**Hole-cut plate, not an inpainted clean plate.** The subject region in `plate.webm` is fully transparent — composite something opaque under it to fill the hole. The single test for whether `--background-output` is the right tool: _will anything ever be visible through the subject's silhouette where the subject used to be?_
+**Hole-cut plate, not an inpainted clean plate.** The subject region in `plate.webm` is fully transparent - composite something opaque under it to fill the hole. The single test for whether `--background-output` is the right tool: _will anything ever be visible through the subject's silhouette where the subject used to be?_
 
 | Use case                                                                            | Right tool                                                                         |
 | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Text/graphics between the cutout and the plate (this command's reason for existing) | **Hole-cut** (`--background-output`)                                               |
 | Subject onto an unrelated scene                                                     | Just `subject.webm`; ignore the plate                                              |
-| Show the room _without_ the person, alone over no other content                     | **Clean plate** — needs an inpainter (LaMa, ProPainter, E2FGVI). Not this command. |
-| Replace the subject with a different subject                                        | **Clean plate** — same as above                                                    |
+| Show the room _without_ the person, alone over no other content                     | **Clean plate** - needs an inpainter (LaMa, ProPainter, E2FGVI). Not this command. |
+| Replace the subject with a different subject                                        | **Clean plate** - same as above                                                    |
 
 If a user asks for "the room with the person removed" and intends to display it standalone, do **not** reach for `--background-output`. Tell them they need an inpainter.
 
@@ -163,7 +163,7 @@ Typical layered composition (the canonical hole-cut use case):
 </div>
 ```
 
-This is functionally equivalent to the text-behind-subject pattern below, but you don't need the original `presenter.mp4` in the project — the plate replaces it. Useful when you want to ship just the two transparent layers and let the user drop arbitrary content between them.
+This is functionally equivalent to the text-behind-subject pattern below, but you don't need the original `presenter.mp4` in the project - the plate replaces it. Useful when you want to ship just the two transparent layers and let the user drop arbitrary content between them.
 
 ### Output Format
 
@@ -173,11 +173,11 @@ This is functionally equivalent to the text-behind-subject pattern below, but yo
 | `.mov` (ProRes 4444)  | Editing in DaVinci/Premiere/FCP. Large files.                 |
 | `.png`                | Single-image cutout (still subject, layered over a backdrop). |
 
-Chrome decodes VP9 alpha natively, so the `.webm` plugs into a composition like any other muted-autoplay video — see the `hyperframes` skill for the `<video>` track conventions.
+Chrome decodes VP9 alpha natively, so the `.webm` plugs into a composition like any other muted-autoplay video - see the `hyperframes` skill for the `<video>` track conventions.
 
 ### Quality presets
 
-`--quality fast|balanced|best` controls only the VP9 encoder's CRF — segmentation quality is fixed.
+`--quality fast|balanced|best` controls only the VP9 encoder's CRF - segmentation quality is fixed.
 
 | Preset     | CRF | When                                                  |
 | ---------- | --- | ----------------------------------------------------- |
@@ -185,13 +185,13 @@ Chrome decodes VP9 alpha natively, so the `.webm` plugs into a composition like 
 | `balanced` | 18  | Default. Visually identical for most uses             |
 | `best`     | 12  | Master / final delivery. Largest file, tightest match |
 
-### Compositing patterns — pick the right one
+### Compositing patterns - pick the right one
 
 The cutout webm is a **re-encoded copy** of the source mp4's RGB. That choice has consequences depending on what you put behind it:
 
 | Pattern                                                  | What's behind the cutout                   | Result                                                                                                                                                                                                                            |
 | -------------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cutout over a different scene** (most common)          | Static image, gradient, or unrelated video | Looks great. The cutout's RGB is the only source of the subject — no doubling, no edge halo. This is what `remove-background` is built for.                                                                                       |
+| **Cutout over a different scene** (most common)          | Static image, gradient, or unrelated video | Looks great. The cutout's RGB is the only source of the subject - no doubling, no edge halo. This is what `remove-background` is built for.                                                                                       |
 | **Cutout over its own source mp4** (text-behind-subject) | Same mp4 the cutout was generated from     | Two RGB sources for the same person. At default `--quality balanced` (crf 18) the doubling is barely visible; at `--quality fast` (crf 30) you'll see a faint color shift / edge halo. Use `--quality best` (crf 12) for masters. |
 | **Cutout over a _different_ take of the same person**    | Footage of the same subject                | Will look like two separate people overlapping. Don't do this.                                                                                                                                                                    |
 
@@ -223,17 +223,17 @@ The cutout webm is a **re-encoded copy** of the source mp4's RGB. That choice ha
 Two key rules:
 
 1. **Wrap the cutout video in a non-timed `<div>`** and animate the wrapper's opacity, not the video element's. The framework forces opacity:1 on active clips (any element with `data-start`/`data-duration`), so animating the video's opacity directly is silently overridden. The wrapper has no `data-*` attributes, so it's owned by your CSS/GSAP.
-2. **Both videos use `data-start="0"` and `data-media-start="0"`** so the framework decodes them in sync from t=0. Late-mounting the cutout (`data-start=3.3`) introduces a seek + warm-up that lands a frame off the base mp4 — visible as one frame of misalignment at the cut.
+2. **Both videos use `data-start="0"` and `data-media-start="0"`** so the framework decodes them in sync from t=0. Late-mounting the cutout (`data-start=3.3`) introduces a seek + warm-up that lands a frame off the base mp4 - visible as one frame of misalignment at the cut.
 
 Then GSAP-flip the wrapper opacity at the cut: `tl.set(cutoutWrap, { opacity: 1 }, 3.3)`.
 
-## TTS → Transcribe → Captions
+## TTS -> Transcribe -> Captions
 
 When there's no pre-recorded voiceover, generate one and transcribe it back to get word-level timestamps for captions:
 
 ```bash
 npx hyperframes tts script.txt --voice af_heart --output narration.wav
-npx hyperframes transcribe narration.wav   # → transcript.json
+npx hyperframes transcribe narration.wav   # -> transcript.json
 ```
 
 Whisper extracts precise word boundaries from the generated audio, so caption timing matches delivery without hand-tuning.

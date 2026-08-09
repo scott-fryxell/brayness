@@ -2,7 +2,7 @@
 
 10 proven techniques from production HyperFrames videos. Use these in your storyboard and compositions to create visually rich, professional output. Each technique includes a minimal code pattern you can adapt.
 
-These are NOT advanced — they're standard motion design patterns that every composition should use at least 2-3 of.
+These are NOT advanced - they're standard motion design patterns that every composition should use at least 2-3 of.
 
 ---
 
@@ -38,7 +38,7 @@ Use `path.getTotalLength()` to calculate the dasharray value dynamically.
 
 ## 2. Canvas 2D Procedural Art
 
-Animated noise, particle fields, data visualizations — anything that evolves frame-by-frame. Drive it with a GSAP proxy.
+Animated noise, particle fields, data visualizations - anything that evolves frame-by-frame. Drive it with a GSAP proxy.
 
 ```html
 <canvas id="proc-canvas" width="1920" height="1080"></canvas>
@@ -82,7 +82,7 @@ Animated noise, particle fields, data visualizations — anything that evolves f
 </script>
 ```
 
-The `hash()` function is deterministic — same frame renders identically every time.
+The `hash()` function is deterministic - same frame renders identically every time.
 
 ---
 
@@ -146,7 +146,7 @@ Words appear one-by-one, synced to transcript.json timestamps. The core techniqu
 </script>
 ```
 
-The slide distance DECAYS per word (80→12px) — mimics a camera settling.
+The slide distance DECAYS per word (80->12px) - mimics a camera settling.
 
 ---
 
@@ -200,7 +200,7 @@ Embed real video footage inside compositions. Videos must be `muted` with `plays
   ></video>
 </div>
 <script>
-  // Video playback is controlled by the framework — don't call play() manually
+  // Video playback is controlled by the framework - don't call play() manually
   tl.from(".video-frame", { scale: 0.9, opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
 </script>
 ```
@@ -241,7 +241,7 @@ Terminal typing effect using `tl.call()` to update text content character by cha
 </script>
 ```
 
-Use `ease: "steps(1)"` for cursor blink — creates discrete on/off.
+Use `ease: "steps(1)"` for cursor blink - creates discrete on/off.
 
 ---
 
@@ -251,7 +251,7 @@ Animate font-variation-settings to reshape glyphs in real-time. Works with varia
 
 ```html
 <style>
-  /* Load the captured local variable font — do NOT use Google Fonts @import.
+  /* Load the captured local variable font - do NOT use Google Fonts @import.
      Replace this placeholder with an @font-face pointing to ../capture/assets/fonts/. */
   @font-face {
     font-family: "Fraunces";
@@ -275,7 +275,7 @@ Animate font-variation-settings to reshape glyphs in real-time. Works with varia
 </script>
 ```
 
-The glyph subtly reshapes as axes animate — optical size adjusts detail, weight changes thickness.
+The glyph subtly reshapes as axes animate - optical size adjusts detail, weight changes thickness.
 
 ---
 
@@ -304,7 +304,7 @@ Animate an element along an arbitrary SVG path. Use for sliders following curves
 
 ## 10. Velocity-Matched Transitions
 
-Exit one beat and enter the next with matched velocities — creates perceived continuous motion.
+Exit one beat and enter the next with matched velocities - creates perceived continuous motion.
 
 ```javascript
 // EXIT (in outgoing composition): accelerating with blur
@@ -334,7 +334,7 @@ tl.to(
 );
 ```
 
-The fastest point of both curves meets at the cut — the viewer perceives smooth camera motion. Match ease families: `.in` for exits, `.out` for entries.
+The fastest point of both curves meets at the cut - the viewer perceives smooth camera motion. Match ease families: `.in` for exits, `.out` for entries.
 
 ---
 
@@ -342,7 +342,7 @@ The fastest point of both curves meets at the cut — the viewer perceives smoot
 
 Drive any GSAP-tweenable property from the playing audio. Bass pulses a logo on kick drums. Treble glows a CTA on cymbals. Amplitude breathes a background during quiet phrases. The result: motion that feels locked to the track in a way pre-authored tweens never can.
 
-**When to use:** Any video with music or dramatic narration — brand reels, product launches, hype edits. Skip for calm/tutorial pacing.
+**When to use:** Any video with music or dramatic narration - brand reels, product launches, hype edits. Skip for calm/tutorial pacing.
 
 **How it works:** Pre-extract audio frequency bands into a JSON file, then sample per-frame via `tl.call()`:
 
@@ -352,9 +352,9 @@ for (var f = 0; f < AUDIO_DATA.totalFrames; f++) {
   tl.call(
     (function (frame) {
       return function () {
-        var bass = frame.bands[0]; // 0–1
+        var bass = frame.bands[0]; // 0-1
         var treble = frame.bands[13];
-        gsap.set(".logo", { scale: 1 + bass * 0.04 }); // 3–4% pulse on bass
+        gsap.set(".logo", { scale: 1 + bass * 0.04 }); // 3-4% pulse on bass
         gsap.set(".cta", { filter: `drop-shadow(0 0 ${treble * 24}px #00C3FF)` });
       };
     })(AUDIO_DATA.frames[f]),
@@ -364,13 +364,13 @@ for (var f = 0; f < AUDIO_DATA.totalFrames; f++) {
 }
 ```
 
-Per-frame sampling is required — a single tween will not react. Pre-extract bands with `extract-audio-data.py` from the hyperframes upstream repo (`skills/gsap/scripts/extract-audio-data.py`):
+Per-frame sampling is required - a single tween will not react. Pre-extract bands with `extract-audio-data.py` from the hyperframes upstream repo (`skills/gsap/scripts/extract-audio-data.py`):
 
 ```bash
 python3 skills/gsap/scripts/extract-audio-data.py narration.wav --fps 30 --bands 16 -o audio-data.json
 ```
 
-Keep text/logo intensity subtle (≤5% scale, ≤30% glow) — audio-reactive motion on tiny elements reads as jitter. Bigger backgrounds can push to 10–30%.
+Keep text/logo intensity subtle (<=5% scale, <=30% glow) - audio-reactive motion on tiny elements reads as jitter. Bigger backgrounds can push to 10-30%.
 
 **Never do:** equalizer bars, spectrum analyzers, waveform displays, strobing, rainbow color cycling. The audio provides _timing and intensity_; the visual vocabulary still comes from the brand. See `skills/hyperframes/references/audio-reactive.md` for the full API and anti-patterns.
 

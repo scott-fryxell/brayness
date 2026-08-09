@@ -5,9 +5,9 @@ metadata:
   category: Design & UX
   pairs-with:
   - skill: realness-design
-    reason: Native elements carry affordance before CSS, and HTML attributes as state (details[open], dialog[open], input:disabled) are affordances CSS reads directly — no JS class toggling needed
+    reason: Native elements carry affordance before CSS; boolean attributes are state CSS reads directly
   - skill: motion-systems
-    reason: Feedback and state change are UX decisions first; motion implements them
+    reason: This skill decides what changes; motion-systems decides how it moves
   tags:
     - ux
     - ui
@@ -18,121 +18,46 @@ metadata:
 
 # UX Interface Design
 
-Design interfaces that are self-evident, low-friction, and understandable with minimal explanatory text. Prefer structure, hierarchy, constraints, and interaction over labels and descriptions.
+If the UI needs instructions, fix the UI - not the copy. Structure,
+hierarchy, constraints, and interaction carry meaning; text confirms it.
 
-## Core Principle
+Not for: marketing copy, pure visual styling critiques, long-form docs, or
+interfaces where detailed explanation is the product.
 
-If the UI needs instructions, fix the UI—not the copy.
+## Rules
 
-## When to Use This Skill
-
-Use this skill when:
-- simplifying an interface that feels too wordy
-- reducing helper text, labels, or onboarding copy
-- reviewing forms, flows, or settings for clarity
-- making the next action more obvious
-- improving defaults, constraints, and inline feedback
-- evaluating whether a UI works when users scan instead of read
-
-Do not use this skill for:
-- marketing copy or landing page messaging
-- pure visual styling critiques unrelated to usability
-- long-form product documentation or tutorials
-- information-heavy interfaces where detailed explanation is the product itself
-
-## Design Rules
-
-### 1. Clarity Over Explanation
-- Make layout, grouping, and affordances carry the meaning
-- Use text to confirm meaning, not create it
-
-### 2. Labels Are a Last Resort
-- Avoid labels or helper text unless they are truly necessary
-- Before adding text, first try:
-  - improving layout
-  - making controls more specific
-  - choosing better defaults
-
-### 3. Remove Redundant Text
-- Do not repeat what context already makes obvious
-- Avoid waste like:
-  - “Submit Form” when “Submit” works
-  - section headers that only restate the visible content
-- Every word must justify its existence
-
-### 4. Show, Don’t Tell
-- Prefer:
-  - real previews
-  - inline examples
-  - visible state changes
-- Avoid instructional paragraphs when the interface can demonstrate the answer
-
-### 5. Inline Feedback Only
-- Put feedback at the point of interaction
-- Do not rely on:
-  - top-of-page error summaries
-  - disconnected instructions
-
-### 6. Default-Driven Design
-- Use sensible defaults to remove decisions
-- Preselect the most common option
-- Reduce explanation by starting in the most useful state
-
-### 7. Progressive Explanation
-- Do not front-load instructions
-- Let users act first
-- Explain only when:
-  - an error occurs
-  - the system truly needs clarification
-
-### 8. Constraints Over Instructions
-- Prevent invalid input instead of explaining rules in advance
-- Use:
-  - input constraints
-  - live validation
-- Let the interface teach through interaction
-
-### 9. Reduce AI Verbosity Bias
-- Avoid over-labeling, over-describing, and naming every section
-- Prefer implicit understanding through structure and visual priority
-
-### 10. One-Sentence Limit
-- If explanation is necessary, keep it to one short sentence
-- If more is needed, redesign the interface
-
-### 11. Trust User Intuition
-- Do not narrate obvious actions
-- Avoid lines like:
-  - “Click below to continue”
-- Assume baseline user competence
-
-### 12. Hierarchy Over Whitespace
-- Do not rely on empty space alone to create clarity
-- Use:
-  - strong grouping
-  - clear primary actions
-  - visible priority
-- Dense is acceptable if it remains understandable
+1. **Structure over text.** Layout, grouping, and affordances make meaning;
+   labels and helper copy are a last resort. Before adding text: better
+   layout, more specific controls, better defaults. Never repeat what
+   context shows ("Submit Form" -> "Submit"); never narrate ("Click below
+   to continue").
+2. **Defaults and constraints over instructions.** Preselect the common
+   option; start in the most useful state. Prevent invalid input with
+   constraints and live validation instead of explaining rules up front.
+3. **Feedback lives at the point of interaction.** No top-of-page error
+   summaries, no disconnected instructions. Explain only when an error
+   occurs or the system genuinely needs input.
+4. **Show, don't tell.** Real previews, inline examples, visible state
+   changes - not instructional paragraphs. If explanation is unavoidable,
+   one short sentence; needing more means redesign.
+5. **Hierarchy over whitespace.** Strong grouping, one obvious primary
+   action, visible priority. Dense is fine if it stays scannable. Don't
+   name every section - that's the AI verbosity bias.
 
 ## Review
 
-1. Remove descriptive text — does the interface still work?
+1. Remove the descriptive text - does the interface still work?
 2. Is there exactly one obvious next action?
-3. Fix layout, grouping, defaults, and constraints before adding copy
-4. Are errors prevented instead of explained?
-5. Delete anything that does not directly enable action
-
-## Anti-Patterns
-
-- helper text under every input
-- repeated labels and descriptions
-- instructions explaining obvious actions
-- long onboarding tooltips for simple flows
-- pages that explain before allowing interaction
-- naming every section whether it needs a name or not
+3. Fix layout, grouping, defaults, constraints before adding copy.
+4. Are errors prevented rather than explained?
+5. Delete anything that does not directly enable action - helper text under
+   every input, onboarding tooltips for simple flows, pages that explain
+   before allowing interaction.
 
 ## Integration
 
-- **realness-design**: native elements are their own affordances — `<details>` discloses, `<dialog>` is modal, `<button>` communicates action. The right element often makes explicit UX design unnecessary. Its boolean attributes (`open`, `disabled`, `checked`) are application state CSS reads directly — UI clarity without JS class toggling. See its markup reference for element choice.
-- **motion-systems**: when a state change needs motion, defer there — this skill decides *what* changes, motion-systems decides *how* it moves
-
+- **realness-design**: the right element is its own affordance - `<details>`
+  discloses, `<dialog>` is modal; boolean attributes (`open`, `disabled`)
+  are state CSS reads without JS.
+- **motion-systems**: what changes is decided here; how it moves is decided
+  there.

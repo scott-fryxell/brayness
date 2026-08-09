@@ -26,8 +26,8 @@ find /brayness/work/brayness/ -type f -name '.env*'
 **No git directories**
 
 ```bash
-find /brayness/work/brayness/ -type d -name '.git'
-# Should return nothing
+find work/brayness -mindepth 2 -type d -name '.git'
+# Should return nothing (the mirror's own .git at depth 1 is expected)
 ```
 
 ### Structure checks

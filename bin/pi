@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 root="$(cd "$(dirname "$0")/.." && pwd)"
-export PI_CODING_AGENT_DIR="$root"
-export PI_CODING_AGENT_SESSION_DIR="$root/sessions"
+export PI_CODING_AGENT_DIR="$root/.pi/agent"
+
+# Canary: pi state must live in this repo. If ~/.pi exists, something ran pi
+# without this wrapper and leaked config/sessions outside the harness.
+if [[ -e "$HOME/.pi" ]]; then
+  echo "~/.pi exists - pi state leaked outside the harness." >&2
+  echo "Inspect it (ls -la ~/.pi), fold anything unique into $root, then delete it." >&2
+  exit 1
+fi
 
 node_ok() {
   local ver major minor
@@ -48,15 +55,21 @@ fi
 
 export PATH="$(dirname "$best_node"):$PATH"
 
-local_cli="$root/node_modules/@earendil-works/pi-coding-agent/dist/cli.js"
-if [[ -f "$local_cli" ]]; then
-  exec "$best_node" "$local_cli" "$@"
+# Run pi via npx - no local or global install required. First run fetches pi
+# into the npx cache (~/.npm/_npx); later runs are fast and offline.
+# Load skills from the real repo skills/ dir directly - no symlink under .pi/agent.
+# --skill with a directory loads every skill inside it. Only add it for session
+# runs; management subcommands (install/remove/update/list/config/auth) and
+# informational flags don't accept --skill.
+load_skills=1
+for a in "$@"; do
+  case "$a" in
+    install|remove|uninstall|update|list|config|auth|--help|-h|--version|-v|--list-models) load_skills=0 ;;
+  esac
+  [[ "$load_skills" == 0 ]] && break
+done
+if [[ "$load_skills" == 1 ]]; then
+  set -- "$@" --skill "$root/skills"
 fi
 
-pi_bin="$(command -v pi 2>/dev/null)"
-if [[ -z "$pi_bin" ]]; then
-  echo "pi not found — run: npm install" >&2
-  exit 127
-fi
-
-exec "$pi_bin" "$@"
+exec npx --yes @earendil-works/pi-coding-agent "$@"

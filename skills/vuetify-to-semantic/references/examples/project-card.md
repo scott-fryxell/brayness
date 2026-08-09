@@ -1,6 +1,6 @@
 # Example: Project Card
 
-Shows v-card → article with Schema.org microdata, grid replacing v-row/v-col.
+Shows v-card -> article with Schema.org microdata, grid replacing v-row/v-col.
 
 ## Before
 
@@ -160,12 +160,12 @@ article[itemtype*="ResearchProject"] {
 ## What changed
 
 - `v-col` wrapper removed - grid is on the parent `section.projects`
-- `v-card` → `<article itemtype="ResearchProject">` - entity type drives both semantics and CSS
-- `v-card-title` → `<h2 itemprop="name">` - real heading, not a styled div
-- `v-card-text` → removed - content flows directly in article
-- `v-divider` → removed - visual separation via spacing in Stylus
-- `v-row` / `v-col` inside card → removed - flexbox on section element
-- `v-img` → `<img loading="lazy" itemprop="image">`
-- `v-icon mdi-domain` → `<svg><use href="/icons.svg#organization" /></svg>`
+- `v-card` -> `<article itemtype="ResearchProject">` - entity type drives both semantics and CSS
+- `v-card-title` -> `<h2 itemprop="name">` - real heading, not a styled div
+- `v-card-text` -> removed - content flows directly in article
+- `v-divider` -> removed - visual separation via spacing in Stylus
+- `v-row` / `v-col` inside card -> removed - flexbox on section element
+- `v-img` -> `<img loading="lazy" itemprop="image">`
+- `v-icon mdi-domain` -> `<svg><use href="/icons.svg#organization" /></svg>`
 - Sponsor nested as `<li itemprop="sponsor" itemtype="Organization">`
 - All `class=` attributes removed - styling entirely via element + attribute selectors

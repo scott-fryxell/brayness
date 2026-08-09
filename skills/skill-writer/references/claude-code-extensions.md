@@ -1,6 +1,6 @@
 # Claude Code Extensions
 
-Claude Code extends the [Agent Skills specification](https://agentskills.io/specification) with additional frontmatter fields and features. These are optional — skills that use only the base spec remain portable across all compatible tools.
+Claude Code extends the [Agent Skills specification](https://agentskills.io/specification) with additional frontmatter fields and features. These are optional - skills that use only the base spec remain portable across all compatible tools.
 
 ## Extended Frontmatter Fields
 
@@ -34,7 +34,7 @@ user-invocable: false
 
 ### Subagent Execution
 
-Set `context: fork` to run a skill in an isolated subagent. The skill content becomes the prompt — the subagent won't have access to conversation history.
+Set `context: fork` to run a skill in an isolated subagent. The skill content becomes the prompt - the subagent won't have access to conversation history.
 
 ```yaml
 ---
@@ -95,7 +95,7 @@ agent: Explore
 Summarize this pull request.
 ```
 
-Commands execute immediately as preprocessing — Claude only sees the output.
+Commands execute immediately as preprocessing - Claude only sees the output.
 
 ## Skill Locations
 

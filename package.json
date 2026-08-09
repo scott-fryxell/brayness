@@ -25,7 +25,7 @@
   "scripts": {
     "brayness": "./bin/pi",
     "start": "npm run brayness",
-    "pi:update": "npm install @earendil-works/pi-coding-agent@latest && ./bin/pi update --extensions",
+    "pi:update": "rm -rf ~/.npm/_npx && npx --yes @earendil-works/pi-coding-agent update --all",
     "pi:list": "./bin/pi list",
     "feeds": "./skills/vault/rebuild-feeds.sh"
   },
@@ -33,9 +33,6 @@
   "type": "module",
   "engines": {
     "node": ">=22.19.0"
-  },
-  "dependencies": {
-    "@earendil-works/pi-coding-agent": "^0.83.0"
   },
   "packageManager": "npm@11.14.1"
 }

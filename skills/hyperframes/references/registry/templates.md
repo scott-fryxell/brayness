@@ -143,13 +143,13 @@ Copy-paste starter templates for each component type. These embed the proven pat
         GROUPS.forEach(function (g, gi) {
           var groupEl = document.getElementById("PREFIX-cg-" + gi);
 
-          // SHOW — set opacity to 1 (never use tl.from with opacity:0 here)
+          // SHOW - set opacity to 1 (never use tl.from with opacity:0 here)
           tl.set(groupEl, { opacity: 1, visibility: "visible" }, g.start);
 
-          // ENTRANCE — customize this per style
+          // ENTRANCE - customize this per style
           tl.from(groupEl, { scale: 1.3, duration: 0.15, ease: "back.out(2)" }, g.start);
 
-          // KARAOKE — highlight each word
+          // KARAOKE - highlight each word
           for (var wi = g.wordStart; wi <= g.wordEnd; wi++) {
             var wordEl = document.getElementById("PREFIX-cw-" + wi);
             tl.to(wordEl, { color: "#FFD700", scale: 1.1, duration: 0.06 }, WORDS[wi].start);
@@ -172,12 +172,12 @@ Copy-paste starter templates for each component type. These embed the proven pat
 
 **Replace checklist:**
 
-- `BLOCKNAME` → your block name (e.g., `cap-swoosh`)
-- `PREFIX` → short unique prefix for IDs (e.g., `sw`)
-- Font family, weight, size → your style's typography
-- Entrance animation → your style's entrance
-- Karaoke highlight → your style's active word treatment
-- Colors → your style's palette
+- `BLOCKNAME` -> your block name (e.g., `cap-swoosh`)
+- `PREFIX` -> short unique prefix for IDs (e.g., `sw`)
+- Font family, weight, size -> your style's typography
+- Entrance animation -> your style's entrance
+- Karaoke highlight -> your style's active word treatment
+- Colors -> your style's palette
 
 
 ## registry-item.json Templates
@@ -267,7 +267,7 @@ Tags by category:
     </div>
     <script>
       (function () {
-        // Component snippet — no data-composition-id, no __timelines.
+        // Component snippet - no data-composition-id, no __timelines.
         // The parent composition controls timing.
         // Keep all class names and IDs prefixed with COMPNAME.
       })();
@@ -278,6 +278,6 @@ Tags by category:
 
 **Replace checklist:**
 
-- `COMPNAME` → your component name (e.g., `shimmer-sweep`)
+- `COMPNAME` -> your component name (e.g., `shimmer-sweep`)
 - Background should be `transparent` so it overlays cleanly
-- No `data-composition-id` or `window.__timelines` — the parent owns timing
+- No `data-composition-id` or `window.__timelines` - the parent owns timing

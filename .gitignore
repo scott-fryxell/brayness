@@ -13,21 +13,34 @@ dist/
 build/
 .next/
 
-# Secrets (never commit)
+# Secrets and machine-local state (never commit)
 .env
 .env.local
 .env.*.local
-
-# Personal context (machine-local AGENTS.md variant, loaded by
-# extensions/personal-context)
+auth.json
+trust.json
 AGENTS.local.md
 
+# pi caches and lock state (machine-local)
+mcp-cache.json
+mcp-npx-cache.json
+skills-lock.json
+.skill-lock.json
+models-store.json
+.auto/
+
 # Session logs - conversation transcripts, may contain secrets/personal info.
-# Kept in dev /brain only, never synced to the published repo.
+# Kept in dev /brayness only, never synced to the published repo.
 sessions/
+
+# Plans (scratch working area)
+plans/
 
 # Editor
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# Agents
+.agents/

@@ -4,12 +4,12 @@ Everything runs through `npx hyperframes`. Requires Node.js >= 22 and FFmpeg.
 
 ## Workflow
 
-1. **Scaffold** — `npx hyperframes init my-video`
-2. **Write** — author HTML composition (see the `hyperframes` skill)
-3. **Lint** — `npx hyperframes lint`
-4. **Visual inspect** — `npx hyperframes inspect`
-5. **Preview** — `npx hyperframes preview`
-6. **Render** — `npx hyperframes render`
+1. **Scaffold** - `npx hyperframes init my-video`
+2. **Write** - author HTML composition (see the `hyperframes` skill)
+3. **Lint** - `npx hyperframes lint`
+4. **Visual inspect** - `npx hyperframes inspect`
+5. **Preview** - `npx hyperframes preview`
+6. **Render** - `npx hyperframes render`
 
 Lint and inspect before preview. `lint` catches missing `data-composition-id`, overlapping tracks, and unregistered timelines. `inspect` opens the rendered composition in headless Chrome, seeks through the timeline, and reports text spilling out of bubbles/containers or off the canvas.
 
@@ -104,17 +104,17 @@ npx hyperframes render --docker                       # byte-identical
 | `--gpu`              | flag                  | off                        | GPU-accelerated encoding                                           |
 | `--strict`           | flag                  | off                        | Fail on lint errors                                                |
 | `--strict-all`       | flag                  | off                        | Fail on errors AND warnings                                        |
-| `--variables`        | JSON object           | —                          | Override variable values declared in `data-composition-variables`  |
-| `--variables-file`   | path                  | —                          | JSON file with variable values (alternative to `--variables`)      |
+| `--variables`        | JSON object           | -                          | Override variable values declared in `data-composition-variables`  |
+| `--variables-file`   | path                  | -                          | JSON file with variable values (alternative to `--variables`)      |
 | `--strict-variables` | flag                  | off                        | Fail render on undeclared keys or type mismatches in `--variables` |
 
 **Quality guidance:** `draft` while iterating, `standard` for review, `high` for final delivery.
 
-**Parametrized renders:** the composition declares its variables on the `<html>` root with **`data-composition-variables`** — a JSON **array of declarations** (`{id, type, label, default}` per entry) that defines the schema. Scripts inside read the resolved values via `window.__hyperframes.getVariables()`. The CLI **`--variables '{"title":"Q4 Report"}'`** is a JSON **object keyed by id** that overrides those declared defaults for one render; missing keys fall through, so the same composition runs unchanged in dev preview and in production. (Sub-comp hosts can also override per-instance with **`data-variable-values`** — same object shape, scoped to one mount of the sub-composition. See the `hyperframes` skill for the full pattern.)
+**Parametrized renders:** the composition declares its variables on the `<html>` root with **`data-composition-variables`** - a JSON **array of declarations** (`{id, type, label, default}` per entry) that defines the schema. Scripts inside read the resolved values via `window.__hyperframes.getVariables()`. The CLI **`--variables '{"title":"Q4 Report"}'`** is a JSON **object keyed by id** that overrides those declared defaults for one render; missing keys fall through, so the same composition runs unchanged in dev preview and in production. (Sub-comp hosts can also override per-instance with **`data-variable-values`** - same object shape, scoped to one mount of the sub-composition. See the `hyperframes` skill for the full pattern.)
 
 ## Asset Preprocessing
 
-`npx hyperframes tts`, `transcribe`, and `remove-background` produce assets (narration audio, word-level transcripts, transparent video) that get dropped into a composition. Each downloads its own model on first run. For voice selection, whisper model rules (the `.en`-translates-non-English gotcha), output format choice (VP9 alpha WebM vs ProRes), and the TTS → transcribe → captions chain, see [media.md](media.md).
+`npx hyperframes tts`, `transcribe`, and `remove-background` produce assets (narration audio, word-level transcripts, transparent video) that get dropped into a composition. Each downloads its own model on first run. For voice selection, whisper model rules (the `.en`-translates-non-English gotcha), output format choice (VP9 alpha WebM vs ProRes), and the TTS -> transcribe -> captions chain, see [media.md](media.md).
 
 ## Troubleshooting
 

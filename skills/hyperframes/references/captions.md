@@ -4,9 +4,9 @@
 
 **Never use `.en` models unless the user explicitly states the audio is English.** `.en` models TRANSLATE non-English audio into English instead of transcribing it.
 
-1. User says the language → `--model small --language <code>` (no `.en`)
-2. User says English → `--model small.en`
-3. Language unknown → `--model small` (no `.en`, no `--language`) — auto-detects
+1. User says the language -> `--model small --language <code>` (no `.en`)
+2. User says English -> `--model small.en`
+3. Language unknown -> `--model small` (no `.en`, no `--language`) - auto-detects
 
 ---
 
@@ -27,24 +27,24 @@ For transcription commands, whisper models, external APIs, see [transcript-guide
 
 Read the full transcript before choosing. Four dimensions:
 
-**1. Visual feel** — corporate→clean; energetic→bold; storytelling→elegant; technical→precise; social→playful.
+**1. Visual feel** - corporate->clean; energetic->bold; storytelling->elegant; technical->precise; social->playful.
 
-**2. Color palette** — dark+bright for energy; muted for professional; high contrast for clarity; one accent color.
+**2. Color palette** - dark+bright for energy; muted for professional; high contrast for clarity; one accent color.
 
-**3. Font mood** — heavy/condensed for impact; clean sans for modern; rounded for friendly; serif for elegance.
+**3. Font mood** - heavy/condensed for impact; clean sans for modern; rounded for friendly; serif for elegance.
 
-**4. Animation character** — scale-pop for punchy; gentle fade for calm; word-by-word for emphasis; typewriter for technical.
+**4. Animation character** - scale-pop for punchy; gentle fade for calm; word-by-word for emphasis; typewriter for technical.
 
 ## Per-Word Styling
 
 Scan for words deserving distinct treatment:
 
-- **Brand/product names** — larger size, unique color
-- **ALL CAPS** — scale boost, flash, accent color
-- **Numbers/statistics** — bold weight, accent color
-- **Emotional keywords** — exaggerated animation (overshoot, bounce)
-- **Call-to-action** — highlight, underline, color pop
-- **Marker highlight** — for beyond-color emphasis, see [css-patterns.md](css-patterns.md)
+- **Brand/product names** - larger size, unique color
+- **ALL CAPS** - scale boost, flash, accent color
+- **Numbers/statistics** - bold weight, accent color
+- **Emotional keywords** - exaggerated animation (overshoot, bounce)
+- **Call-to-action** - highlight, underline, color pop
+- **Marker highlight** - for beyond-color emphasis, see [css-patterns.md](css-patterns.md)
 
 ## Script-to-Style Mapping
 
@@ -69,7 +69,7 @@ Break on sentence boundaries, 150ms+ pauses, or max word count.
 - **Landscape (1920x1080):** Bottom 80-120px, centered
 - **Portrait (1080x1920):** Lower middle ~600-700px from bottom, centered
 - Never cover the subject's face
-- `position: absolute` — never relative
+- `position: absolute` - never relative
 - One caption group visible at a time
 
 ## Text Overflow Prevention
@@ -87,9 +87,9 @@ el.style.fontSize = result.fontSize + "px";
 
 Options: `maxWidth` (1600 landscape, 900 portrait), `baseFontSize` (78), `minFontSize` (42), `fontWeight`, `fontFamily`, `step` (2).
 
-CSS safety nets: `max-width` on container, `overflow: visible` (**not** `hidden` — hidden clips scaled emphasis words and glow effects), `position: absolute`, explicit `height`. When per-word styling uses `scale > 1.0`, compute `maxWidth = safeWidth / maxScale` to leave headroom.
+CSS safety nets: `max-width` on container, `overflow: visible` (**not** `hidden` - hidden clips scaled emphasis words and glow effects), `position: absolute`, explicit `height`. When per-word styling uses `scale > 1.0`, compute `maxWidth = safeWidth / maxScale` to leave headroom.
 
-**Container pattern:** Full-width absolute container, centered. Do **not** use `left: 50%; transform: translateX(-50%)` — causes clipping at composition edges.
+**Container pattern:** Full-width absolute container, centered. Do **not** use `left: 50%; transform: translateX(-50%)` - causes clipping at composition edges.
 
 ## Caption Exit Guarantee
 
@@ -100,7 +100,7 @@ tl.to(groupEl, { opacity: 0, scale: 0.95, duration: 0.12, ease: "power2.in" }, g
 tl.set(groupEl, { opacity: 0, visibility: "hidden" }, group.end); // deterministic kill
 ```
 
-Self-lint after building timeline — place **before** `window.__timelines[id] = tl` so it runs at composition init:
+Self-lint after building timeline - place **before** `window.__timelines[id] = tl` so it runs at composition init:
 
 ```js
 GROUPS.forEach(function (group, gi) {
@@ -119,7 +119,7 @@ tl.seek(0);
 
 ## Pre-Built Caption Components
 
-Before building caption styles from scratch, check the registry — 15 ready-to-use caption components cover the most common styles. Install with `npx hyperframes add <name>` and use as a sub-composition via `data-composition-src`.
+Before building caption styles from scratch, check the registry - 15 ready-to-use caption components cover the most common styles. Install with `npx hyperframes add <name>` and use as a sub-composition via `data-composition-src`.
 
 ```bash
 npx hyperframes catalog --tag caption-style   # list all caption components
@@ -146,13 +146,13 @@ npx hyperframes add caption-highlight         # install a specific one
 
 Browse all with previews: [hyperframes.heygen.com/catalog](https://hyperframes.heygen.com/catalog)
 
-Caption components ship with transparent backgrounds — they're pure overlays. If the underlying video is bright or busy, add a contrast layer (e.g. a semi-transparent dark div) in the host composition beneath the caption sub-composition, not inside the component itself.
+Caption components ship with transparent backgrounds - they're pure overlays. If the underlying video is bright or busy, add a contrast layer (e.g. a semi-transparent dark div) in the host composition beneath the caption sub-composition, not inside the component itself.
 
 ## Further References
 
-- [dynamic-techniques.md](dynamic-techniques.md) — karaoke, clip-path reveals, slam words, scatter exits, elastic, 3D rotation
-- [transcript-guide.md](transcript-guide.md) — transcription commands, whisper models, external APIs
-- [css-patterns.md](css-patterns.md) — CSS+GSAP marker highlighting (deterministic, fully seekable)
+- [dynamic-techniques.md](dynamic-techniques.md) - karaoke, clip-path reveals, slam words, scatter exits, elastic, 3D rotation
+- [transcript-guide.md](transcript-guide.md) - transcription commands, whisper models, external APIs
+- [css-patterns.md](css-patterns.md) - CSS+GSAP marker highlighting (deterministic, fully seekable)
 
 ## Constraints
 
@@ -160,4 +160,4 @@ Caption components ship with transparent backgrounds — they're pure overlays. 
 - Sync to transcript timestamps.
 - One group visible at a time.
 - Every group must have a hard `tl.set` kill at `group.end`.
-- The compiler embeds supported fonts automatically — just declare `font-family` in CSS.
+- The compiler embeds supported fonts automatically - just declare `font-family` in CSS.

@@ -31,7 +31,7 @@ After `hyperframes add data-chart`, wire it into your `index.html`:
 | `data-composition-id`  | Unique ID matching the block's internal composition ID               |
 | `data-start`           | When the block appears in the host timeline (seconds)                |
 | `data-duration`        | How long the block plays (seconds, at most the block's own duration) |
-| `data-track-index`     | Layer ordering — higher numbers render in front                      |
+| `data-track-index`     | Layer ordering - higher numbers render in front                      |
 | `data-width`           | Block canvas width (match the block's dimensions)                    |
 | `data-height`          | Block canvas height (match the block's dimensions)                   |
 

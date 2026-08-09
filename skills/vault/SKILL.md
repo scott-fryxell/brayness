@@ -56,11 +56,8 @@ rg -l "cowpunk" ./work/Anotht
 cat "./work/Anotht/02 Areas/Music/:feed.md"
 ```
 
-For semantic search ("what notes feel related to X"), use the embeddings skill:
-
-```bash
-../embeddings/query.sh "synth gear for live looping"
-```
+For semantic search ("what notes feel related to X"), no tool exists yet -
+fall back to `rg` with synonyms.
 
 ## Recent activity
 
@@ -105,7 +102,7 @@ done
 
 ## How feeds work
 
-Each `:feed.md` contains a Dataview query that reads `created` (YAML frontmatter) to list items chronologically. Starred repos appear alongside regular notes by their repo creation date. The `gitub` column shows `owner/repo` for stars, blank for regular notes:
+Each `:feed.md` contains a Dataview query that reads `created` (YAML frontmatter) to list items chronologically. Starred repos appear alongside regular notes by their repo creation date. The `github` column shows `owner/repo` for stars, blank for regular notes:
 
 ```dataview
 TABLE created AS "Date", github AS "Source"

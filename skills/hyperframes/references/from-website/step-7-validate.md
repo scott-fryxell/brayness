@@ -9,12 +9,12 @@ npx hyperframes lint
 npx hyperframes validate
 ```
 
-`lint` checks HTML structure statically — missing attributes, timeline registration, tween conflicts, CSS transform + GSAP conflicts (including inline styles).
+`lint` checks HTML structure statically - missing attributes, timeline registration, tween conflicts, CSS transform + GSAP conflicts (including inline styles).
 `validate` loads the composition in headless Chrome and catches runtime JS errors, missing assets, and failed network requests.
 
 ## Visual Verification (snapshot)
 
-After lint and validate pass, capture snapshot frames to SEE your own output. **Always use `hyperframes snapshot`** — do not roll your own ffmpeg/headless Chrome script; the default naming (`frame-XX-at-Ys.png`) is expected by later tooling.
+After lint and validate pass, capture snapshot frames to SEE your own output. **Always use `hyperframes snapshot`** - do not roll your own ffmpeg/headless Chrome script; the default naming (`frame-XX-at-Ys.png`) is expected by later tooling.
 
 ```bash
 npx hyperframes snapshot <project-dir> --at <beat-midpoints>
@@ -32,7 +32,7 @@ Calculate the midpoint of each beat from your STORYBOARD.md timings. For a 4-bea
 npx hyperframes snapshot <project-dir> --at 2.9,10.4,18.7,23.9
 ```
 
-This renders one frame per beat at the moment when content is most visible. Use timestamps where the most content is on screen — usually 60-70% into each beat, after entrances finish but before exits start. Output lands in `<project-dir>/snapshots/` with filenames like `frame-00-at-2.9s.png`.
+This renders one frame per beat at the moment when content is most visible. Use timestamps where the most content is on screen - usually 60-70% into each beat, after entrances finish but before exits start. Output lands in `<project-dir>/snapshots/` with filenames like `frame-00-at-2.9s.png`.
 
 **View every snapshot image carefully.** Don't glance and move on. For each frame, check:
 
@@ -57,9 +57,9 @@ This renders one frame per beat at the moment when content is most visible. Use 
 
 **Code vs. rendered verification:**
 
-- For each beat, check: does the snapshot show the assets you referenced in the HTML? If a composition has `<img src="...wave.png">` but the snapshot shows no wave — the image isn't loading, the path is wrong, or it's hidden behind another element.
+- For each beat, check: does the snapshot show the assets you referenced in the HTML? If a composition has `<img src="...wave.png">` but the snapshot shows no wave - the image isn't loading, the path is wrong, or it's hidden behind another element.
 - If a snapshot shows nothing at a timestamp, try a slightly different time (1-2 seconds later). Compositions may still be in entrance animations.
-- The snapshot command is fast — run it multiple times at different timestamps if needed.
+- The snapshot command is fast - run it multiple times at different timestamps if needed.
 
 If any frame has issues, go back to Step 6 and fix that composition before proceeding.
 
@@ -99,9 +99,9 @@ not as a replacement for the project URL.
 
 ## Render (on-demand only)
 
-**Do NOT render automatically as part of the pipeline.** Preview is the delivery — the user scrubs, spots anything they want tweaked, and you iterate. Rendering to MP4 takes minutes of wall-clock time per pass and is wasted work if the user wants changes.
+**Do NOT render automatically as part of the pipeline.** Preview is the delivery - the user scrubs, spots anything they want tweaked, and you iterate. Rendering to MP4 takes minutes of wall-clock time per pass and is wasted work if the user wants changes.
 
-Only run `hyperframes render` when the user **explicitly asks** — e.g. "render it", "make the final", "export the MP4", "I'm happy, produce the file". Until then, stop at preview + snapshots.
+Only run `hyperframes render` when the user **explicitly asks** - e.g. "render it", "make the final", "export the MP4", "I'm happy, produce the file". Until then, stop at preview + snapshots.
 
 When the user does ask to render, always pass `--output renders/<project-name>.mp4` so the final file has a predictable, human-readable name. The CLI default is timestamped (`<project>_YYYY-MM-DD_HH-MM-SS.mp4`) which is hard to reference from docs or later iterations.
 

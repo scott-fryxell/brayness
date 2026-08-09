@@ -17,7 +17,7 @@ server. **Read `references/als-format.md` before modifying the generator.**
 - Session folders live under the H6 root (default: iCloud
   `~/Library/Mobile Documents/com~apple~CloudDocs/Ableton User Library/H6/<year>/<session>/`).
 - The track shell `2024/24-08-28/*.als` and the 12.4 schema donor
-  `2026/260607-124031/*.als` still exist under the H6 root (footer,
+  `2026/260115-162443/*.als` still exist under the H6 root (footer,
   returns, Ableton root, and rack fragment schema). Update
   `TEMPLATE_GLOB` / `SCHEMA_GLOB` in the script if either moves.
 - Rack fragment
@@ -68,6 +68,6 @@ The script resolves relative to its own location; run it from anywhere.
   1. `gunzip -c file.als | sed -n '<line>p'` using the line from Live's
      error dialog.
   2. Check `references/als-format.md` - usually id collisions (audio vs
-     return track Ids → "Non-unique list ids"), schema mix, or donor
+     return track Ids -> "Non-unique list ids"), schema mix, or donor
      transport leftovers.
   3. Fix, delete the bad `.als`, regenerate with `--only <session>`.

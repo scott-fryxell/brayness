@@ -2,7 +2,7 @@
 
 ### Push Slide
 
-Both scenes move together — new pushes old out.
+Both scenes move together - new pushes old out.
 
 ```js
 tl.to(old, { x: -1920, duration: 0.5, ease: "power3.inOut" }, T);

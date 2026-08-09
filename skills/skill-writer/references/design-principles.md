@@ -1,6 +1,6 @@
 # Skill Design Principles
 
-Principles for writing effective agent skills. A skill is a set of instructions injected into an agent's context window — every line competes for space with the user's actual task.
+Principles for writing effective agent skills. A skill is a set of instructions injected into an agent's context window - every line competes for space with the user's actual task.
 
 ## Conciseness
 
@@ -26,9 +26,9 @@ Match the specificity of your instructions to the fragility of the task.
 
 | Fragility | Instruction Style | Example |
 |-----------|------------------|---------|
-| **High** — wrong output is costly | Prescriptive steps, exact formats | Commit message format, API output schema |
-| **Medium** — multiple valid approaches | Guidelines with examples | Code review priorities, refactoring strategy |
-| **Low** — many correct answers | Goals and constraints only | "Explain this code", "Summarize these changes" |
+| **High** - wrong output is costly | Prescriptive steps, exact formats | Commit message format, API output schema |
+| **Medium** - multiple valid approaches | Guidelines with examples | Code review priorities, refactoring strategy |
+| **Low** - many correct answers | Goals and constraints only | "Explain this code", "Summarize these changes" |
 
 Over-constraining low-fragility tasks wastes context and limits the agent. Under-constraining high-fragility tasks leads to inconsistent results.
 
@@ -38,9 +38,13 @@ Structure skills so agents load only what they need, when they need it.
 
 **Three-tier loading:**
 
-1. **Metadata** (always loaded) — frontmatter `name` and `description` determine whether the skill activates
-2. **Instructions** (loaded on activation) — the SKILL.md body with the core workflow
-3. **Resources** (loaded on demand) — reference files, loaded conditionally based on the task context
+1. **Metadata** (always loaded) - frontmatter `name` and `description` determine whether the skill activates
+2. **Instructions** (loaded on activation) - the SKILL.md body with the core workflow
+3. **Resources** (loaded on demand) - reference files, loaded conditionally based on the task context
+
+Keep frontmatter valid YAML: an unquoted colon inside `description:` breaks
+parsing and silently drops the skill (we hit this in brayness). Quote the
+whole description when in doubt.
 
 ```markdown
 ## Step 3: Load Language Guide
@@ -57,15 +61,15 @@ This keeps the base context small while making deep knowledge available when nee
 
 The `description` field determines when agents activate the skill. It must contain the phrases users actually say.
 
-**Write in third person** — the description is injected into the system prompt, and inconsistent point-of-view causes discovery problems:
+**Write in third person** - the description is injected into the system prompt, and inconsistent point-of-view causes discovery problems:
 ```yaml
-# Good — third person
+# Good - third person
 description: Processes Excel files and generates reports. Use when working with spreadsheets.
 
-# Bad — first person
+# Bad - first person
 description: I can help you process Excel files.
 
-# Bad — second person
+# Bad - second person
 description: You can use this to process Excel files.
 ```
 
@@ -73,22 +77,22 @@ description: You can use this to process Excel files.
 
 **Effective descriptions:**
 ```yaml
-# Good — includes natural trigger phrases
+# Good - includes natural trigger phrases
 description: Create commit messages following Sentry conventions. Use when committing code changes, writing commit messages, or formatting git history.
 
-# Good — includes action verbs and domain terms
+# Good - includes action verbs and domain terms
 description: Security code review for vulnerabilities. Use when asked to "security review", "find vulnerabilities", "check for security issues", "audit security", "OWASP review".
 ```
 
 **Ineffective descriptions:**
 ```yaml
-# Bad — too vague, no trigger phrases
+# Bad - too vague, no trigger phrases
 description: A helpful skill for code quality.
 
-# Bad — describes internals, not when to use it
+# Bad - describes internals, not when to use it
 description: Runs a Python script that parses AST and generates reports.
 
-# Bad — too short, won't match varied user phrasing
+# Bad - too short, won't match varied user phrasing
 description: Code review.
 ```
 
@@ -128,10 +132,10 @@ Similarly, don't repeat conventions already in `CLAUDE.md` or `AGENTS.md`. Refer
 Don't include information that will become outdated:
 
 ```markdown
-# Bad — will become wrong
+# Bad - will become wrong
 If you're doing this before August 2025, use the old API.
 
-# Good — use "old patterns" section
+# Good - use "old patterns" section
 ## Current method
 Use the v2 API endpoint.
 

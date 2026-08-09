@@ -10,7 +10,7 @@
 Changes found:
 - New skill: skills/brayness-sync/SKILL.md (+ references/, ...)
 - Modified: extensions/personal-context/index.ts
-- No changes to bin/, settings.json, AGENTS.md
+- No changes to bin/, .pi/agent/settings.json, AGENTS.md
 ```
 
 **Plan**:
@@ -21,7 +21,7 @@ Excluding: .git/, .env, node_modules/, etc.
 Impact: 15 files added, 3 modified, 0 deleted
 ```
 
-**User approves** → Agent copies files → **Validation passes** all checks
+**User approves** -> Agent copies files -> **Validation passes** all checks
 
 **Git diff**:
 
@@ -40,12 +40,12 @@ Release: brayness-sync + personal-context update
 
 - Added: brayness-sync skill (copy changes, validate, commit to work/brayness/)
 - Updated: personal-context extension
-- Synced: dev → work/brayness/ for release
+- Synced: dev -> work/brayness/ for release
 
 Ready to tag v1.2.0
 ```
 
-**User approves** → **Commit succeeds** → Ready to npm publish
+**User approves** -> **Commit succeeds** -> Ready to npm publish
 
 ---
 
@@ -105,7 +105,7 @@ Options:
 3. Skip this extension and investigate dev setup
 ```
 
-**User removes the .git** → **Validation passes on retry** → **Sync continues**
+**User removes the .git** -> **Validation passes on retry** -> **Sync continues**
 
 ---
 
@@ -125,7 +125,7 @@ Extensions updated:
   - html/index.js
 
 Configuration:
-  - package.json version 1.1.0 → 1.2.0
+  - package.json version 1.1.0 -> 1.2.0
 ```
 
 **Plan** (condensed):
@@ -161,10 +161,10 @@ Skills:
 Extensions:
 - html: semantic element detection improvements
 
-Synced from dev → work/brayness/
+Synced from dev -> work/brayness/
 ```
 
-**User approves** → **Commit executes** → Git log shows:
+**User approves** -> **Commit executes** -> Git log shows:
 
 ```
 abc1234 Release v1.2.0: Skills + extension updates

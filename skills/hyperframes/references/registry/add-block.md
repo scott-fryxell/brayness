@@ -48,4 +48,4 @@ hyperframes preview
 
 ### 4. Customize (optional)
 
-Edit `compositions/data-chart.html` — data arrays are at the top of the script, colors are in the CSS rules scoped under `[data-composition-id="data-chart"]`.
+Edit `compositions/data-chart.html` - data arrays are at the top of the script, colors are in the CSS rules scoped under `[data-composition-id="data-chart"]`.

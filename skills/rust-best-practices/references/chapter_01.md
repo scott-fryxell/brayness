@@ -144,25 +144,25 @@ enum Direction {
 ```
 
 ## 1.3 Handling `Option<T>` and `Result<T, E>`
-Rust 1.65 introduced a better way to safely unpack Option and Result types with the `let Some(x) = … else { … }` or `let Ok(x) = … else { … }` when you have a default `return` value, `continue` or `break` default else case. It allows early returns when the missing case is **expected and normal**, not exceptional.
+Rust 1.65 introduced a better way to safely unpack Option and Result types with the `let Some(x) = ... else { ... }` or `let Ok(x) = ... else { ... }` when you have a default `return` value, `continue` or `break` default else case. It allows early returns when the missing case is **expected and normal**, not exceptional.
 
 ### ✅ Cases to use each pattern matching for Option and Return
 * Use `match` when you want to pattern match against the inner types `T` and `E`
 ```rust
 match self {
-    Ok(Direction::South) => { … },
-    Ok(Direction::North) => { … },
-    Ok(Direction::East) => { … },
-    Ok(Direction::West) => { … },
-    Err(E::One) => { … },
-    Err(E::Two) => { … },
+    Ok(Direction::South) => { ... },
+    Ok(Direction::North) => { ... },
+    Ok(Direction::East) => { ... },
+    Ok(Direction::West) => { ... },
+    Err(E::One) => { ... },
+    Err(E::Two) => { ... },
 }
 
 match self {
-    Some(3|5) => { … }
-    Some(x) if x > 10 => { … }
-    Some(x) => { … }
-    None => { … }
+    Some(3|5) => { ... }
+    Some(x) if x > 10 => { ... }
+    Some(x) => { ... }
+    None => { ... }
 }
 ```
 
@@ -402,7 +402,7 @@ let subgraph_tls_root_store: RootCertStore = configuration
 // Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
 // when an unknown printer took a galley
 fn do_something_odd() {
-    …
+    ...
 }
 ```
 > Prefer `/// doc` comment if it's describing the function.

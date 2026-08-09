@@ -73,21 +73,21 @@ Use `<ul>` / `<li>` only when content is truly a list (membership matters). Use 
 
 ## Icons
 
-`v-icon` → `<svg class="icon"><use href="/icons.svg#name" /></svg>`
+`v-icon` -> `<svg class="icon"><use href="/icons.svg#name" /></svg>`
 
 Map `mdi-*` names to sprite IDs. Common mappings:
-- `mdi-magnify` → `search`
-- `mdi-plus` → `add`
-- `mdi-chevron-left` → `chevron-left`
-- `mdi-chevron-right` → `chevron-right`
-- `mdi-arrow-up` → `arrow-up`
-- `mdi-arrow-down` → `arrow-down`
-- `mdi-account` → `person`
-- `mdi-domain` → `organization`
-- `mdi-pencil-clock` → `edit-clock`
-- `mdi-sort-variant` → `sort`
-- `mdi-close` → `close`
-- `mdi-delete` → `delete`
+- `mdi-magnify` -> `search`
+- `mdi-plus` -> `add`
+- `mdi-chevron-left` -> `chevron-left`
+- `mdi-chevron-right` -> `chevron-right`
+- `mdi-arrow-up` -> `arrow-up`
+- `mdi-arrow-down` -> `arrow-down`
+- `mdi-account` -> `person`
+- `mdi-domain` -> `organization`
+- `mdi-pencil-clock` -> `edit-clock`
+- `mdi-sort-variant` -> `sort`
+- `mdi-close` -> `close`
+- `mdi-delete` -> `delete`
 
 ## Media
 
@@ -141,8 +141,8 @@ Map `mdi-*` names to sprite IDs. Common mappings:
 
 | Vuetify | CSS | Notes |
 |---|---|---|
-| `v-expand-transition` | `grid-template-rows: 0fr → 1fr` | CSS grid height trick |
+| `v-expand-transition` | `grid-template-rows: 0fr -> 1fr` | CSS grid height trick |
 
-## Utility classes → remove entirely
+## Utility classes -> remove entirely
 
 All Vuetify utility classes (`pa-*`, `ma-*`, `px-*`, `py-*`, `mx-*`, `my-*`, `d-flex`, `d-none`, `d-block`, `text-h*`, `text-body-*`, `text-caption`, `text-center`, `elevation-*`, `rounded`, `fill-height`, `align-center`, `justify-center`, `font-weight-*`, `ga-*`, `cursor-pointer`, etc.) are removed. Spacing, display, and typography are expressed in Stylus on the element selectors.

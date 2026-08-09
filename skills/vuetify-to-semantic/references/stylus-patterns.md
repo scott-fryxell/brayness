@@ -48,7 +48,7 @@ article[itemtype*="Person"] {
 
 ## Available mixins
 
-Defined in `@web/src/style/mixins/`:
+Defined in `work/realness/src/style/mixins/`:
 
 ```stylus
 // Border with radius
@@ -123,11 +123,11 @@ Map from Vuetify config to CSS custom properties (set in `src/style/variables.st
 | `rounded` / `rounded-lg` | `border-radius: calc(base-line * 0.33);` |
 
 Spacing scale reference (Vuetify uses 4px = 1 unit; base-line = ~21px):
-- `*-1` ≈ `calc(base-line * 0.2)`
-- `*-2` ≈ `calc(base-line * 0.4)`
-- `*-4` ≈ `calc(base-line * 0.75)`
-- `*-6` ≈ `base-line`
-- `*-8` ≈ `calc(base-line * 1.5)`
+- `*-1` ~ `calc(base-line * 0.2)`
+- `*-2` ~ `calc(base-line * 0.4)`
+- `*-4` ~ `calc(base-line * 0.75)`
+- `*-6` ~ `base-line`
+- `*-8` ~ `calc(base-line * 1.5)`
 
 ## Grid replacing v-row / v-col
 

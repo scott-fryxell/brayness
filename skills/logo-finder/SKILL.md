@@ -5,7 +5,7 @@ description: Find and install brand SVG logos via SVGL (https://svgl.app/) and W
 
 # Logo Finder (SVGL + Commons)
 
-Download brand logos into a static asset folder of your choice. **Prefer SVG** (`.svg`); use PNG only when Commons/Wikipedia has no vector (e.g. [Final Cut Pro](https://en.wikipedia.org/wiki/Final_Cut_Pro#/media/File:FinalCutProACS2026.png)). Commit assets with the repo.
+Download brand logos into a static asset folder. **Prefer SVG** (`.svg`); use PNG only when Commons/Wikipedia has no vector (e.g. [Final Cut Pro](https://en.wikipedia.org/wiki/Final_Cut_Pro#/media/File:FinalCutProACS2026.png)).
 
 **Primary:** [SVGL API](https://svgl.app/docs/api)
 **Fallback:** curated [Wikimedia Commons](https://commons.wikimedia.org/) rows in `assets/commons-logos.tsv` (see [references/commons.md](references/commons.md))
@@ -41,8 +41,6 @@ bash skills/logo-finder/scripts/commons.sh "DaVinci Resolve" path/to/brands/davi
 bash skills/logo-finder/scripts/commons.sh --url 'https://upload.wikimedia.org/.../file.svg' path/to/brands/file.svg
 ```
 
-Not fetched at runtime on the live site - only during install. Commit the downloaded assets.
-
 ## Where to place logos - ask first
 
 Never assume the output directory. **Ask the user where logos should go** before downloading. If they have no preference, propose a best-practice path based on the project's framework:
@@ -60,8 +58,7 @@ Conventions worth keeping:
 
 - One folder, named `brands/` or `logos/` (pick one, stay consistent).
 - Slug filenames: lowercase, hyphenated (`DaVinci Resolve` -> `davinci-resolve.svg`).
-- Prefer a single committed folder over scattered per-component copies - logos are shared assets.
-- Commit SVGs to the repo; do not fetch at runtime.
+- One committed shared folder, not per-component copies; never fetch at runtime.
 
 If the project already has a logo folder in use, reuse it. Confirm the served URL prefix so the slug paths you wire into markup match.
 
@@ -77,19 +74,11 @@ If the project already has a logo folder in use, reuse it. Confirm the served UR
 
 ## Finding missing logos in an existing page
 
-There is no `missing-from-about` script. Instead, read the target file and find logo references that are empty or use a placeholder icon, then feed those names to `batch.sh` or `logo.sh`. This keeps the skill independent of any one template format.
-
-## API surface (summary)
-
-| Task           | Request                                                          |
-| -------------- | ---------------------------------------------------------------- |
-| SVGL search    | `GET https://api.svgl.app?search={query}`                        |
-| SVGL SVG       | `GET https://api.svgl.app/svg/{filename}`                        |
-| Commons upload | Row in `assets/commons-logos.tsv` or Commons API `imageinfo.url` |
-
-See [references/api-surface.md](references/api-surface.md) and [references/commons.md](references/commons.md).
+There is no script for this. Read the target file, find logo references that are empty or placeholder, feed those names to `batch.sh` or `logo.sh`.
 
 ## References
+
+API details: [references/api-surface.md](references/api-surface.md)
 
 - [commons.md](references/commons.md)
 - [common-use-cases.md](references/common-use-cases.md)

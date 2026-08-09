@@ -12,7 +12,7 @@ var AUDIO_DATA = {
 };
 ```
 
-- `frames[i].bands[]` — frequency band amplitudes, 0-1. Index 0 = bass, higher = treble.
+- `frames[i].bands[]` - frequency band amplitudes, 0-1. Index 0 = bass, higher = treble.
 - Each band normalized independently across the full track.
 
 ## Mapping Audio to Visuals
@@ -24,7 +24,7 @@ var AUDIO_DATA = {
 | Overall amplitude      | `opacity`, `y`, `backgroundColor` | Breathe, lift, color shift |
 | Mid-range (bands[4-8]) | `borderRadius`, `width`           | Shape morphing             |
 
-Any GSAP-tweenable property works — `clipPath`, `filter`, SVG attributes, CSS custom properties.
+Any GSAP-tweenable property works - `clipPath`, `filter`, SVG attributes, CSS custom properties.
 
 ## Content, Not Medium
 
@@ -39,7 +39,7 @@ Audio provides **timing and intensity**. The visual vocabulary comes from the na
 Audio reactivity requires per-frame sampling via a `for` loop with `tl.call()`, not a single tween:
 
 ```js
-// ✅ Correct — sample every frame
+// ✅ Correct - sample every frame
 for (var f = 0; f < AUDIO_DATA.totalFrames; f++) {
   tl.call(
     (function (frame) {
@@ -52,7 +52,7 @@ for (var f = 0; f < AUDIO_DATA.totalFrames; f++) {
   );
 }
 
-// ❌ Wrong — single tween, doesn't react to audio
+// ❌ Wrong - single tween, doesn't react to audio
 gsap.to(".el", { scale: 1.2, duration: totalDuration });
 ```
 
@@ -64,10 +64,10 @@ Without per-frame sampling, the composition doesn't actually react to audio.
 
 ## Guidelines
 
-- **Subtlety for text** — 3-6% scale variation, soft glow. Heavy pulsing makes text unreadable.
-- **Go bigger on non-text** — backgrounds and shapes can handle 10-30% swings.
-- **Match the energy** — corporate = subtle; music video = dramatic.
-- **Deterministic** — pre-extracted data, no Web Audio API, no runtime analysis.
+- **Subtlety for text** - 3-6% scale variation, soft glow. Heavy pulsing makes text unreadable.
+- **Go bigger on non-text** - backgrounds and shapes can handle 10-30% swings.
+- **Match the energy** - corporate = subtle; music video = dramatic.
+- **Deterministic** - pre-extracted data, no Web Audio API, no runtime analysis.
 
 ## Constraints
 

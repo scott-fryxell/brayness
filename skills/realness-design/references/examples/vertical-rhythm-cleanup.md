@@ -11,7 +11,7 @@ section#colors > details > header > h2 {
 }
 ```
 
-`0.6665rem` is `base-line * 0.5` — a fractional vertical multiple, which already breaks vertical harmony on its own. But looking closer, the base system's global heading rule already sets:
+`0.6665rem` is `base-line * 0.5` - a fractional vertical multiple, which already breaks vertical harmony on its own. But looking closer, the base system's global heading rule already sets:
 
 ```css
 h1, h2, h3, h4, h5, h6 {
@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 ```
 
-So this component wasn't just using the wrong number — it was restating a property the cascade already handles, and the restated value had drifted to half of what the system default actually was. Nobody had to intend that; it's what happens when a value gets typed once, by hand, instead of inherited.
+So this component wasn't just using the wrong number - it was restating a property the cascade already handles, and the restated value had drifted to half of what the system default actually was. Nobody had to intend that; it's what happens when a value gets typed once, by hand, instead of inherited.
 
 ## The fix
 
@@ -32,10 +32,10 @@ section#colors > details > header > h2 {
 }
 ```
 
-The `margin-bottom` now comes from the global `h1–h6` rule again, correctly, without anyone having to keep two numbers in sync.
+The `margin-bottom` now comes from the global `h1-h6` rule again, correctly, without anyone having to keep two numbers in sync.
 
 ## The general check
 
-Before writing `margin`/`padding` on any element, ask: does the base system already set this property on this element (directly, or via a reset)? If yes, and the value matches, delete the restatement — you're not saving anything by keeping it, and you're one hand-edit away from silent drift. If yes, but you need a *different* value, write only the properties that actually differ, not the whole shorthand.
+Before writing `margin`/`padding` on any element, ask: does the base system already set this property on this element (directly, or via a reset)? If yes, and the value matches, delete the restatement - you're not saving anything by keeping it, and you're one hand-edit away from silent drift. If yes, but you need a *different* value, write only the properties that actually differ, not the whole shorthand.
 
-The universal reset is a special case of "the base system already sets this": every element gets `margin: 0; padding: 0;` before any other rule runs, so `margin: 0;` (or `padding: 0;`) on an element with no more specific rule is *always* redundant, not just sometimes. `Colors.vue` had six of these (on `ol`, `figure`, `article`) that were pure noise — the reset already got there first.
+The universal reset is a special case of "the base system already sets this": every element gets `margin: 0; padding: 0;` before any other rule runs, so `margin: 0;` (or `padding: 0;`) on an element with no more specific rule is *always* redundant, not just sometimes. `Colors.vue` had six of these (on `ol`, `figure`, `article`) that were pure noise - the reset already got there first.

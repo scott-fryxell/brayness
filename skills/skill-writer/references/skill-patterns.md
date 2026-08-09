@@ -50,7 +50,7 @@ iterate-pr/
 - Invoke with `uv run <skill-dir>/scripts/script_name.py`
 - Do not assume current working directory is the skill directory
 - Scripts output structured JSON for agent consumption
-- Scripts handle errors explicitly — don't punt to the agent
+- Scripts handle errors explicitly - don't punt to the agent
 - SKILL.md includes a fallback section for when scripts fail
 
 **When to use:** The workflow benefits from structured data extraction, API calls, or processing that would be fragile as inline bash commands.
@@ -136,7 +136,7 @@ Fix GitHub issue $ARGUMENTS following our coding standards.
 
 ### Missing Trigger Keywords
 
-**Problem:** Description says "A skill for helping with code" — agents can't match this to user requests like "review my PR" or "check for bugs".
+**Problem:** Description says "A skill for helping with code" - agents can't match this to user requests like "review my PR" or "check for bugs".
 
 **Fix:** Include the actual phrases users say: `Use when asked to "review code", "find bugs", "check for issues"`.
 
@@ -154,7 +154,7 @@ Fix GitHub issue $ARGUMENTS following our coding standards.
 
 ### Unconditional Reference Loading
 
-**Problem:** SKILL.md says "Read all reference files before starting" — loads 20+ files into context regardless of the task.
+**Problem:** SKILL.md says "Read all reference files before starting" - loads 20+ files into context regardless of the task.
 
 **Fix:** Use a decision table to load only relevant references:
 ```markdown

@@ -1,6 +1,6 @@
 # Visual Style Library
 
-Named visual identities for HyperFrames videos. Each style is grounded in a real graphic design tradition and expressed as a DESIGN.md-compatible token block. Use them as starters — copy the YAML into your project's `design.md` front matter, then customize.
+Named visual identities for HyperFrames videos. Each style is grounded in a real graphic design tradition and expressed as a DESIGN.md-compatible token block. Use them as starters - copy the YAML into your project's `design.md` front matter, then customize.
 
 **How to pick:** Match mood first, content second. Ask: _"What should the viewer FEEL?"_
 
@@ -21,7 +21,7 @@ Named visual identities for HyperFrames videos. Each style is grounded in a real
 
 ---
 
-## 1. Swiss Pulse — Josef Müller-Brockmann
+## 1. Swiss Pulse - Josef Müller-Brockmann
 
 **Mood:** Clinical, precise | **Best for:** SaaS dashboards, developer tools, APIs, metrics
 
@@ -67,11 +67,11 @@ motion:
   transition: cinematic-zoom
 ```
 
-Grid-locked compositions. Every element snaps to an invisible 12-column grid. Numbers dominate the frame at 80–120px. Animated counters count up from 0. Hard cuts, no decorative transitions. Nothing floats.
+Grid-locked compositions. Every element snaps to an invisible 12-column grid. Numbers dominate the frame at 80-120px. Animated counters count up from 0. Hard cuts, no decorative transitions. Nothing floats.
 
 ---
 
-## 2. Velvet Standard — Massimo Vignelli
+## 2. Velvet Standard - Massimo Vignelli
 
 **Mood:** Premium, timeless | **Best for:** Luxury products, enterprise software, keynotes, investor decks
 
@@ -116,11 +116,11 @@ motion:
   transition: cross-warp-morph
 ```
 
-Generous negative space. Symmetrical, centered, architectural precision. Thin sans-serif, ALL CAPS, wide letter-spacing. Sequential reveals with long holds. Nothing snaps — everything glides with intention. Luxury takes its time.
+Generous negative space. Symmetrical, centered, architectural precision. Thin sans-serif, ALL CAPS, wide letter-spacing. Sequential reveals with long holds. Nothing snaps - everything glides with intention. Luxury takes its time.
 
 ---
 
-## 3. Deconstructed — Neville Brody
+## 3. Deconstructed - Neville Brody
 
 **Mood:** Industrial, raw | **Best for:** Tech news, developer launches, security products, punk-energy reveals
 
@@ -163,11 +163,11 @@ motion:
   transition: glitch
 ```
 
-Type at angles, overlapping edges, escaping frames. Bold industrial weight. Gritty textures: scan-line effects, glitch artifacts baked into design. Text SLAMS and SHATTERS. Letters scramble then snap to final position. Intentional irregularity — nothing should feel polished.
+Type at angles, overlapping edges, escaping frames. Bold industrial weight. Gritty textures: scan-line effects, glitch artifacts baked into design. Text SLAMS and SHATTERS. Letters scramble then snap to final position. Intentional irregularity - nothing should feel polished.
 
 ---
 
-## 4. Maximalist Type — Paula Scher
+## 4. Maximalist Type - Paula Scher
 
 **Mood:** Loud, kinetic | **Best for:** Big product launches, milestone announcements, high-energy hype videos
 
@@ -209,11 +209,11 @@ motion:
   transition: ridged-burn
 ```
 
-Text IS the visual. Overlapping type layers at different scales and angles, filling 50–80% of frame. Bold saturated colors — maximum contrast. Everything kinetic: slamming, sliding, scaling. 2–3 second rapid-fire scenes. No static moments. Fast arrivals, hard stops.
+Text IS the visual. Overlapping type layers at different scales and angles, filling 50-80% of frame. Bold saturated colors - maximum contrast. Everything kinetic: slamming, sliding, scaling. 2-3 second rapid-fire scenes. No static moments. Fast arrivals, hard stops.
 
 ---
 
-## 5. Data Drift — Refik Anadol
+## 5. Data Drift - Refik Anadol
 
 **Mood:** Futuristic, immersive | **Best for:** AI products, ML platforms, data companies, speculative tech
 
@@ -259,11 +259,11 @@ motion:
   transition: gravitational-lens
 ```
 
-Thin futuristic sans-serif — floating, weightless, minimal. Fluid morphing compositions. Extreme scale shifts (micro → macro). Particles coalesce into numbers. Light traces data paths through the frame. Smooth, continuous, organic. Nothing hard.
+Thin futuristic sans-serif - floating, weightless, minimal. Fluid morphing compositions. Extreme scale shifts (micro -> macro). Particles coalesce into numbers. Light traces data paths through the frame. Smooth, continuous, organic. Nothing hard.
 
 ---
 
-## 6. Soft Signal — Stefan Sagmeister
+## 6. Soft Signal - Stefan Sagmeister
 
 **Mood:** Intimate, warm | **Best for:** Wellness brands, personal stories, lifestyle products, human-centered apps
 
@@ -315,7 +315,7 @@ Handwritten-style or humanist serif fonts. Personal, lowercase, delicate. Close-
 
 ---
 
-## 7. Folk Frequency — Eduardo Terrazas
+## 7. Folk Frequency - Eduardo Terrazas
 
 **Mood:** Cultural, vivid | **Best for:** Consumer apps, food platforms, community products, festive launches
 
@@ -363,11 +363,11 @@ motion:
   transition: swirl-vortex
 ```
 
-Bold warm rounded type. Pattern and repetition — folk art rhythm and density. Layered compositions with rich visual texture. Every frame feels handcrafted. Colorful motion: elements bounce, pop, spin into place with joy. Overshoots feel intentional. Celebratory energy.
+Bold warm rounded type. Pattern and repetition - folk art rhythm and density. Layered compositions with rich visual texture. Every frame feels handcrafted. Colorful motion: elements bounce, pop, spin into place with joy. Overshoots feel intentional. Celebratory energy.
 
 ---
 
-## 8. Shadow Cut — Hans Hillmann
+## 8. Shadow Cut - Hans Hillmann
 
 **Mood:** Dark, cinematic | **Best for:** Security products, dramatic reveals, investigative content, intense launches
 
@@ -412,11 +412,11 @@ motion:
   transition: domain-warp
 ```
 
-Near-monochrome: deep blacks, cold greys, stark white + one blood accent. Sharp angular text like film noir title cards. Heavy contrast, no softness. Elements emerge from darkness — reveal is the narrative. Slow creeping push-ins, dramatic scale reveals. The pause before the hit matters. Domain Warp dissolves reality before the next scene.
+Near-monochrome: deep blacks, cold greys, stark white + one blood accent. Sharp angular text like film noir title cards. Heavy contrast, no softness. Elements emerge from darkness - reveal is the narrative. Slow creeping push-ins, dramatic scale reveals. The pause before the hit matters. Domain Warp dissolves reality before the next scene.
 
 ---
 
-## Mood → Style Guide
+## Mood -> Style Guide
 
 | If the content feels...            | Use...          |
 | ---------------------------------- | --------------- |
@@ -433,11 +433,11 @@ Near-monochrome: deep blacks, cold greys, stark white + one blood accent. Sharp 
 
 ## Creating Custom Styles
 
-These 8 styles are starters — not constraints. Create your own:
+These 8 styles are starters - not constraints. Create your own:
 
 1. **Name it** after a designer, art movement, or cultural reference
-2. **Write YAML tokens** — `colors` (2–5 tokens), `typography` (2–3 scales), `rounded`, `spacing`, `motion` (energy + easing + duration + atmosphere + transition)
-3. **Add prose** — one paragraph describing the feel, what to do, what to avoid
-4. **Token references** — use `{colors.accent}`, `{typography.headline}` in component definitions
+2. **Write YAML tokens** - `colors` (2-5 tokens), `typography` (2-3 scales), `rounded`, `spacing`, `motion` (energy + easing + duration + atmosphere + transition)
+3. **Add prose** - one paragraph describing the feel, what to do, what to avoid
+4. **Token references** - use `{colors.accent}`, `{typography.headline}` in component definitions
 
-The pattern: **YAML tokens (what) → prose rationale (why) → components (how they combine).**
+The pattern: **YAML tokens (what) -> prose rationale (why) -> components (how they combine).**

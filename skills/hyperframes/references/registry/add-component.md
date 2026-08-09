@@ -18,7 +18,7 @@ Open `compositions/components/shimmer-sweep.html` and read the comment header.
 
 ### 3. Wire into your composition
 
-**HTML** — wrap target elements:
+**HTML** - wrap target elements:
 
 ```html
 <div class="shimmer-sweep-target" style="--shimmer-color: rgba(255, 255, 255, 0.5)">
@@ -26,9 +26,9 @@ Open `compositions/components/shimmer-sweep.html` and read the comment header.
 </div>
 ```
 
-**CSS** — paste the `.shimmer-sweep-target` and `.shimmer-mask` rules from the snippet.
+**CSS** - paste the `.shimmer-sweep-target` and `.shimmer-mask` rules from the snippet.
 
-**JS** — paste the auto-injection script (before timeline code):
+**JS** - paste the auto-injection script (before timeline code):
 
 ```js
 document.querySelectorAll(".shimmer-sweep-target").forEach((el) => {
@@ -40,7 +40,7 @@ document.querySelectorAll(".shimmer-sweep-target").forEach((el) => {
 });
 ```
 
-**Timeline** — add the sweep:
+**Timeline** - add the sweep:
 
 ```js
 tl.fromTo(

@@ -18,7 +18,7 @@ brew install exiftool
 ## Analyze a single photo (vision + EXIF)
 
 ```bash
-bash ${CLAUDE_SKILL_DIR}/segment.sh /path/to/photo.jpg
+bash skills/photos/segment.sh /path/to/photo.jpg
 ```
 
 Returns:
@@ -28,19 +28,19 @@ Returns:
 ## Vision only
 
 ```bash
-bash ${CLAUDE_SKILL_DIR}/analyze.sh /path/to/photo.jpg
+bash skills/photos/analyze.sh /path/to/photo.jpg
 ```
 
 ## EXIF only
 
 ```bash
-bash ${CLAUDE_SKILL_DIR}/exif.sh /path/to/photo.jpg
+bash skills/photos/exif.sh /path/to/photo.jpg
 ```
 
 ## Custom vision prompt
 
 ```bash
-bash ${CLAUDE_SKILL_DIR}/analyze.sh /path/to/photo.jpg "What architectural details are visible?"
+bash skills/photos/analyze.sh /path/to/photo.jpg "What architectural details are visible?"
 ```
 
 ## Batch: analyze a folder
@@ -49,7 +49,7 @@ bash ${CLAUDE_SKILL_DIR}/analyze.sh /path/to/photo.jpg "What architectural detai
 for img in /path/to/photos/*.{jpg,jpeg,JPG,JPEG,png,webp}; do
   [ -f "$img" ] || continue
   echo "### $(basename "$img")"
-  bash ${CLAUDE_SKILL_DIR}/segment.sh "$img"
+  bash skills/photos/segment.sh "$img"
   echo ""
 done
 ```
@@ -68,5 +68,5 @@ done
 Set `PHOTOS_MODEL` to use a different ollama model:
 
 ```bash
-PHOTOS_MODEL=gemma4:e2b bash ${CLAUDE_SKILL_DIR}/analyze.sh photo.jpg
+PHOTOS_MODEL=gemma4:e2b bash skills/photos/analyze.sh photo.jpg
 ```

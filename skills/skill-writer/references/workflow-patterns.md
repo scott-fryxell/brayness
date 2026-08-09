@@ -35,8 +35,8 @@ Guide agents through decision points with clear branching:
 ```markdown
 1. Determine the modification type:
 
-   **Creating new content?** → Follow "Creation workflow" below
-   **Editing existing content?** → Follow "Editing workflow" below
+   **Creating new content?** -> Follow "Creation workflow" below
+   **Editing existing content?** -> Follow "Editing workflow" below
 
 2. Creation workflow:
    - Use docx-js library
@@ -76,10 +76,10 @@ Use a validate-fix-repeat pattern for tasks where output quality matters:
 ```
 
 This pattern works for:
-- Code generation (lint → fix → re-lint)
-- Document editing (validate XML → fix → re-validate)
-- Data processing (check schema → fix → re-check)
-- Form filling (validate fields → fix → re-validate)
+- Code generation (lint -> fix -> re-lint)
+- Document editing (validate XML -> fix -> re-validate)
+- Data processing (check schema -> fix -> re-check)
+- Form filling (validate fields -> fix -> re-validate)
 
 ## Plan-Validate-Execute
 
@@ -97,6 +97,6 @@ Benefits:
 - Catches errors before changes are applied
 - Machine-verifiable intermediate output
 - Agent can iterate on the plan without touching originals
-- Clear debugging — error messages point to specific plan entries
+- Clear debugging - error messages point to specific plan entries
 
 Use this pattern for: batch operations, destructive changes, complex data transformations.

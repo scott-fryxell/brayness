@@ -1,13 +1,9 @@
 ---
 name: rust-best-practices
 description: >
-  Guide for writing idiomatic Rust code based on Apollo GraphQL's best practices handbook. Use this skill when:
-  (1) writing new Rust code or functions,
-  (2) reviewing or refactoring existing Rust code,
-  (3) deciding between borrowing vs cloning or ownership patterns,
-  (4) implementing error handling with Result types,
-  (5) optimizing Rust code for performance,
-  (6) writing tests or documentation for Rust projects.
+  Idiomatic Rust guide based on Apollo GraphQL's best practices handbook.
+  Use when writing, reviewing, or refactoring Rust - ownership and borrowing
+  decisions, Result error handling, performance, clippy, and tests.
 license: MIT
 compatibility: Rust 1.70+, Cargo
 metadata:
@@ -43,7 +39,7 @@ future crate needs them.
 ### Borrowing & Ownership
 - Prefer `&T` over `.clone()` unless ownership transfer is required
 - Use `&str` over `String`, `&[T]` over `Vec<T>` in function parameters
-- Small `Copy` types (≤24 bytes) can be passed by value
+- Small `Copy` types (24 bytes or less) can be passed by value
 - Use `Cow<'_, T>` when ownership is ambiguous
 
 ### Error Handling

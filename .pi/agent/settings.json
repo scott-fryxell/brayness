@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.83.0",
+  "lastChangelogVersion": "0.84.1",
   "defaultProvider": "openrouter",
-  "defaultModel": "deepseek/deepseek-v4-pro",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "deepseek/deepseek-v4-flash-0731",
+  "defaultThinkingLevel": "off",
   "packages": [
     "npm:pi-mono-btw",
     "npm:pi-mono-auto-fix",
@@ -11,13 +11,12 @@
     "npm:pi-mono-usage",
     "npm:pi-rewind-hook",
     "npm:pi-autoresearch",
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:pi-subagents-j0k3r"
   ],
   "enabledModels": [
     "openrouter/openrouter/free",
     "openrouter/z-ai/glm-5.2",
-    "openrouter/deepseek/deepseek-v4-flash",
-    "openrouter/deepseek/deepseek-v4-pro",
     "anthropic/claude-fable-5",
     "openrouter/thinkingmachines/inkling",
     "openrouter/moonshotai/kimi-k3",

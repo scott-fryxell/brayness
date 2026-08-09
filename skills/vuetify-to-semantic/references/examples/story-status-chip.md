@@ -45,7 +45,7 @@ span[data-status="flagged"] { background-color: var(--color-secondary); color: w
 
 ## What changed
 
-- `v-chip` → `<span>` - no wrapper component needed
+- `v-chip` -> `<span>` - no wrapper component needed
 - `:color` prop removed - color is driven by `data-status` attribute via CSS
 - `class="text-uppercase"` removed - expressed in Stylus on the element selector
 - `size="small"` removed - size expressed via font-size in Stylus

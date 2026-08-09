@@ -1,192 +1,86 @@
 # Sync Workflow Details
 
-Step-by-step guide for the agent to execute the sync.
+Commands for each step. Run from the dev repo root
+(`/Users/scott/Desktop/brayness`). The copy list lives in `SKILL.md` - if
+this file and SKILL.md disagree, SKILL.md wins and this file needs fixing.
 
-## Step 1: Detect changes
-
-Before syncing, understand what changed in dev since the last sync.
-
-```bash
-# List new/modified skills
-ls -la /brayness/skills/ | head -20
-
-# List new/modified extensions
-ls -la /brayness/extensions/ | head -20
-
-# Check if bin/pi changed
-ls -la /brayness/bin/pi
-
-# Check if package.json changed
-git -C /brayness/work/brayness/ diff HEAD -- package.json | head -30
-```
-
-**Output for agent**: List the major changes detected (new skills, updated extensions, etc).
-
-## Step 2: Create a plan
-
-Show the user what will happen:
-
-```markdown
-# Sync Plan
-
-## Changes detected
-
-- New skill: `skills/example-skill/`
-- Modified: `skills/existing-skill/SKILL.md`
-- Updated: `extensions/my-extension/`
-- No changes to: bin/, settings.json, AGENTS.md
-
-## What will be copied
-
-- Source: /brayness/skills/ → Destination: /brayness/work/brayness/skills/
-- Source: /brayness/extensions/ → Destination: /brayness/work/brayness/extensions/
-- Source: /brayness/bin/pi → Destination: /brayness/work/brayness/bin/pi
-- Source: /brayness/package.json → Destination: /brayness/work/brayness/package.json
-
-## What will be excluded
-
-- .git/ directories (from nested projects like work/agent-browser/)
-- .env files (secrets)
-- node_modules/ (build artifacts)
-- .DS_Store, dist/, other temp files
-
-## Ready to proceed?
-
-- [ ] Review changes above
-- [ ] Confirm you want to sync
-```
-
-**Ask the user to approve** before proceeding.
-
-## Step 3: Execute copy
-
-Use `rsync` for safe, atomic copying with exclusion patterns:
+## Step 1: Detect
 
 ```bash
-rsync -av \
-  --delete \
-  --exclude='.git' \
-  --exclude='.env' \
-  --exclude='node_modules' \
-  --exclude='.DS_Store' \
-  --exclude='dist' \
-  --exclude='.next' \
-  --exclude='build' \
-  /brayness/skills/ /brayness/work/brayness/skills/
+# What differs in the copy-list trees (dirs)
+diff -rq skills work/brayness/skills --exclude=.git --exclude=node_modules | head -30
+diff -rq extensions work/brayness/extensions --exclude=.git --exclude=node_modules | head -30
 
-rsync -av \
-  --delete \
-  --exclude='.git' \
-  --exclude='.env' \
-  --exclude='node_modules' \
-  --exclude='.DS_Store' \
-  /brayness/extensions/ /brayness/work/brayness/extensions/
-
-# NOTE: never rsync sessions/ - conversation transcripts may contain secrets
-# or personal info, and the published repo gitignores the directory.
-
-# Individual files
-cp /brayness/bin/pi /brayness/work/brayness/bin/pi
-cp /brayness/package.json /brayness/work/brayness/package.json
+# Single files
+for f in bin/pi bin/skill-lint package.json AGENTS.md README.md \
+         .ignore .nvmrc \
+         .pi/agent/settings.json .pi/agent/models.json .pi/agent/subagents.json; do
+  cmp -s "$f" "work/brayness/$f" || echo "differs: $f"
+done
 ```
 
-**Output for agent**: "Files copied. Running validation..."
+## Step 2: Plan
+
+Show changed paths, additions, exclusions. Get approval before copying.
+
+## Step 3: Copy
+
+```bash
+rsync -av --delete \
+  --exclude='.git' --exclude='.env*' --exclude='node_modules' \
+  --exclude='.DS_Store' --exclude='dist' --exclude='build' \
+  skills/ work/brayness/skills/
+
+rsync -av --delete \
+  --exclude='.git' --exclude='.env*' --exclude='node_modules' \
+  --exclude='.DS_Store' \
+  extensions/ work/brayness/extensions/
+
+cp .pi/agent/subagents.json work/brayness/.pi/agent/subagents.json
+
+install -m 755 bin/pi work/brayness/bin/pi
+install -m 755 bin/skill-lint work/brayness/bin/skill-lint
+cp package.json AGENTS.md README.md .ignore .nvmrc work/brayness/
+
+mkdir -p work/brayness/.pi/agent/npm
+cp .pi/agent/settings.json .pi/agent/models.json work/brayness/.pi/agent/
+cp .pi/agent/npm/README.md .pi/agent/npm/.gitignore work/brayness/.pi/agent/npm/
+
+# Symlinks (recreate, don't copy targets)
+# pi loads skills via --skill in bin/pi (no symlink). Cursor/Claude Code
+# still read skills through their repo-root symlinks.
+ln -sfn ../../extensions work/brayness/.pi/agent/extensions
+ln -sfn ../skills work/brayness/.cursor/skills
+ln -sfn ../skills work/brayness/.claude/skills
+
+# NEVER copy sessions/, auth.json, trust.json, mcp caches, models-store.json
+```
 
 ## Step 4: Validate
 
-Run all checks from `references/validation.md`.
+Run every check in `references/validation.md`. Stop on any failure.
 
-If any check fails, show the error and stop. Ask user to fix or retry.
-
-If all checks pass, continue to Step 5.
-
-## Step 5: Show git diff
-
-Display what changed in the published repo:
+## Step 5: Review diff
 
 ```bash
-cd /brayness/work/brayness/
-
-# Short summary
-git diff --stat
-
-# Full diff
-git diff
+git -C work/brayness diff --stat
+git -C work/brayness diff
 ```
 
-For large diffs, show:
+Summarize; show key files (package.json, changed SKILL.md files) in full.
 
-- Summary (files added/modified/deleted)
-- Key files like `package.json` and `SKILL.md`s in full
-- Large binary files (skip)
-
-**Output for agent**: Clear, scannable diff that user can review.
-
-## Step 6: Propose commit message
-
-Analyze the changes and suggest a commit:
+## Step 6: Commit (after approval)
 
 ```bash
-cd /brayness/work/brayness/
-
-# Count changes by type
-git diff --stat | tail -1  # shows total files/lines
-
-# Look at package.json to infer version
-grep '"version"' package.json
+git -C work/brayness add -A
+git -C work/brayness commit -m "approved message"
+git -C work/brayness log --oneline -3
 ```
 
-**Suggested commit format:**
+Commit format: one line on what shipped (skills added/updated, config
+changes), body listing the notable paths.
 
-```
-Release: brayness-sync update [date]
+## If a step fails
 
-- Added: list new skills/extensions
-- Updated: list modified skills/extensions
-- Changed: package.json or config updates
-
-Synced from dev /brayness/ → published work/brayness/
-```
-
-**Ask the user** to review and approve the message before committing.
-
-## Step 7: Commit
-
-When user approves:
-
-```bash
-cd /brayness/work/brayness/
-git add -A
-git commit -m "your approved message"
-```
-
-**Output for agent**:
-
-```
-[main abc1234] Release: brayness-sync update...
- X files changed, Y insertions(+), Z deletions(-)
-```
-
-Show the commit hash and summary.
-
-## Cleanup
-
-After successful commit:
-
-```bash
-cd /brayness/work/brayness/
-git log --oneline -5  # Show recent commits
-```
-
-**Output for agent**: "Sync complete. work/brayness/ is now up to date and ready to tag/release."
-
-## Troubleshooting steps
-
-If any step fails, show the error clearly and suggest:
-
-1. Check the file system (does the source exist?)
-2. Review the exclude patterns (is something being filtered by accident?)
-3. Check git status in work/brayness/ (are there conflicts?)
-4. Ask user if they want to skip this sync or fix and retry
-
-Never proceed if validation fails.
+Show the error, name the failing path, and stop. Fix in dev, re-run from
+Step 1. Never commit a failed validation.

@@ -1,6 +1,6 @@
 # Transition Catalog
 
-Hard rules, scene template, and routing to implementation code. Read the reference file for the transition type you need — don't load all of them.
+Hard rules, scene template, and routing to implementation code. Read the reference file for the transition type you need - don't load all of them.
 
 ## Hard Rules (CSS)
 
@@ -8,7 +8,7 @@ These cause real bugs if violated.
 
 **Scene visibility:** Scene 1 visible by default (no `opacity: 0`). Scenes 2+ have `opacity: 0` on the CONTAINER div. GSAP reveals them. No visibility shim (`timedEls`).
 
-**Fonts:** Just write the `font-family` you want — the compiler embeds supported fonts automatically via `@font-face` with inline data URIs. No need for `<link>` tags or `@import`. Works in all contexts including sandboxed iframes.
+**Fonts:** Just write the `font-family` you want - the compiler embeds supported fonts automatically via `@font-face` with inline data URIs. No need for `<link>` tags or `@import`. Works in all contexts including sandboxed iframes.
 
 **Element structure:** No `class="clip"` on scene divs in standalone compositions. Only the root div gets `data-composition-id`/`data-start`/`data-duration`.
 
@@ -18,7 +18,7 @@ These cause real bugs if violated.
 
 **Z-index:** Gravity drop, zoom out, diagonal split need outgoing scene ON TOP (`zIndex: 10`) so it exits while revealing the new scene behind (`zIndex: 1`).
 
-**Page burn:** Content burns with the page — no falling debris. Hide scene1 via `tl.set` at burn end, NEVER `onComplete` (not reversible). `onUpdate` must restore `clipPath: "none"` when `wp <= 0` for rewind support. Incoming scene fades from black at 90% through burn.
+**Page burn:** Content burns with the page - no falling debris. Hide scene1 via `tl.set` at burn end, NEVER `onComplete` (not reversible). `onUpdate` must restore `clipPath: "none"` when `wp <= 0` for rewind support. Incoming scene fades from black at 90% through burn.
 
 **Clock wipe:** 9-point polygon with intermediate edge positions. Step through 4 quadrants with separate tweens.
 
@@ -90,7 +90,7 @@ Shader setup, WebGL init, capture, and fragment shaders are handled by `@hyperfr
 </html>
 ```
 
-Every transition follows: position new scene → animate outgoing → swap → animate incoming → clean up overlays.
+Every transition follows: position new scene -> animate outgoing -> swap -> animate incoming -> clean up overlays.
 
 ## CSS Transitions
 
@@ -114,4 +114,4 @@ All code examples use `old` for the outgoing scene-inner selector and `new` for 
 
 ## Shader Transitions
 
-WebGL shader transitions are provided by `@hyperframes/shader-transitions` (`packages/shader-transitions/`). The package handles setup, capture, WebGL init, render loop, and GSAP integration. Read the package source for available shaders and API — do not copy raw GLSL manually.
+WebGL shader transitions are provided by `@hyperframes/shader-transitions` (`packages/shader-transitions/`). The package handles setup, capture, WebGL init, render loop, and GSAP integration. Read the package source for available shaders and API - do not copy raw GLSL manually.

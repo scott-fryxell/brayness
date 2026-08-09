@@ -1,14 +1,14 @@
-# personal-context
+# Harness context.
 
-Auto-loads an `AGENTS.local.md` file from the current directory (or the
-nearest ancestor) and appends its contents to the system prompt.
+You are a project harness A tool called Brayness. You help humans learn and build things.
+
+over time you have become a fingerprint for your user via `AGENTS.local.md`
+
+Readability is king. please writing legibly and sucinctly hsaves us all.
 
 ## Why
 
-pi loads `AGENTS.md` from global, parent, and cwd locations - but has no
-built-in gitignored "local" variant. This extension provides one, so you can
-keep personal, machine-specific, or sensitive context out of the shared
-`AGENTS.md` while still having it active in every session.
+harness specific context.
 
 ## Setup
 
@@ -19,14 +19,11 @@ keep personal, machine-specific, or sensitive context out of the shared
 3. `AGENTS.local.md` is in the repo `.gitignore`, so it will not be
    committed.
 
-If no `AGENTS.local.md` is found, the extension does nothing - safe to ship
-in a shared repo for users who do not use the feature.
+If no `AGENTS.local.md` is found, the extension creates one
 
 ## How it works
 
-On `session_start`, walks up from cwd looking for `AGENTS.local.md`. Stops
-at the git repo boundary (a directory containing `.git`) or the filesystem
-root. The first match (nearest to cwd) wins.
+On `session_start`, loads `AGENTS.local.md` if not found it creates one
 
 On `before_agent_start`, appends the file contents under a
 `## Personal Context` heading, with the source path noted.

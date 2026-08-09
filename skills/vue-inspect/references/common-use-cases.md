@@ -32,7 +32,7 @@ Verified live in `work/realness` `/colors` against `Colors.vue`:
 })()
 ```
 
-Returned `{ icon_index: 0, roles_weights_open: false }` — the actual live values,
+Returned `{ icon_index: 0, roles_weights_open: false }` - the actual live values,
 confirmed against the component's real `ref(0)`/`ref(false)` declarations.
 
 ## 2. Getting the whole component tree for a page
@@ -46,11 +46,11 @@ App
 ├── working-border
 └── support-layout
     ├── site-nav
-    │   └── LogoAsLink → RouterLink → icon
+    │   └── LogoAsLink -> RouterLink -> icon
     └── RouterView
         └── Colors
-            ├── icon ×6
-            └── preview-mark ×N → icon
+            ├── icon x6
+            └── preview-mark xN -> icon
 ```
 
 Useful for confirming a component is actually mounted where you think it is, or for
@@ -95,7 +95,7 @@ find(app._instance, 'preview-mark', 0).props   // { name: 'star', label: 'water 
 
 ## 5. Confirming a component actually mounted (or didn't)
 
-If `find(...)` returns `null`, the component isn't in the current render — check a
+If `find(...)` returns `null`, the component isn't in the current render - check a
 `v-if` condition, a route mismatch, or a typo in the component name. This is faster
 than adding a breakpoint or a mount-lifecycle `console.log`, especially for
 conditionally-rendered components that only appear after an interaction:
@@ -108,7 +108,7 @@ agent-browser eval "(() => { /* find(...) */ })()"
 ## 6. Catching state mid-animation or mid-transition
 
 Since `eval` reads the actual live Proxy, not a snapshot taken at page-load, you can
-sample state at a specific moment — e.g. mid-CSS-transition, right after a click,
+sample state at a specific moment - e.g. mid-CSS-transition, right after a click,
 or during a timed `setTimeout`/`requestAnimationFrame` sequence:
 
 ```bash
@@ -133,5 +133,5 @@ document.querySelector('#app').__vue_app__.version
 ```
 
 Combine with checking `instance.type.__file` presence (only populated in dev builds)
-to confirm whether you're looking at a dev or production build — see
+to confirm whether you're looking at a dev or production build - see
 [troubleshooting-workarounds.md](troubleshooting-workarounds.md#7-component-names-are-missing-or-mangled-in-production-builds).

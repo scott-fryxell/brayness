@@ -5,29 +5,18 @@ metadata:
   category: Design & Frontend
   pairs-with:
   - skill: motion-systems
-    reason: Sibling skill — motion-systems covers mechanism selection and tokens; this covers multi-element sequencing and choreography
+    reason: Sibling skill - motion-systems covers mechanism selection and tokens; this covers multi-element sequencing and choreography
   - skill: user-interface
-    reason: Choreography serves UX goals — attention, hierarchy, continuity
+    reason: Choreography serves UX goals - attention, hierarchy, continuity
   - skill: realness-design
-    reason: Animation decisions for realness projects defer to this skill and motion-systems
+    reason: Design-system skills defer animation decisions to the motion pair
 ---
 
 # Motion Choreography Patterns
 
-## Overview
-
-This skill focuses on choreography: how multiple moving parts coordinate in time and space to communicate interaction intent.
-
-Use it alongside foundational motion guidance to create motion systems that are legible, consistent, and production-ready across complex UI flows.
-
-## When to Use
-
-- Designing sequences with more than one animated element
-- Building staggered reveals, list transitions, and layout mode changes
-- Implementing modal, drawer, popover, and overlay interaction stacks
-- Handling add/remove/reorder scenarios in dense interfaces
-- Mapping user input (tap, drag, scroll) to motion responses
-- Auditing whether motion hierarchy matches product hierarchy
+How multiple moving parts coordinate in time and space to communicate
+interaction intent. Mechanism selection and tokens live in `motion-systems`;
+this skill owns sequencing.
 
 ## Choreography Model
 
@@ -95,6 +84,6 @@ When reduced motion is requested:
 
 ## Output Contract
 
-Use the same five-section format as `motion-systems`: Intent → Motion Spec → Implementation → Accessibility Fallback → QA Checklist. Replace "Intent" with "Storyboard" (who moves, in what order, and why) when orchestrating multiple elements.
+Use the same five-section format as `motion-systems`: Intent -> Motion Spec -> Implementation -> Accessibility Fallback -> QA Checklist. Replace "Intent" with "Storyboard" (who moves, in what order, and why) when orchestrating multiple elements.
 
 QA reference: [references/QA_STORYBOARD_CHECKLIST.md](references/QA_STORYBOARD_CHECKLIST.md)

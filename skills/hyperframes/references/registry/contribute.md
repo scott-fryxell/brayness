@@ -6,15 +6,15 @@ Guide the user from idea to merged PR for a new registry block or component.
 ## Workflow
 
 ```
-1. Clarify → 2. Scaffold → 3. Build → 4. Validate → 5. Preview → 6. Ship
+1. Clarify -> 2. Scaffold -> 3. Build -> 4. Validate -> 5. Preview -> 6. Ship
 ```
 
 ### Step 1: Clarify
 
 Ask what they're building. The registry has two item types:
 
-- **Block** (`registry/blocks/`, type `hyperframes:block`) — a full standalone composition with fixed dimensions and duration. Caption styles, VFX effects, title cards, lower thirds.
-- **Component** (`registry/components/`, type `hyperframes:component`) — a reusable snippet with no fixed dimensions or duration. CSS effects, text treatments, overlays that adapt to any composition size.
+- **Block** (`registry/blocks/`, type `hyperframes:block`) - a full standalone composition with fixed dimensions and duration. Caption styles, VFX effects, title cards, lower thirds.
+- **Component** (`registry/components/`, type `hyperframes:component`) - a reusable snippet with no fixed dimensions or duration. CSS effects, text treatments, overlays that adapt to any composition size.
 
 Then ask:
 
@@ -107,13 +107,13 @@ Apply the correct template based on type. See [templates.md](templates.md) for c
 - Overflow: call `window.__hyperframes.fitTextFontSize()` on every group
 - Karaoke: highlight active word via `tl.to(wordEl, { color/scale }, WORDS[wi].start)`
 - Hard kill: `tl.set(groupEl, { opacity: 0, visibility: "hidden" }, g.end)` on EVERY group
-- **Never use `tl.from(el, { opacity: 0 })` at the same position as `tl.set(el, { opacity: 1 })`** — the from clobbers the set. Use `tl.to` instead.
+- **Never use `tl.from(el, { opacity: 0 })` at the same position as `tl.set(el, { opacity: 1 })`** - the from clobbers the set. Use `tl.to` instead.
 
 **Per-character animation** (typewriter, scramble):
 
 - Wrap each character in `<span>` with ID `{prefix}-ch-{group}-{char}`
 - Stagger via `tl.set` at computed intervals from word timestamps
-- Cursors/decorative elements: use `tl.set` at intervals — NOT CSS animation (not seekable)
+- Cursors/decorative elements: use `tl.set` at intervals - NOT CSS animation (not seekable)
 
 **Positioning variants:**
 
@@ -124,7 +124,7 @@ Apply the correct template based on type. See [templates.md](templates.md) for c
 #### VFX blocks (Three.js)
 
 - Use `three@0.147.0` from CDN (global script)
-- `tl.eventCallback("onUpdate", renderScene); renderScene();` — NO requestAnimationFrame
+- `tl.eventCallback("onUpdate", renderScene); renderScene();` - NO requestAnimationFrame
 - State proxy pattern: GSAP animates plain JS object, render function reads it
 - Seeded PRNG (`mulberry32`) for randomness
 
@@ -132,7 +132,7 @@ Apply the correct template based on type. See [templates.md](templates.md) for c
 
 - `data-composition-id` MUST match `window.__timelines["id"]`
 - All element IDs prefixed with block abbreviation
-- `gsap.timeline({ paused: true })` — always paused
+- `gsap.timeline({ paused: true })` - always paused
 - No `Math.random()`, no `Date.now()`
 
 ### Step 4: Validate
@@ -155,7 +155,7 @@ hyperframes snapshot --at "1.0,3.0,5.0,7.0"
 npx hyperframes publish
 ```
 
-**Catalog preview image** — The catalog card uses a PNG at `docs/images/catalog/{kind}/{name}.png` (where `{kind}` is `blocks` or `components`). Generate it from a snapshot, then:
+**Catalog preview image** - The catalog card uses a PNG at `docs/images/catalog/{kind}/{name}.png` (where `{kind}` is `blocks` or `components`). Generate it from a snapshot, then:
 
 - **HeyGen internal contributors:** run `scripts/upload-docs-images.sh` (requires AWS profile `engineering-767398024897`)
 - **External contributors:** attach the preview MP4 to your PR description. A maintainer will generate and upload the catalog image before merging.
@@ -173,7 +173,7 @@ git checkout -b feat/registry-{name}
 # 2. Format HTML
 npx oxfmt registry/{kind}/{name}/*.html
 
-# 3. Update registry/registry.json — add entry to the "items" array:
+# 3. Update registry/registry.json - add entry to the "items" array:
 #    { "name": "{name}", "type": "hyperframes:block" }  (or "hyperframes:component")
 
 # 4. Generate catalog docs page
@@ -186,7 +186,7 @@ npx hyperframes publish
 git add registry/{kind}/{name}/ registry/registry.json docs/catalog/
 
 # 7. Commit
-git commit -m "feat(registry): add {name} — {one sentence}"
+git commit -m "feat(registry): add {name} - {one sentence}"
 
 # 8. Push and open PR with hyperframes.dev link
 git push origin feat/registry-{name}
@@ -197,8 +197,8 @@ gh pr create --title "feat(registry): {name}" --body "preview: {hyperframes.dev-
 
 ## Quality Gate
 
-- [ ] `hyperframes lint` → 0 errors
-- [ ] `hyperframes validate` → 0 console errors
+- [ ] `hyperframes lint` -> 0 errors
+- [ ] `hyperframes validate` -> 0 console errors
 - [ ] `npx oxfmt --check` passes
 - [ ] `registry/registry.json` updated with new entry
 - [ ] `scripts/generate-catalog-pages.ts` run (docs page generated)

@@ -6,7 +6,7 @@ All blur transitions scale with energy. See SKILL.md "Blur Intensity by Energy" 
 
 Content becomes fully abstract before resolving. The heaviest blur transition.
 
-**Calm (default for this type — it's inherently heavy):**
+**Calm (default for this type - it's inherently heavy):**
 
 ```js
 tl.to(old, { filter: "blur(30px)", scale: 1.08, duration: 0.5, ease: "power1.in" }, T);

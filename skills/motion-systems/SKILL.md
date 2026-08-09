@@ -5,7 +5,7 @@ metadata:
   category: Design & Frontend
   pairs-with:
   - skill: motion-choreography-patterns
-    reason: Sibling skill — this covers mechanism selection and tokens; choreography covers multi-element sequencing
+    reason: Sibling skill - this covers mechanism selection and tokens; choreography covers multi-element sequencing
   - skill: user-interface
     reason: UX decides what state changes need motion; this skill decides how they move
   - skill: realness-design
@@ -14,31 +14,9 @@ metadata:
 
 # CSS Motion Systems
 
-## Overview
-
-This skill provides a production-oriented motion system for web UI work. It is focused on interaction clarity, performance, and accessibility, not decorative animation.
-
-Use this skill to design and implement motion that:
-
-- Preserves spatial continuity between states
-- Communicates hierarchy and focus
-- Uses performant properties (`transform`, `opacity`)
-- Provides reduced-motion alternatives
-- Uses View Transitions API intentionally for page/state continuity
-
-## When to Use
-
-- Building or refining interaction motion in product UI
-- Choosing between CSS transition, keyframes, WAAPI, and View Transitions API
-- Creating route transitions or list/detail shared element transitions
-- Defining motion tokens (duration, distance, easing) for a design system
-- Reviewing motion quality, performance, and accessibility
-
-## When NOT to Use
-
-- Static content with no interaction/state change
-- Cases where motion increases cognitive load without adding clarity
-- Situations requiring immediate state updates where any delay harms usability
+Production-oriented motion for web UI - interaction clarity, performance,
+and accessibility, not decoration. Skip motion entirely when it adds
+cognitive load or delays a state update that must feel instant.
 
 ## Motion Goals
 
@@ -199,14 +177,7 @@ When using this skill, produce these five sections:
 4. **Accessibility Fallback** - reduced-motion and unsupported API behavior
 5. **QA Checklist** - performance, usability, and cross-device verification
 
-## Starter Tokens
+## References
 
-Use these baseline tokens and adapt to the product:
-
-See: [references/MOTION_TOKENS.css](references/MOTION_TOKENS.css)
-
-## Review Checklist
-
-Before shipping, run through:
-
-See: [references/MOTION_REVIEW_CHECKLIST.md](references/MOTION_REVIEW_CHECKLIST.md)
+- [references/MOTION_TOKENS.css](references/MOTION_TOKENS.css) - starter tokens; adapt to the product
+- [references/MOTION_REVIEW_CHECKLIST.md](references/MOTION_REVIEW_CHECKLIST.md) - run before shipping

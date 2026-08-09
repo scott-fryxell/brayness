@@ -2,7 +2,7 @@
 
 ### Glitch
 
-RGB-tinted overlays (NOT multiply blend — use normal blending at 35% opacity) jitter with large offsets. Scene itself also jitters.
+RGB-tinted overlays (NOT multiply blend - use normal blending at 35% opacity) jitter with large offsets. Scene itself also jitters.
 
 ```js
 tl.set("#glitch-r", { opacity: 1, x: 40, y: -8 }, T);

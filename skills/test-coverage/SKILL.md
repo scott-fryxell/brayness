@@ -5,32 +5,24 @@ description: Write Vitest specs for Vue 3 JavaScript (Vite Plus, happy-dom, @vue
 
 # Tests, coverage, and refactor risk
 
-Canonical reference: **`work/realness`** (`@realness.online/web`).
+Canonical reference: **`work/realness`** (`@realness.online/web`). Run every
+command below from that directory.
 
 Match `tests/**/*.spec.js` there. Do not introduce Jest, React Testing Library, TypeScript test files, or co-located `*.test.ts`.
 
 Two jobs:
 
-1. **Write specs** — patterns below; detail in [references/web-realness.md](references/web-realness.md)
-2. **Prioritize** — `npm run test:risk` before refactors; not a blind chase for 100%
-
-## When to use
-
-- Adding or extending specs for `src/**`
-- Mocking `@/use/*`, Firebase, `idb-keyval`, or browser APIs
-- Mounting Vue components; fixing failing `vp test`
-- User asks what to test, what to refactor, or where risk is highest
-- `test:coverage` or coverage thresholds fail CI / pre-commit
-- After `npx fallow` reports cycles, complexity, or unused files
+1. **Write specs** - patterns below; detail in [references/web-realness.md](references/web-realness.md)
+2. **Prioritize** - `npm run test:risk` before refactors; not a blind chase for 100%
 
 ## Stack
 
 | Piece | What we use |
 | --- | --- |
-| Runner | Vite Plus — `vp test`, `import … from 'vite-plus/test'` |
+| Runner | Vite Plus - `vp test`, `import ... from 'vite-plus/test'` |
 | Engine | Vitest (`vite-plus-test` alias) |
 | DOM | `happy-dom` |
-| Vue | `@vue/test-utils` — prefer `shallowMount` |
+| Vue | `@vue/test-utils` - prefer `shallowMount` |
 | Language | JavaScript + JSDoc |
 | Coverage | V8, 80% global, `all: true` |
 
@@ -51,9 +43,9 @@ Pre-commit: `vp check --fix && vp run type && vp test run`.
 ### Layout
 
 - All specs in `tests/**/*.spec.js` mirroring `src/` (not co-located)
-- `describe('@/utils/itemid', …)` or view/component name
-- `@/` → `src/`; `@@/` → `tests/mocks/`
-- Config: `vite.config.js` → `test` block; setup: `tests/setup.js`, `tests/mocks/`
+- `describe('@/utils/itemid', ...)` or view/component name
+- `@/` -> `src/`; `@@/` -> `tests/mocks/`
+- Config: `vite.config.js` -> `test` block; setup: `tests/setup.js`, `tests/mocks/`
 
 ### Skeleton
 
@@ -72,7 +64,7 @@ describe('@/utils/example', () => {
 })
 ```
 
-`snake_case`, no semicolons, test behavior not internals.
+Test behavior, not internals (JS style: AGENTS.md).
 
 ### Key patterns
 
@@ -83,7 +75,7 @@ describe('@/utils/example', () => {
 | Vue components | `shallowMount`, stubs, semantic queries | `tests/components/account/as-notifications.spec.js` |
 | Composable mocks | `vi.hoisted()` refs for `vi.mock` closures | `tests/views/Account.spec.js` |
 | Composables | `with_setup()` + `mount(defineComponent(...))` | `tests/use/poster.spec.js` |
-| Async errors | `await expect(…).rejects.toThrow()` | `tests/utils/itemid.spec.js` |
+| Async errors | `await expect(...).rejects.toThrow()` | `tests/utils/itemid.spec.js` |
 
 **Hoisted mocks** (reset `.value` in `beforeEach`):
 
@@ -103,7 +95,7 @@ vi.mock('@/use/push', () => ({
 
 Global mocks: `tests/mocks/default.js`, `tests/mocks/browser/*`. Per-spec mocks only when behavior differs.
 
-`mockReset: false` in config — mocks keep implementations; clear call history each test.
+`mockReset: false` in config - mocks keep implementations; clear call history each test.
 
 ### What we do not do
 
@@ -130,8 +122,8 @@ npm run test:risk:report
 
 Runs `scripts/prioritize-refactor-risk.js`.
 
-- **Delete or wire** — fallow `unused-files`; do not add tests
-- **Test before refactor** — ranked by coverage gap + CRAP + fan-in + hotspots + P0/P1
+- **Delete or wire** - fallow `unused-files`; do not add tests
+- **Test before refactor** - ranked by coverage gap + CRAP + fan-in + hotspots + P0/P1
 
 Options: `--threshold 80 --top 25 --root .`
 
@@ -159,7 +151,7 @@ npx fallow --format json
 | --- | --- |
 | **test-first** | Add/extend specs before refactor |
 | **refactor-with-tests** | Some coverage; shore up hot paths then refactor |
-| **delete-or-wire** | Fallow unused file — entry point or delete |
+| **delete-or-wire** | Fallow unused file - entry point or delete |
 | **defer** | Low product risk |
 
 Priority: **P0** IDs/auth/sync/payments, **P1** posters/potrace/3D, **P2** rest.
@@ -178,19 +170,19 @@ When behavior changes, update `.fallowrc.json`, [references/fallow-integration.m
 # Refactor risk (coverage + fallow)
 
 ## Delete or wire
-- …
+- ...
 
 ## Test before refactor
-| file | pri | cov% | risk | … |
+| file | pri | cov% | risk | ... |
 
 ## Workflow
 ```
 
 ## Judgment principles
 
-- Unused in fallow graph → **delete or wire**, not test
-- High complexity + low coverage + high fan-in → **test-first**
-- Cycles (`itemid` ↔ `serverless`, `Directory`) → characterize with tests, then break
+- Unused in fallow graph -> **delete or wire**, not test
+- High complexity + low coverage + high fan-in -> **test-first**
+- Cycles (`itemid` <-> `serverless`, `Directory`) -> characterize with tests, then break
 - Nuclear triad: typecheck + lint + tests; coverage supports refactors
 - Match existing spec style; extend specs over new files
 - Excluded from coverage: `src/main.js`, `src/router.js`, `src/wasm/**`
@@ -205,7 +197,7 @@ When behavior changes, update `.fallowrc.json`, [references/fallow-integration.m
 
 ## References
 
-- [web-realness.md](references/web-realness.md) — stack, patterns, file map, judgment
-- [fallow-integration.md](references/fallow-integration.md) — `.fallowrc.json`
+- [web-realness.md](references/web-realness.md) - stack, patterns, file map, judgment
+- [fallow-integration.md](references/fallow-integration.md) - `.fallowrc.json`
 - Vitest: https://vitest.dev/
 - Vue Test Utils: https://test-utils.vuejs.org/

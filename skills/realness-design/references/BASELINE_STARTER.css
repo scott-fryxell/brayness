@@ -36,7 +36,7 @@
  * ------------------------------------------------------------------- */
 :root {
   --unit: 1rem;
-  --measure: calc(var(--unit) * 22);  /* ≈ 22rem, tune to your font */
+  --measure: calc(var(--unit) * 22);  /* ~ 22rem, tune to your font */
   --gate: calc(var(--unit) * 32);
   --limit: calc(var(--unit) * 48);
 }

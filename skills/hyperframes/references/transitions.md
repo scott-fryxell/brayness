@@ -7,11 +7,11 @@ A transition tells the viewer how two scenes relate. A crossfade says "this cont
 These are non-negotiable for every multi-scene composition:
 
 1. **Every composition uses transitions.** No exceptions. Scenes without transitions feel like jump cuts.
-2. **Every scene uses entrance animations.** Elements animate IN via `gsap.from()` — opacity, position, scale, etc. No scene should pop fully-formed onto screen.
-3. **Exit animations are BANNED** except on the final scene. Do NOT use `gsap.to()` to animate elements out before a transition fires. The transition IS the exit. Outgoing scene content must be fully visible when the transition starts — the transition handles the visual handoff.
+2. **Every scene uses entrance animations.** Elements animate IN via `gsap.from()` - opacity, position, scale, etc. No scene should pop fully-formed onto screen.
+3. **Exit animations are BANNED** except on the final scene. Do NOT use `gsap.to()` to animate elements out before a transition fires. The transition IS the exit. Outgoing scene content must be fully visible when the transition starts - the transition handles the visual handoff.
 4. **Final scene exception:** The last scene MAY fade elements out (e.g., fade to black at the end of the composition). This is the only scene where exit animations are allowed.
 
-## Energy → Primary Transition
+## Energy -> Primary Transition
 
 | Energy                                   | CSS Primary                  | Shader Primary                       | Accent                         | Duration  | Easing                 |
 | ---------------------------------------- | ---------------------------- | ------------------------------------ | ------------------------------ | --------- | ---------------------- |
@@ -21,14 +21,14 @@ These are non-negotiable for every multi-scene composition:
 
 Pick ONE primary (60-70% of scene changes) + 1-2 accents. Never use a different transition for every scene.
 
-## Mood → Transition Type
+## Mood -> Transition Type
 
 Think about what the transition _communicates_, not just what it looks like.
 
 | Mood                     | Transitions                                                                                                                          | Why it works                                                                                |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | **Warm / inviting**      | Light leak, blur crossfade, focus pull, film burn · **Shader:** thermal distortion, light leak, cross-warp morph                     | Soft edges, warm color washes. Nothing sharp or mechanical.                                 |
-| **Cold / clinical**      | Squeeze, zoom out, blinds, shutter, grid dissolve · **Shader:** gravitational lens                                                   | Content transforms mechanically — compressed, shrunk, sliced, gridded.                      |
+| **Cold / clinical**      | Squeeze, zoom out, blinds, shutter, grid dissolve · **Shader:** gravitational lens                                                   | Content transforms mechanically - compressed, shrunk, sliced, gridded.                      |
 | **Editorial / magazine** | Push slide, vertical push, diagonal split, shutter · **Shader:** whip pan                                                            | Like turning a page or slicing a layout. Clean directional movement.                        |
 | **Tech / futuristic**    | Grid dissolve, staggered blocks, blinds, chromatic aberration · **Shader:** glitch, chromatic split                                  | Grid dissolve is the core "data" transition. Shader glitch adds posterization + scan lines. |
 | **Tense / edgy**         | Glitch, VHS, chromatic aberration, ripple · **Shader:** ridged burn, glitch, domain warp                                             | Instability, distortion, digital breakdown. Ridged burn adds sharp lightning-crack edges.   |
@@ -42,9 +42,9 @@ Think about what the transition _communicates_, not just what it looks like.
 | Position                   | Use                                                                        | Why                                                   |
 | -------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------- |
 | **Opening**                | Your most distinctive transition. Match the mood. 0.4-0.6s                 | Sets the visual language for the entire piece.        |
-| **Between related points** | Your primary transition. Consistent. 0.3s                                  | Don't distract — the content is continuing.           |
-| **Topic change**           | Something different from your primary. Staggered blocks, shutter, squeeze. | Signals "new section" — the viewer's brain resets.    |
-| **Climax / hero reveal**   | Your boldest accent. Fastest or most dramatic.                             | This is the payoff — spend your best transition here. |
+| **Between related points** | Your primary transition. Consistent. 0.3s                                  | Don't distract - the content is continuing.           |
+| **Topic change**           | Something different from your primary. Staggered blocks, shutter, squeeze. | Signals "new section" - the viewer's brain resets.    |
+| **Climax / hero reveal**   | Your boldest accent. Fastest or most dramatic.                             | This is the payoff - spend your best transition here. |
 | **Wind-down**              | Return to gentle. Blur crossfade, crossfade. 0.5-0.7s                      | Let the viewer exhale after the climax.               |
 | **Outro**                  | Slowest, simplest. Crossfade, color dip to black. 0.6-1.0s                 | Closure. Don't introduce new energy at the end.       |
 
@@ -63,7 +63,7 @@ Think about what the transition _communicates_, not just what it looks like.
 | `snappy`   | 0.2s     | `power4.inOut`    |
 | `smooth`   | 0.4s     | `power2.inOut`    |
 | `gentle`   | 0.6s     | `sine.inOut`      |
-| `dramatic` | 0.5s     | `power3.in` → out |
+| `dramatic` | 0.5s     | `power3.in` -> out |
 | `instant`  | 0.15s    | `expo.inOut`      |
 | `luxe`     | 0.7s     | `power1.inOut`    |
 
@@ -77,10 +77,10 @@ Read [transitions/catalog.md](transitions/catalog.md) for GSAP code and hard rul
 | Scale/zoom  | Zoom through, zoom out, gravity drop, 3D flip                  | Cinematic zoom, gravitational lens                                        |
 | Reveal/mask | Circle iris, diamond iris, diagonal split, clock wipe, shutter | SDF iris                                                                  |
 | Dissolve    | Crossfade, blur crossfade, focus pull, color dip               | Cross-warp morph, domain warp                                             |
-| Cover       | Staggered blocks, horizontal blinds, vertical blinds           | —                                                                         |
+| Cover       | Staggered blocks, horizontal blinds, vertical blinds           | -                                                                         |
 | Light       | Light leak, overexposure burn, film burn                       | Light leak (shader), thermal distortion                                   |
 | Distortion  | Glitch, chromatic aberration, ripple, VHS tape                 | Glitch (shader), chromatic split, ridged burn, ripple waves, swirl vortex |
-| Pattern     | Grid dissolve, morph circle                                    | —                                                                         |
+| Pattern     | Grid dissolve, morph circle                                    | -                                                                         |
 
 ## Transitions That Don't Work in CSS
 
@@ -88,9 +88,9 @@ Avoid: star iris, tilt-shift, lens flare, hinge/door. See catalog.md for why.
 
 ## CSS vs Shader
 
-CSS transitions animate scene containers with opacity, transforms, clip-path, and filters. Shader transitions composite both scene textures per-pixel on a WebGL canvas — they can warp, dissolve, and morph in ways CSS cannot.
+CSS transitions animate scene containers with opacity, transforms, clip-path, and filters. Shader transitions composite both scene textures per-pixel on a WebGL canvas - they can warp, dissolve, and morph in ways CSS cannot.
 
-**Both are first-class options.** Shaders are provided by the `@hyperframes/shader-transitions` package — import from the package instead of writing raw GLSL. CSS transitions are simpler to set up. Choose based on the effect you want, not based on which is easier.
+**Both are first-class options.** Shaders are provided by the `@hyperframes/shader-transitions` package - import from the package instead of writing raw GLSL. CSS transitions are simpler to set up. Choose based on the effect you want, not based on which is easier.
 
 When a composition uses shader transitions, ALL transitions in that composition should be shader-based (the WebGL canvas replaces DOM-based scene switching). Don't mix CSS and shader transitions in the same composition.
 
@@ -109,4 +109,4 @@ These rules only apply to shader transition compositions. CSS-only compositions 
 
 ## Visual Pattern Warning
 
-Avoid transitions that create visible repeating geometric patterns — grids of tiles, hexagonal cells, uniform dot arrays, evenly-spaced blob circles. These look cheap and artificial regardless of the math behind them. Organic noise (FBM, domain warping) is good because it's irregular. Geometric repetition is bad because the eye instantly sees the grid.
+Avoid transitions that create visible repeating geometric patterns - grids of tiles, hexagonal cells, uniform dot arrays, evenly-spaced blob circles. These look cheap and artificial regardless of the math behind them. Organic noise (FBM, domain warping) is good because it's irregular. Geometric repetition is bad because the eye instantly sees the grid.

@@ -2,19 +2,21 @@
 
 Apply repository registration and quality checks before completion.
 
-## Registration checklist
+## Registration checklist (brayness)
 
-1. Create/update `plugins/sentry-skills/skills/<name>/SKILL.md`.
-2. Add/update canonical skill in `README.md` Available Skills table (alphabetical; exclude alias/symlink entries).
-3. Add/update `Skill(sentry-skills:<name>)` in `.claude/settings.json`.
-4. Add/update skill allowlist in `plugins/sentry-skills/skills/claude-settings-audit/SKILL.md`.
+1. Create/update `skills/<name>/SKILL.md` at the repo root `skills/` folder.
+2. Nothing else to wire: pi, Cursor, and Claude Code all load `skills/`
+   through symlinks (`.pi/agent/skills`, `.cursor/skills`, `.claude/skills`).
+3. Frontmatter must be valid YAML (`name`, `description`); quote the
+   description if it contains a colon.
 
 ## Validation checklist
 
 1. Run:
 
 ```bash
-uv run plugins/sentry-skills/skills/skill-writer/scripts/quick_validate.py <path/to/skill-directory> --strict-depth
+./bin/skill-lint
+python3 skills/skill-writer/scripts/quick_validate.py skills/<name> --strict-depth
 ```
 
 2. Confirm for authoring/generator skills:
@@ -30,7 +32,6 @@ uv run plugins/sentry-skills/skills/skill-writer/scripts/quick_validate.py <path
 
 4. Confirm evaluation outputs as applicable:
 - lightweight qualitative summary (recommended default)
-- qualitative depth rubric status for API/workaround/use-case/gap handling (recommended for integration/documentation and skill-authoring)
 - deeper eval or quantitative summary only if user requested benchmark mode or risk warrants it
 
 5. Reject shallow handoffs that omit required artifacts.

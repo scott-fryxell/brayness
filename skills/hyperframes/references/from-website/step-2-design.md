@@ -15,9 +15,9 @@ DESIGN.md is NOT the creative plan. The STORYBOARD (Step 4) drives creative dire
 5-10 key colors with HEX values from `capture/extracted/tokens.json` and their roles:
 
 ```
-- **Primary Surface**: `#020204` — deep black background
-- **Primary Content**: `#FFFFFF` — high-purity white for text and borders
-- **Accent Warm**: `#FB923C` — orange for CTAs and highlights
+- **Primary Surface**: `#020204` - deep black background
+- **Primary Content**: `#FFFFFF` - high-purity white for text and borders
+- **Accent Warm**: `#FB923C` - orange for CTAs and highlights
 ```
 
 Include semantic colors if the site uses color to differentiate product areas.
@@ -58,9 +58,9 @@ For each, note the distinctive visual treatment (border-radius, spacing, hover b
 - Keep imagery desaturated with dark gradients for text readability
 
 ### Don'ts
-- Do not use bright solid background colors — stay in "The Void"
-- Do not use standard drop shadows — use radial glow or bloom effects
-- Do not use sharp high-speed animations — all motion should be fluid
+- Do not use bright solid background colors - stay in "The Void"
+- Do not use standard drop shadows - use radial glow or bloom effects
+- Do not use sharp high-speed animations - all motion should be fluid
 ```
 
 ## Rules
@@ -68,9 +68,9 @@ For each, note the distinctive visual treatment (border-radius, spacing, hover b
 - Use **exact HEX values** from `capture/extracted/tokens.json`. Do not approximate.
 - Name components by what you see in the screenshot, not generic terms.
 - Keep it under 100 lines. This is a cheat sheet, not a design system document.
-- No "Style Prompt" section — the storyboard handles creative direction.
-- No "Assets" section — `capture/extracted/asset-descriptions.md` already covers this.
-- No "Motion" section — the storyboard specifies motion per-beat.
+- No "Style Prompt" section - the storyboard handles creative direction.
+- No "Assets" section - `capture/extracted/asset-descriptions.md` already covers this.
+- No "Motion" section - the storyboard specifies motion per-beat.
 
 ## Example
 
@@ -122,9 +122,9 @@ Soulscape 2026 is a cinematic, "high-signal" digital experience that positions i
 
 ### Don'ts
 
-- Do not use bright solid background colors — the page must remain in "The Void."
-- Do not use standard drop shadows — use radial glow or bloom effects instead.
-- Do not use sharp high-speed animations — all motion should be fluid and breathing.
+- Do not use bright solid background colors - the page must remain in "The Void."
+- Do not use standard drop shadows - use radial glow or bloom effects instead.
+- Do not use sharp high-speed animations - all motion should be fluid and breathing.
 ```
 
 Here is a contrasting example from a light, corporate brand to show the range:

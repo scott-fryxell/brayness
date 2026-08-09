@@ -8,7 +8,7 @@ in the H6 library:
 - `2026/260207-170338/260207-170338.als` (Live 12.1.5) - rejected as
   template (effect racks, 7-8 clips per track) but used to confirm the
   newer schema and relative-path conventions
-- `2026/260607-124031/260607-124031.als` (Live 12.4.3) - donor for
+- `2026/260115-162443/260115-162443.als` (Live 12.4.3) - donor for
   expanded Scott 2024 Effect Rack Devices XML (paths still reference
   Ableton User Library
   `Presets/Audio Effects/Audio Effect Rack/Scott 2024 Effect Rack.adg`)

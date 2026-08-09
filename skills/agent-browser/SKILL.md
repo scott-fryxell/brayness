@@ -18,7 +18,7 @@ This file is a discovery stub, not the usage guide. Before running any
 `agent-browser` command, load the actual workflow content from the CLI:
 
 ```bash
-agent-browser skills get core             # start here — workflows, common patterns, troubleshooting
+agent-browser skills get core             # start here - workflows, common patterns, troubleshooting
 agent-browser skills get core --full      # include full command reference and templates
 ```
 
@@ -40,15 +40,6 @@ agent-browser skills get agentcore         # AWS Bedrock AgentCore cloud browser
 
 Run `agent-browser skills list` to see everything available on the
 installed version.
-
-## Why agent-browser
-
-- Fast native Rust CLI, not a Node.js wrapper
-- Works with any AI agent (Cursor, Claude Code, Codex, Continue, Windsurf, etc.)
-- Chrome/Chromium via CDP with no Playwright or Puppeteer dependency
-- Accessibility-tree snapshots with element refs for reliable interaction
-- Sessions, authentication vault, state persistence, video recording
-- Specialized skills for Electron apps, Slack, exploratory testing, cloud providers
 
 ## Observability Dashboard
 

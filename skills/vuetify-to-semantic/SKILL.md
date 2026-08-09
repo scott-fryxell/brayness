@@ -14,7 +14,7 @@ metadata:
 
 # Vuetify to Semantic
 
-Refactor a seeq-app Vue page or component from Vuetify to semantic HTML5, Schema.org microdata, and Stylus element selectors. Follows the `@web/` pattern: no utility classes, no replacement component library, styles applied via element and attribute selectors only.
+Refactor a seeq-app Vue page or component from Vuetify to semantic HTML5, Schema.org microdata, and Stylus element selectors. Follows the `work/realness` pattern: no utility classes, no replacement component library, styles applied via element and attribute selectors only.
 
 ## Process
 
@@ -31,15 +31,15 @@ Read the full `.vue` file. Identify:
 Use `references/component-map.md` for the full mapping.
 
 Key decisions:
-- `v-row` / `v-col` → remove both; apply CSS Grid to the parent element directly
-- `v-card` → `<article>` with the correct Schema.org `itemtype` for the entity
-- `v-sheet` → `<section>` or `<aside>` based on role
-- `v-list` / `v-list-item` → `<ul>` / `<li>` only when content is truly a list; use `<article>` per item when each stands alone
-- `v-btn` with `to=` → `<a>`; without `to=` → `<button>`
-- `v-icon` → `<svg class="icon"><use href="/icons.svg#name" /></svg>`
-- `v-dialog` → `<dialog>`
-- `v-navigation-drawer` → `<nav>`
-- `v-app-bar` → `<header>`
+- `v-row` / `v-col` -> remove both; apply CSS Grid to the parent element directly
+- `v-card` -> `<article>` with the correct Schema.org `itemtype` for the entity
+- `v-sheet` -> `<section>` or `<aside>` based on role
+- `v-list` / `v-list-item` -> `<ul>` / `<li>` only when content is truly a list; use `<article>` per item when each stands alone
+- `v-btn` with `to=` -> `<a>`; without `to=` -> `<button>`
+- `v-icon` -> `<svg class="icon"><use href="/icons.svg#name" /></svg>`
+- `v-dialog` -> `<dialog>`
+- `v-navigation-drawer` -> `<nav>`
+- `v-app-bar` -> `<header>`
 
 ### 3. Add Schema.org microdata
 
@@ -65,8 +65,8 @@ Output a clean `<template>` block:
 
 ### 5. Replace Vuetify composables
 
-- `useDisplay` → `use_display` composable (`src/use/display.js`) using `matchMedia`
-- `useTheme` → `use_theme` composable (`src/use/theme.js`) reading `prefers-color-scheme`
+- `useDisplay` -> `use_display` composable (create `src/use/display.js`, matching realness's `src/use/` layout) using `matchMedia`
+- `useTheme` -> `use_theme` composable (create `src/use/theme.js`) reading `prefers-color-scheme`
 
 Update the `<script setup>` import accordingly.
 

@@ -21,7 +21,7 @@ Do not hand-write track XML (tried, abandoned - too much schema detail).
 Instead cut real projects into pieces and substitute:
 
 1. header = everything through `<Tracks>` from the **12.4 schema donor**
-   (`SCHEMA_GLOB` = `2026/260607-124031/*.als`)
+   (`SCHEMA_GLOB` = `2026/260115-162443/*.als`)
 2. track template = one `<AudioTrack>` from the **12.0 shell**
    (`TEMPLATE_GLOB` = `2024/24-08-28/*.als`) - single clip, empty Devices;
    rack fragment injected per track at generate time
@@ -63,8 +63,8 @@ matched as exact quoted `Value="..."` so path contents are untouched.
 
 Beat math at `--tempo` (default 120): arrangement `CurrentEnd` =
 `sec * tempo / 60`. On the 12.0 track shell, `OutMarker` /
-`HiddenLoopEnd` / `RightTime` follow Live's saved shape (`≈ sec`), and
-`LoopEnd ≈ CurrentEnd / 2`. Clips stay `IsWarped=false`. Writing the
+`HiddenLoopEnd` / `RightTime` follow Live's saved shape (`~ sec`), and
+`LoopEnd ~ CurrentEnd / 2`. Clips stay `IsWarped=false`. Writing the
 full beat length into every end field made clips ~2x the audio.
 Warp-marker pair is retargeted so `BeatTime/SecTime` matches `--tempo`.
 H6 WAVs have no BPM metadata - pass `--tempo` or set tempo in Live.
@@ -101,7 +101,7 @@ Glue, macros). The `.adg` is a different schema (`GroupDevicePreset` /
 Source of truth for injection:
 
 - Fragment file: `references/scott-2024-effect-rack-devices.xml`
-- Extracted from `H6/2026/260607-124031/260607-124031.als` (Live 12.4.3)
+- Extracted from `H6/2026/260115-162443/260115-162443.als` (Live 12.4.3)
 - `Path` / `RelativePath` still point at Ableton User Library:
   `Presets/Audio Effects/Audio Effect Rack/Scott 2024 Effect Rack.adg`
 - Do not read a skill-local `.adg` copy
