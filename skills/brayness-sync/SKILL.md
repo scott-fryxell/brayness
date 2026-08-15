@@ -11,19 +11,19 @@ mirror stays clean and publishable. Every sync is reviewed - no blind sync.
 
 ## Copy list (source of truth)
 
-| Path                                                  | Why                                     |
-| ----------------------------------------------------- | --------------------------------------- |
-| `skills/`                                             | skill catalog                           |
-| `extensions/`                                         | extensions                              |
-| `bin/pi`, `bin/skill-lint`                            | CLI wrappers                            |
-| `package.json`                                        | app dependency + scripts                |
-| `AGENTS.md`, `CLAUDE.md`, `README.md`                 | agent docs                              |
-| `.gitignore`, `.ignore`, `.nvmrc`                     | repo config                             |
-| `.pi/agent/settings.json`, `.pi/agent/models.json`    | pi config                               |
-| `.pi/agent/npm/README.md`, `.pi/agent/npm/.gitignore` | add-on signposts                        |
+| Path                                                  | Why                                         |
+| ----------------------------------------------------- | ------------------------------------------- |
+| `skills/`                                             | skill catalog                               |
+| `extensions/`                                         | extensions                                  |
+| `bin/pi`                                              | CLI wrapper                                 |
+| `package.json`                                        | app dependency + scripts                    |
+| `AGENTS.md`, `CLAUDE.md`, `README.md`                 | agent docs                                  |
+| `.gitignore`, `.ignore`, `.nvmrc`                     | repo config                                 |
+| `.pi/agent/settings.json`, `.pi/agent/models.json`    | pi config                                   |
+| `.pi/agent/npm/README.md`, `.pi/agent/npm/.gitignore` | add-on signposts                            |
 | `.pi/agent/subagents.json`                            | subagent config (defaults, tools, profiles) |
-| `.pi/agent/extensions`                                | symlink                                |
-| `.cursor/skills`, `.claude/skills`                    | repo-root symlinks (Cursor/Claude Code) |
+| `.pi/agent/extensions`                                | symlink                                     |
+| `.cursor/skills`, `.claude/skills`                    | repo-root symlinks (Cursor/Claude Code)     |
 
 Never copy: `.pi/agent/` anything else (auth, trust, caches, models-store,
 sessions, npm/node_modules), `.env*`, nested `.git/`, `node_modules/`,

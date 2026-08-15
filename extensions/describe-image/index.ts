@@ -11,7 +11,7 @@
  *   instead of raw image data it can't process.
  * - Registers a `describe_image` tool for manual use (path/URL based).
  *
- * Setup: mlx_vlm.server must be running on port 8080 (launchd: com.scott.mlx-vlm).
+ * Setup: mlx_vlm.server must be running on port 8080 (launchd: com.scott.mlx-vision-server).
  * Model: gemma-4-e2b-it (MLX, 4-bit).
  */
 
@@ -124,7 +124,7 @@ export default function describeImageExtension(pi: ExtensionAPI) {
 			} catch (err: unknown) {
 				const msg = err instanceof Error ? err.message : String(err)
 				return {
-					content: [{ type: "text", text: `Vision analysis failed: ${msg}.\nIs the MLX vision server running? (launchctl start com.scott.mlx-vlm)` }],
+					content: [{ type: "text", text: `Vision analysis failed: ${msg}.\nIs the MLX vision server running? (launchctl start com.scott.mlx-vision-server)` }],
 					isError: true,
 				}
 			}

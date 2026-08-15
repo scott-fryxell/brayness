@@ -18,8 +18,8 @@ Layout and dependencies: `README.md`.
   in `bin/pi` (no symlink); Cursor and Claude Code use the `.cursor/skills` and
   `.claude/skills` symlinks pointing at it. Edit skills in `skills/`, never in
   `.pi/`.
-- Cursor: open the project folder when coding (`work/realness`); the repo root
-  only for skills. Nested `.git` dirs in a repo-root window break agent search.
+- Cursor: open the project folder when coding (`work/realness`); the repo root only for skills. Nested `.git` dirs in a repo-root window break agent search.
+- Start work in the project's work directory (`work/<project>`), not the repo root; move to the root directory only for skills, harness config, or cross-project work. `work/<project>` is where code, tests, and builds live.
 - Memory: durable learnings go in `AGENTS.local.md` Learnings (see the
   `episodic-memory` skill); past-session transcripts via the `previous-work`
   skill.
@@ -42,6 +42,7 @@ words.
 - Default to bullets, tables, short chunks, clear headings; prose when depth is
   wanted.
 - About two to six sentences unless asked to go deeper.
+- State the point plainly; don't build explanations as thesis-antithesis-synthesis.
 
 ### Typography (ASCII only)
 
@@ -64,12 +65,13 @@ words.
   citing.
 - Say plainly when something is unknown.
 - Verify cheapest-first: run structural/deterministic checks before expensive
-  ones, and never let the producer grade its own homework. See the `verify` and
+  ones, and never let the producer grade its own homework. See the `critic` and
   `episodic-memory` skills.
 
 ## Code
 
-Readability is king. Smallest change that satisfies the ask.
+Readability is king. Smallest change that satisfies the ask. Use simple
+language; build up to long explanations.
 
 ### Quality
 

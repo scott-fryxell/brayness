@@ -15,8 +15,10 @@ Apply repository registration and quality checks before completion.
 1. Run:
 
 ```bash
-./bin/skill-lint
-python3 skills/skill-writer/scripts/quick_validate.py skills/<name> --strict-depth
+uv run skills/skill-writer/scripts/quick_validate.py skills/<name> --strict-depth
+
+# Sweep every skill
+for d in skills/*/; do uv run skills/skill-writer/scripts/quick_validate.py "$d"; done
 ```
 
 2. Confirm for authoring/generator skills:

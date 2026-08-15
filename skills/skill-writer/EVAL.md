@@ -1,36 +1,43 @@
 # Skill Writer Eval Prompts
 
-Use these prompts when deeper evaluation matters (high-risk, regression tracking, or explicit request).
-These are optional guidance artifacts, not required outputs for every skill.
+Reusable eval templates for when deeper evaluation matters (high-risk skill,
+regression tracking, or explicit request). Optional guidance artifacts, not
+required output for every skill.
 
-## Integration/Documentation Depth Eval
+Fill the `{{placeholders}}` in a template, save it to a file, and run it through
+whichever harness you are in (see Runbook).
+
+## Template: integration/documentation depth eval
 
 ```text
-Use `sentry-skills:skill-writer` to synthesize a new skill named `pi-agent-integration-eval` for working with `@mariozechner/pi-agent-core` as a consumer in downstream libraries.
+Use the `skill-writer` skill to synthesize a new skill named `{{skill-name}}`
+for working with `{{subject}}` as a consumer in downstream projects.
 
-Primary objective: produce a non-surface-level integration skill that covers API surface, known issues/workarounds, and common real-world use cases.
+Primary objective: produce a non-surface-level integration skill covering API
+surface, known issues/workarounds, and common real-world use cases.
 
 Scope:
-- Source root: `<pi-mono-root>/packages/agent`
-- This is for USING Pi in another library, not editing Pi internals.
+- Source root: `{{source-root}}`
+- This is for USING {{subject}}, not editing its internals.
 
 Mandatory source retrieval:
 - README, CHANGELOG
-- `src/index.ts`, `src/agent.ts`, `src/agent-loop.ts`, `src/types.ts`, `src/proxy.ts`
-- `test/agent.test.ts`, `test/agent-loop.test.ts`
-- In-repo usage scan for key APIs (for example Agent, agentLoop, streamProxy, convertToLlm, transformContext, steer, followUp, continue)
+- Public entry points and type definitions
+- Test files covering the primary APIs
+- Usage scan for the key APIs: {{key-apis}}
 
 Required depth artifacts:
 - `references/api-surface.md`
 - `references/common-use-cases.md` (at least 6 concrete downstream use cases)
-- `references/troubleshooting-workarounds.md` (at least 8 failure modes with fixes/workarounds)
+- `references/troubleshooting-workarounds.md` (at least 8 failure modes with fixes)
 - `references/integration-patterns.md` (happy path, robust variant, anti-pattern + correction)
 
 Depth gates (hard fail if missing):
-- Coverage matrix includes: API surface, options/config, runtime lifecycle, event semantics, queue semantics, failure modes, version variance, downstream usage patterns.
+- Coverage matrix includes: API surface, options/config, runtime lifecycle,
+  event semantics, failure modes, version variance, downstream usage patterns.
 - Any partial coverage includes explicit next retrieval actions.
 - Qualitative depth rubric includes pass/fail for API/workaround/use-case/gap handling.
-- Run validator and report output.
+- Run the validator and report its output.
 
 Output sections:
 1) Summary
@@ -39,48 +46,44 @@ Output sections:
 4) Open Gaps
 ```
 
-## Pass/Fail Rubric
+## Pass/fail rubric
 
 Pass only if all required artifacts exist and have the requested depth.
-Fail if API mapping is partial, workaround guidance is shallow, or use cases are generic and not actionable.
-Fail if completion is claimed with unresolved high-impact gaps and no next retrieval actions.
+Fail if API mapping is partial, workaround guidance is shallow, or use cases are
+generic and not actionable.
+Fail if completion is claimed with unresolved high-impact gaps and no next
+retrieval actions.
 
-## Optional Deep-Eval Pattern
+## Runbook
 
-When you need stronger confidence, run this sequence:
-
-1. Use a fixed prompt set (positives + negatives).
-2. Capture deterministic traces (`codex exec --json`).
-3. Apply rubric/schema checks where practical (`--output-schema`).
-4. Compare baseline vs candidate and report deltas.
-
-## Isolated Eval Runbook
-
-Run the eval in a temporary isolated workspace (copy of repo in `/tmp`):
+Run the eval against a throwaway copy so a bad run cannot touch the real skills.
 
 ```bash
-EVAL_DIR=/tmp/sentry-skills-eval-run
-rm -rf "$EVAL_DIR"
-mkdir -p "$EVAL_DIR"
-rsync -a "<repo-root>/"/ "$EVAL_DIR"/
-
-codex exec \
-  --ephemeral \
-  --full-auto \
-  --sandbox workspace-write \
-  --skip-git-repo-check \
-  --add-dir "<pi-mono-root>" \
-  -C "$EVAL_DIR" \
-  "$(cat <eval-prompt-file>)"
+EVAL_DIR=/tmp/skill-writer-eval-run
+rm -rf "$EVAL_DIR" && mkdir -p "$EVAL_DIR"
+rsync -a --exclude=.git --exclude=node_modules ./ "$EVAL_DIR"/
+cd "$EVAL_DIR"
 ```
 
-Where `<eval-prompt-file>` contains the exact eval prompt from this file.
+Then invoke the harness you are in, non-interactively, with the filled-in
+template as the prompt:
 
-Validate the generated skill output:
+| Harness     | Command                                          |
+| ----------- | ------------------------------------------------ |
+| pi          | `./bin/pi -p --no-session "$(cat eval-prompt.txt)"` |
+| Claude Code | `claude -p "$(cat eval-prompt.txt)"`             |
+| Cursor      | `cursor-agent -p "$(cat eval-prompt.txt)"`       |
+
+For deterministic traces to diff baseline against candidate, add the harness's
+JSON output flag (pi: `--mode json`).
+
+Validate whatever the run produced:
 
 ```bash
-uv run "<repo-root>/plugins/sentry-skills/skills/skill-writer/scripts/quick_validate.py" \
-  /tmp/sentry-skills-eval-run/plugins/sentry-skills/skills/pi-agent-integration-eval \
+uv run skills/skill-writer/scripts/quick_validate.py \
+  skills/{{skill-name}} \
   --skill-class integration-documentation \
   --strict-depth
 ```
+
+Nothing from `$EVAL_DIR` lands in the repo until you have read the diff.

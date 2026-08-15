@@ -12,7 +12,7 @@ diff -rq skills work/brayness/skills --exclude=.git --exclude=node_modules | hea
 diff -rq extensions work/brayness/extensions --exclude=.git --exclude=node_modules | head -30
 
 # Single files
-for f in bin/pi bin/skill-lint package.json AGENTS.md README.md \
+for f in bin/pi package.json AGENTS.md README.md \
          .ignore .nvmrc \
          .pi/agent/settings.json .pi/agent/models.json .pi/agent/subagents.json; do
   cmp -s "$f" "work/brayness/$f" || echo "differs: $f"
@@ -39,7 +39,6 @@ rsync -av --delete \
 cp .pi/agent/subagents.json work/brayness/.pi/agent/subagents.json
 
 install -m 755 bin/pi work/brayness/bin/pi
-install -m 755 bin/skill-lint work/brayness/bin/skill-lint
 cp package.json AGENTS.md README.md .ignore .nvmrc work/brayness/
 
 mkdir -p work/brayness/.pi/agent/npm

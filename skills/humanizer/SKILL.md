@@ -394,6 +394,14 @@ When you see these, lean toward leaving the prose alone — they are evidence of
 
 **File mode.** The user points at a file. Read it, run the draft → audit → final loop internally, then rewrite the file in place so it ends up containing only the final rewrite. Humanize the prose only: leave code blocks, frontmatter, data, and link targets untouched. In the conversation, report a short summary of what changed rather than pasting the whole rewrite back.
 
+**iA Writer mode.** The user is drafting in iA Writer, which expects one line per paragraph rather than hard 80-column wraps. After finishing a file-mode rewrite, unwrap it:
+
+```zsh
+scripts/wrap.sh writer <file>.md
+```
+
+`scripts/wrap.sh nvim <file>.md` hard wraps it again at 80, which is what `work/nvim/lua/plugins/prettier.lua` does on save. Saving in nvim undoes the writer wrapping, so run `writer` last.
+
 **Embedded mode.** Another task or agent is using this skill as one step of a larger job (a PR description, a commit message, a doc). Run the loop internally and output only the final text. No draft, no audit bullets, no summary. The caller wants prose, not ceremony.
 
 ## Process and Output

@@ -387,14 +387,16 @@ def validate_skill(
             "Consider moving content to references/."
         )
 
-    # Check for common issues.
-    if "references/" in content or "scripts/" in content:
-        refs_dir = skill_path / "references"
-        scripts_dir = skill_path / "scripts"
-        if "references/" in content and not refs_dir.exists():
-            errors.append("SKILL.md references 'references/' but directory does not exist")
-        if "scripts/" in content and not scripts_dir.exists():
-            errors.append("SKILL.md references 'scripts/' but directory does not exist")
+    # Check for common issues. Only a path naming a file inside the skill's own
+    # references/ or scripts/ counts. A bare substring match also fires on
+    # unrelated words ("agent-transcripts/"), on a sibling skill's dir
+    # ("../other-skill/references/x.md"), and on prose about some other
+    # project's scripts/ dir - none of which say anything about this skill.
+    for dir_name in ("references", "scripts"):
+        if not re.search(rf"(?<![\w./-])(?:\./)?{dir_name}/[\w.-]+", content):
+            continue
+        if not (skill_path / dir_name).exists():
+            errors.append(f"SKILL.md references '{dir_name}/' but directory does not exist")
 
     # If SOURCES.md is referenced, ensure it exists and includes provenance schema headers.
     if "SOURCES.md" in content:

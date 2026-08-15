@@ -29,7 +29,7 @@ Use this only when:
 Suggested workflow:
 
 1. Build a prompt set with positives, implicit triggers, and negatives.
-2. Capture deterministic run traces (for example `codex exec --json`).
+2. Capture deterministic run traces via your harness's JSON output (pi: `--mode json`, Claude Code / Cursor: `--output-format stream-json`).
 3. Apply machine-checkable rubric/schema checks (for example `--output-schema` where applicable).
 4. Compare baseline vs updated behavior and report deltas.
 
