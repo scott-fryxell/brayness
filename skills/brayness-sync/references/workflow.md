@@ -8,14 +8,14 @@ this file and SKILL.md disagree, SKILL.md wins and this file needs fixing.
 
 ```bash
 # What differs in the copy-list trees (dirs)
-diff -rq skills work/brayness/skills --exclude=.git --exclude=node_modules | head -30
-diff -rq extensions work/brayness/extensions --exclude=.git --exclude=node_modules | head -30
+diff -rq skills work/sync/skills --exclude=.git --exclude=node_modules | head -30
+diff -rq extensions work/sync/extensions --exclude=.git --exclude=node_modules | head -30
 
 # Single files
 for f in bin/pi package.json AGENTS.md README.md \
          .ignore .nvmrc \
          .pi/agent/settings.json .pi/agent/models.json .pi/agent/subagents.json; do
-  cmp -s "$f" "work/brayness/$f" || echo "differs: $f"
+  cmp -s "$f" "work/sync/$f" || echo "differs: $f"
 done
 ```
 
@@ -29,28 +29,28 @@ Show changed paths, additions, exclusions. Get approval before copying.
 rsync -av --delete \
   --exclude='.git' --exclude='.env*' --exclude='node_modules' \
   --exclude='.DS_Store' --exclude='dist' --exclude='build' \
-  skills/ work/brayness/skills/
+  skills/ work/sync/skills/
 
 rsync -av --delete \
   --exclude='.git' --exclude='.env*' --exclude='node_modules' \
   --exclude='.DS_Store' \
-  extensions/ work/brayness/extensions/
+  extensions/ work/sync/extensions/
 
-cp .pi/agent/subagents.json work/brayness/.pi/agent/subagents.json
+cp .pi/agent/subagents.json work/sync/.pi/agent/subagents.json
 
-install -m 755 bin/pi work/brayness/bin/pi
-cp package.json AGENTS.md README.md .ignore .nvmrc work/brayness/
+install -m 755 bin/pi work/sync/bin/pi
+cp package.json AGENTS.md README.md .ignore .nvmrc work/sync/
 
-mkdir -p work/brayness/.pi/agent/npm
-cp .pi/agent/settings.json .pi/agent/models.json work/brayness/.pi/agent/
-cp .pi/agent/npm/README.md .pi/agent/npm/.gitignore work/brayness/.pi/agent/npm/
+mkdir -p work/sync/.pi/agent/npm
+cp .pi/agent/settings.json .pi/agent/models.json work/sync/.pi/agent/
+cp .pi/agent/npm/README.md .pi/agent/npm/.gitignore work/sync/.pi/agent/npm/
 
 # Symlinks (recreate, don't copy targets)
 # pi loads skills via --skill in bin/pi (no symlink). Cursor/Claude Code
 # still read skills through their repo-root symlinks.
-ln -sfn ../../extensions work/brayness/.pi/agent/extensions
-ln -sfn ../skills work/brayness/.cursor/skills
-ln -sfn ../skills work/brayness/.claude/skills
+ln -sfn ../../extensions work/sync/.pi/agent/extensions
+ln -sfn ../skills work/sync/.cursor/skills
+ln -sfn ../skills work/sync/.claude/skills
 
 # NEVER copy sessions/, auth.json, trust.json, mcp caches, models-store.json
 ```
@@ -62,8 +62,8 @@ Run every check in `references/validation.md`. Stop on any failure.
 ## Step 5: Review diff
 
 ```bash
-git -C work/brayness diff --stat
-git -C work/brayness diff
+git -C work/sync diff --stat
+git -C work/sync diff
 ```
 
 Summarize; show key files (package.json, changed SKILL.md files) in full.
@@ -71,9 +71,9 @@ Summarize; show key files (package.json, changed SKILL.md files) in full.
 ## Step 6: Commit (after approval)
 
 ```bash
-git -C work/brayness add -A
-git -C work/brayness commit -m "approved message"
-git -C work/brayness log --oneline -3
+git -C work/sync add -A
+git -C work/sync commit -m "approved message"
+git -C work/sync log --oneline -3
 ```
 
 Commit format: one line on what shipped (skills added/updated, config

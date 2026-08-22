@@ -32,6 +32,5 @@ The scripts, `scripts/`, and `tools/` dirs are still authoritative - read `packa
 
 ## Curated files known to exist
 
-- `work/realness/.tooling.md` - build/deploy/test-risk heavy. See `test:coverage`+`fallow:report`, `test:fail-fast`, `verify`, `deploy`/`ship`.
 - `work/seeq-app/.tooling.md` - heavy logging (`logs:errors`, `logs:search`), admin data tools, emulators, deploy.
 - `work/realness-ops/.tooling.md` - thin proxy to `functions/` + ops tools (`traffic`, `ads`).

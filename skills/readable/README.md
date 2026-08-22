@@ -1,4 +1,9 @@
-# Humanizer
+# Readable
+
+Vendored from `blader/humanizer` and renamed to `readable` here; the install
+commands below are upstream's and still use the original name.
+
+## Upstream
 
 [![skills.sh installs](https://skills.sh/b/blader/humanizer)](https://skills.sh/blader/humanizer)
 

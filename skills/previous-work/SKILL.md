@@ -6,7 +6,7 @@ description: Search past agent sessions across all three harnesses (pi, Cursor, 
 # Previous Work
 
 Raw transcript archaeology across pi, Cursor, and Claude Code. For distilled
-lessons, `AGENTS.local.md` Learnings is already in context (episodic-memory
+lessons, `AGENTS.local.md` Learnings is already in context (`memory`
 skill) - check it first; only dig transcripts when you need what actually
 happened.
 
@@ -50,11 +50,10 @@ recency when the user says "yesterday" or "last week".
 ## Ground rules
 
 - Transcripts contain secrets and personal info. Quote the minimum that
-  answers the question; never paste whole files into a response or commit
-  them anywhere.
+  answers the question, and leave it in the transcript otherwise.
 - Cite where the answer came from (which store, which file, the date) so the
   user can reopen the session.
 - Not found is a real answer: say which stores you searched and with what
   terms instead of guessing.
 - Durable lessons discovered while digging go to `AGENTS.local.md` Learnings
-  (episodic-memory skill) so the next search is unnecessary.
+  (`memory` skill) so the next search is unnecessary.

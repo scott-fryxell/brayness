@@ -1,11 +1,11 @@
 ---
 name: brayness-sync
-description: Sync changes from dev brayness/ to the published work/brayness/ git mirror. Copies skills, extensions, bin, agent docs, and selected .pi/agent config while excluding secrets, sessions, nested .git dirs, and node_modules. Validates the copy, shows git diffs, and proposes commits. Use for "sync brayness", "prepare release", or after major skill/extension changes.
+description: Sync changes from dev brayness/ to the published `work/sync/` git mirror. Copies skills, extensions, bin, agent docs, and selected .pi/agent config while excluding secrets, sessions, nested .git dirs, and node_modules. Validates the copy, shows git diffs, and proposes commits. Use for "sync brayness", "prepare release", or after major skill/extension changes.
 ---
 
 # Brayness Sync
 
-One-way copy: dev root -> `work/brayness/` (the git-tracked mirror for
+One-way copy: dev root -> `work/sync/` (the git-tracked mirror for
 releases). Dev has working chaos (nested repos, secrets, sessions); the
 mirror stays clean and publishable. Every sync is reviewed - no blind sync.
 

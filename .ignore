@@ -34,8 +34,10 @@ models-store.json
 # Kept in dev /brayness only, never synced to the published repo.
 sessions/
 
-# Plans (scratch working area)
-plans/
+# Plans (scratch working area) - searchable on purpose
+
+# Scratch output - screenshots, intermediate files, throwaway scripts
+artifacts/
 
 # Editor
 .vscode/

@@ -1,9 +1,9 @@
 ---
-name: h6-to-als
+name: zoom-to-ableton
 description: Generate Ableton Live Set (.als) files for Zoom H6 recording sessions in batch, without opening Live. Use when the user wants to "set up Ableton projects from H6 recordings", "generate .als files", "auto-create Live Sets for sessions", turn Zoom H6 multitrack folders into mixable projects, backfill missing .als files, add Scott 2024 Effect Rack to generated tracks, or when a generated .als fails to load and the generator needs fixing.
 ---
 
-# H6 to ALS
+# Zoom to Ableton
 
 Batch-generate one Ableton Live Set per Zoom H6 session folder. Each WAV
 becomes an audio track with an arrangement clip at bar 1, color from the

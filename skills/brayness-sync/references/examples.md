@@ -2,21 +2,21 @@
 
 ## Happy path: Routine sync with new skill
 
-**Scenario**: You created a new skill `brayness-sync` and updated `personal-context` extension. Ready to release.
+**Scenario**: You created a new skill `brayness-sync` and updated `agents-local` extension. Ready to release.
 
 **Agent detects**:
 
 ```
 Changes found:
 - New skill: skills/brayness-sync/SKILL.md (+ references/, ...)
-- Modified: extensions/personal-context/index.ts
+- Modified: extensions/agents-local/index.ts
 - No changes to bin/, .pi/agent/settings.json, AGENTS.md
 ```
 
 **Plan**:
 
 ```
-Will copy: skills/ (new brayness-sync included), extensions/ (personal-context updated)
+Will copy: skills/ (new brayness-sync included), extensions/ (agents-local updated)
 Excluding: .git/, .env, node_modules/, etc.
 Impact: 15 files added, 3 modified, 0 deleted
 ```
@@ -29,18 +29,18 @@ Impact: 15 files added, 3 modified, 0 deleted
 skills/brayness-sync/SKILL.md                  | 150 ++++++++
 skills/brayness-sync/references/validation.md  | 60 +++
 skills/brayness-sync/references/workflow.md    | 200 +++++++++
-extensions/personal-context/index.ts             | 25 +-
+extensions/agents-local/index.ts             | 25 +-
 4 files changed, 434 insertions(+), 10 deletions(-)
 ```
 
 **Proposed commit**:
 
 ```
-Release: brayness-sync + personal-context update
+Release: brayness-sync + agents-local update
 
-- Added: brayness-sync skill (copy changes, validate, commit to work/brayness/)
-- Updated: personal-context extension
-- Synced: dev -> work/brayness/ for release
+- Added: brayness-sync skill (copy changes, validate, commit to work/sync/)
+- Updated: agents-local extension
+- Synced: dev -> work/sync/ for release
 
 Ready to tag v1.2.0
 ```
@@ -57,13 +57,13 @@ Ready to tag v1.2.0
 
 ```
 ✗ SECURITY: .env file found
-  Location: /brayness/work/brayness/skills/my-skill/.env
+  Location: /Users/scott/Desktop/brayness/work/sync/skills/my-skill/.env
 
 Action: STOP - Do not commit. Secret file was copied.
 
 Steps:
-1. Fix: Delete work/brayness/skills/my-skill/.env
-2. Delete: dev /brayness/skills/my-skill/.env
+1. Fix: Delete work/sync/skills/my-skill/.env
+2. Delete: dev /Users/scott/Desktop/brayness/skills/my-skill/.env
 3. Commit secret removal to dev history
 4. Retry sync
 ```
@@ -74,7 +74,7 @@ Steps:
 ERROR: Secret file detected. Sync aborted.
 
 You have a .env in dev that should never be synced.
-Fix it in /brayness/skills/my-skill/.env, then we'll retry.
+Fix it in /Users/scott/Desktop/brayness/skills/my-skill/.env, then we'll retry.
 ```
 
 ---
@@ -87,7 +87,7 @@ Fix it in /brayness/skills/my-skill/.env, then we'll retry.
 
 ```
 ✗ Git corruption: .git directory found
-  Location: /brayness/work/brayness/extensions/my-submodule/.git
+  Location: /Users/scott/Desktop/brayness/work/sync/extensions/my-submodule/.git
 ```
 
 **Agent suggests**:
@@ -96,11 +96,11 @@ Fix it in /brayness/skills/my-skill/.env, then we'll retry.
 Nested repo detected in extensions/. This is expected for submodules in dev.
 The rsync command should have excluded it, but something went wrong.
 
-Check: ls -la /brayness/extensions/my-submodule/
+Check: ls -la /Users/scott/Desktop/brayness/extensions/my-submodule/
 If it has .git/, the exclude pattern didn't work.
 
 Options:
-1. Manually remove .git: rm -rf /brayness/work/brayness/extensions/my-submodule/.git
+1. Manually remove .git: rm -rf /Users/scott/Desktop/brayness/work/sync/extensions/my-submodule/.git
 2. Retry sync with stricter exclusion
 3. Skip this extension and investigate dev setup
 ```
@@ -161,7 +161,7 @@ Skills:
 Extensions:
 - html: semantic element detection improvements
 
-Synced from dev -> work/brayness/
+Synced from dev -> work/sync/
 ```
 
 **User approves** -> **Commit executes** -> Git log shows:
@@ -174,7 +174,7 @@ def5678 Previous release v1.1.0
 **Ready to tag and npm publish**:
 
 ```bash
-cd /brayness/work/brayness/
+cd /Users/scott/Desktop/brayness/work/sync/
 git tag v1.2.0
 npm publish
 ```

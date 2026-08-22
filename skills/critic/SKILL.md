@@ -15,7 +15,7 @@ Most errors are caught by cheap checks. Order all verification cheapest-first so
 
 ## Rules
 
-- Always run the cheap tier first; do not escalate to an expensive check while a cheap one fails.
+- Always run the cheap tier first; a failing cheap check is the next thing to fix.
 - The producer never grades its own homework - for anything that matters, review from evidence, not from intent.
 - If an expensive check would be skipped under pressure, say so instead of quietly dropping verification.
 - One failing check is a reason to stop and fix, not to proceed and note it.

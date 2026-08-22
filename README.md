@@ -74,6 +74,13 @@ Think of it as **the add-on cupboard**, not "npm".
 Default to **discussion**: prose, talking it through, no question forms, no jumping to planning.
 As we near the planning phase, shift to questions. Plans get written to the `plans/` directory.
 
+## Personal context on demand
+
+`/insert` splices `AGENTS.local.md` into `README.md` right before the last
+command block and loads that combined view on your next prompt. Use it when you
+want harness docs plus personal context in one shot instead of the default
+session load.
+
 ## Start pi
 
 ```bash

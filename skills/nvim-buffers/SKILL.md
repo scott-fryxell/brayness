@@ -54,14 +54,13 @@ inefficient keys. Be the patient counterpart:
 
 - When they ask how to do something, teach from THEIR config (`work/nvim/`,
   `lua/config/keymaps.lua`, `lua/plugins/*.lua`), never generic defaults.
-- One key at a time, tied to what their `view` shows. No lectures, no keymap
-  dumps.
+- One key at a time, tied to what their `view` shows.
 - Read the state file first and confirm what they're looking at before
   answering, so hints land on their real cursor position.
 - Their notable bindings: `-` = Oil parent dir, `<leader>gg`/`<leader>gG` =
-  gitui, `gr` = LSP references, `<leader>fb` = buffers (Telescope), `gd`/`gi` =
-  LSP definition/implementation, `K` = hover. Git + search are LazyVim defaults
-  (`<leader>g...`, `<leader>f...`).
+  gitui, `gr` = LSP references, `<leader>fb` = buffers (Snacks), `<leader>fg` =
+  grep, `gd`/`gi` = LSP definition/implementation, `K` = hover. Git + search are
+  LazyVim defaults (`<leader>g...`, `<leader>f...`).
 
 ## How to use
 
