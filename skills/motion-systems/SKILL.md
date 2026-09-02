@@ -8,7 +8,7 @@ metadata:
     reason: Sibling skill - this covers mechanism selection and tokens; choreography covers multi-element sequencing
   - skill: user-interface
     reason: UX decides what state changes need motion; this skill decides how they move
-  - skill: realness-design
+  - skill: useless
     reason: Animation decisions for realness projects (realness defers entirely to this skill); native HTML attributes (open, disabled) drive the state changes CSS transitions respond to
 ---
 

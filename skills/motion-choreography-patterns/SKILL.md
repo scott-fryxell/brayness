@@ -8,7 +8,7 @@ metadata:
     reason: Sibling skill - motion-systems covers mechanism selection and tokens; this covers multi-element sequencing and choreography
   - skill: user-interface
     reason: Choreography serves UX goals - attention, hierarchy, continuity
-  - skill: realness-design
+  - skill: useless
     reason: Design-system skills defer animation decisions to the motion pair
 ---
 

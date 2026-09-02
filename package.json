@@ -27,7 +27,8 @@
     "start": "npm run brayness",
     "pi:update": "rm -rf ~/.npm/_npx && npx --yes @earendil-works/pi-coding-agent update --all",
     "pi:list": "./bin/pi list",
-    "feeds": "./skills/vault/rebuild-feeds.sh"
+    "feeds": "./skills/vault/rebuild-feeds.sh",
+    "make:animation": "node ./bin/make-animation.js"
   },
   "license": "ISC",
   "type": "module",

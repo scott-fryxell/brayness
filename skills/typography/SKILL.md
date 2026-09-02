@@ -5,7 +5,7 @@ allowed-tools: Read,Write,Edit,WebFetch
 metadata:
   category: Design & Creative
   pairs-with:
-  - skill: realness-design
+  - skill: useless
     reason: Settled type decisions for realness projects; proven patterns to draw from for client work. Semantic elements carry typographic meaning before CSS touches them
   - skill: user-interface
     reason: Readability and clarity decisions
@@ -34,7 +34,7 @@ Then build the system in this order: baseline unit -> modular scale -> fluid ran
 
 ## The baseline unit
 
-Everything derives from one unit (mechanics: realness-design, Spacing). Pick the value for the client's density:
+Everything derives from one unit (mechanics: useless, Spacing). Pick the value for the client's density:
 
 - `1.25rem` - tighter, denser, more corporate
 - `1.333rem` - realness default, balanced editorial
@@ -54,11 +54,11 @@ A **fluid range** scales the ratio itself with the viewport (realness: 1.25 -> 1
 
 ## Fluid type
 
-Implementation (the `clamp()` slope math and its bound-order gotcha) lives in realness-design's [TYPE_SCALE_RECIPE.md](../realness-design/references/TYPE_SCALE_RECIPE.md). The judgment call this skill owns: slope-intercept `calc()` when you want the breakpoints legible in the source, `clamp()` shorthand when you're eyeballing.
+Implementation (the `clamp()` slope math and its bound-order gotcha) lives in useless's [TYPE_SCALE_RECIPE.md](../useless/references/TYPE_SCALE_RECIPE.md). The judgment call this skill owns: slope-intercept `calc()` when you want the breakpoints legible in the source, `clamp()` shorthand when you're eyeballing.
 
 ## Heading treatment
 
-Realness's defaults (weight 300, tight tracking, line-height 1 - see realness-design) are a strong client starting point: light + tight works because the scale provides the size contrast. If the client's brand is bolder, adjust weight before scale - 300 to 400 is usually enough.
+Realness's defaults (weight 300, tight tracking, line-height 1 - see useless) are a strong client starting point: light + tight works because the scale provides the size contrast. If the client's brand is bolder, adjust weight before scale - 300 to 400 is usually enough.
 
 ## Font selection
 
@@ -129,5 +129,5 @@ Match fallback x-height to prevent CLS on swap:
 
 ## Integration
 
-- **realness-design**: owns the shared method (rhythm, fluid scale, element-first markup) and realness's settled values. This skill re-picks the values per client; element choice is type choice (`<time>`, `<blockquote>`, headings carry meaning before CSS).
+- **useless**: owns the shared method (rhythm, fluid scale, element-first markup) and realness's settled values. This skill re-picks the values per client; element choice is type choice (`<time>`, `<blockquote>`, headings carry meaning before CSS).
 - **user-interface**: readability and clarity when type and UX intersect.

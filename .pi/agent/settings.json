@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.2",
+  "lastChangelogVersion": "0.84.4",
   "defaultProvider": "openrouter",
   "defaultModel": "deepseek/deepseek-v4-flash-0731",
   "defaultThinkingLevel": "xhigh",

@@ -15,10 +15,10 @@ mirror stays clean and publishable. Every sync is reviewed - no blind sync.
 | ----------------------------------------------------- | ------------------------------------------- |
 | `skills/`                                             | skill catalog                               |
 | `extensions/`                                         | extensions                                  |
-| `bin/pi`                                              | CLI wrapper                                 |
+| `bin/`                                                | harness scripts and CLI wrapper             |
 | `package.json`                                        | app dependency + scripts                    |
-| `AGENTS.md`, `CLAUDE.md`, `README.md`                 | agent docs                                  |
-| `.gitignore`, `.ignore`, `.nvmrc`                     | repo config                                 |
+| `AGENTS.md`, `README.md`                              | agent docs                                  |
+| `.ignore`, `.nvmrc`                                   | repo config                                 |
 | `.pi/agent/settings.json`, `.pi/agent/models.json`    | pi config                                   |
 | `.pi/agent/npm/README.md`, `.pi/agent/npm/.gitignore` | add-on signposts                            |
 | `.pi/agent/subagents.json`                            | subagent config (defaults, tools, profiles) |

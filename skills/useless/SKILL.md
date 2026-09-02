@@ -1,6 +1,6 @@
 ---
-name: realness-design
-description: Design system method for web CSS, HTML, and Vue - semantic element/ARIA/microdata selectors (no invented classes or wrappers), baseline-grid spacing, fluid type scale, materials-and-roles color, OS dark mode, cascade over scoped styles. Use when writing or reviewing CSS/markup/Vue components, cleaning up div soup, or implementing type/spacing/color systems. Defer animation to motion-systems; client type voice to typography.
+name: useless
+description: What building realness taught us about the web platform - semantic HTML with microdata as one decision that serves SEO, CSS selectors, layout, the data model, state (no Pinia), file storage paths, and the NoSQL database. Plus baseline-grid spacing, fluid type scale, materials-and-roles color, OS dark mode, and cascade over scoped styles. Use when writing or reviewing CSS/markup/Vue components, cleaning up div soup, or implementing type/spacing/color systems. Defer animation to motion-systems; client type voice to typography.
 metadata:
   category: Design & Frontend
   tags:
@@ -11,9 +11,30 @@ metadata:
     - layout
 ---
 
-# Realness Design
+# Useless
 
 Semantic HTML first. Style the platform. Not components - elements.
+
+**One markup decision pays seven times.** Microdata is not an SEO garnish bolted
+on at the end. `itemid`, `itemprop` and `itemtype` are the same identifiers the
+stylesheet selects on, the layout reads with `:has()`, the data layer parses,
+the app holds document state in instead of a store, the storage path is built
+from, and the database lists as collections. Write the element once and every
+layer downstream already knows what it means.
+
+| Layer | What reads the markup |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| SEO | `itemtype` / `itemprop` - Schema.org, read by crawlers and any other reader |
+| Design | the attribute is the selector - `address[itemscope]`, `time` |
+| Layout | `:has()` on something real - `figure:has([itemtype='/posters'])`, no wrapper invented to hold it |
+| Data model | `itemprop_value()` reads `<time datetime>`, `<img src>`, `<a href>` - the element says how to read it |
+| Store replacement | no Pinia, no Vuex. `get_item(elements, itemid)` queries the rendered DOM for a document |
+| File storage | `itemid` **is** the path - `/+author/posters/1712000000000` becomes `people/+author/posters/1712000000000.html.gz` |
+| NoSQL database | `Directory` lists a folder as a collection, cached in idb. Storage is the database; the HTML is the row |
+
+That is the whole argument. Everything below is what follows from taking it
+seriously, and the cost of not: an invented class is a name that only one layer
+understands, so the other six have to be told separately.
 
 This skill is a method, demonstrated through one project's answer to it. That project is realness (`work/realness`): a rotoscoping tool that traces photos into layered SVG posters. Sections pair a general rule with a "realness's instance" callout. When you bring this to a different project, keep the method and re-derive the specifics - a client's unit, ratio, and palette are not this project's.
 

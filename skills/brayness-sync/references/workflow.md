@@ -10,9 +10,10 @@ this file and SKILL.md disagree, SKILL.md wins and this file needs fixing.
 # What differs in the copy-list trees (dirs)
 diff -rq skills work/sync/skills --exclude=.git --exclude=node_modules | head -30
 diff -rq extensions work/sync/extensions --exclude=.git --exclude=node_modules | head -30
+diff -rq bin work/sync/bin --exclude=.git --exclude=node_modules | head -30
 
 # Single files
-for f in bin/pi package.json AGENTS.md README.md \
+for f in package.json AGENTS.md README.md \
          .ignore .nvmrc \
          .pi/agent/settings.json .pi/agent/models.json .pi/agent/subagents.json; do
   cmp -s "$f" "work/sync/$f" || echo "differs: $f"
@@ -36,9 +37,13 @@ rsync -av --delete \
   --exclude='.DS_Store' \
   extensions/ work/sync/extensions/
 
+rsync -av --delete \
+  --exclude='.git' --exclude='.env*' --exclude='node_modules' \
+  --exclude='.DS_Store' --exclude='dist' --exclude='build' \
+  bin/ work/sync/bin/
+
 cp .pi/agent/subagents.json work/sync/.pi/agent/subagents.json
 
-install -m 755 bin/pi work/sync/bin/pi
 cp package.json AGENTS.md README.md .ignore .nvmrc work/sync/
 
 mkdir -p work/sync/.pi/agent/npm
