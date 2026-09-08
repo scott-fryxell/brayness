@@ -30,7 +30,7 @@
     "feeds": "./skills/vault/rebuild-feeds.sh",
     "make:animation": "node ./bin/make-animation.js"
   },
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "engines": {
     "node": ">=22.19.0"
