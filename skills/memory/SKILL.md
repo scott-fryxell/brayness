@@ -10,7 +10,7 @@ Learnings are written to `AGENTS.local.md` (or
 system prompt every session by the agents-local extension, so a lesson
 written there is guaranteed to be in context next session - no on-demand
 recall needed. The same extension syncs the `work/` project table in that
-file from disk each session; edit descriptions there, not the row list. This separates it from the Anotht vault (your knowledge) and
+file from disk each session; edit descriptions there, not the row list. This separates it from the vault (your knowledge) and
 from `AGENTS.md` (standing rules).
 
 Only cross-cutting lessons learned from experience belong here. Standing

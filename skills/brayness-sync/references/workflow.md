@@ -8,15 +8,15 @@ this file and SKILL.md disagree, SKILL.md wins and this file needs fixing.
 
 ```bash
 # What differs in the copy-list trees (dirs)
-diff -rq skills work/sync/skills --exclude=.git --exclude=node_modules | head -30
-diff -rq extensions work/sync/extensions --exclude=.git --exclude=node_modules | head -30
-diff -rq bin work/sync/bin --exclude=.git --exclude=node_modules | head -30
+diff -rq skills skills/brayness-sync/published/skills --exclude=.git --exclude=node_modules | head -30
+diff -rq extensions skills/brayness-sync/published/extensions --exclude=.git --exclude=node_modules | head -30
+diff -rq bin skills/brayness-sync/published/bin --exclude=.git --exclude=node_modules | head -30
 
 # Single files
 for f in package.json AGENTS.md README.md \
-         .ignore .nvmrc plans-server.cjs build-plans.cjs \
-         .pi/agent/settings.json .pi/agent/models.json .pi/agent/subagents.json; do
-  cmp -s "$f" "work/sync/$f" || echo "differs: $f"
+         .ignore .nvmrc \
+         .pi/agent/settings.json .pi/agent/models.json; do
+  cmp -s "$f" "skills/brayness-sync/published/$f" || echo "differs: $f"
 done
 ```
 
@@ -30,33 +30,35 @@ Show changed paths, additions, exclusions. Get approval before copying.
 rsync -av --delete \
   --exclude='.git' --exclude='.env*' --exclude='node_modules' \
   --exclude='.DS_Store' --exclude='dist' --exclude='build' \
-  skills/ work/sync/skills/
+  --exclude='/brayness-sync/published' \
+  skills/ skills/brayness-sync/published/skills/
 
 rsync -av --delete \
   --exclude='.git' --exclude='.env*' --exclude='node_modules' \
   --exclude='.DS_Store' \
-  extensions/ work/sync/extensions/
+  extensions/ skills/brayness-sync/published/extensions/
 
 rsync -av --delete \
   --exclude='.git' --exclude='.env*' --exclude='node_modules' \
   --exclude='.DS_Store' --exclude='dist' --exclude='build' \
-  bin/ work/sync/bin/
+  bin/ skills/brayness-sync/published/bin/
 
-cp .pi/agent/subagents.json work/sync/.pi/agent/subagents.json
+rsync -av --delete --exclude='.DS_Store' \
+  prompts/ skills/brayness-sync/published/prompts/
 
-cp package.json AGENTS.md README.md .ignore .nvmrc work/sync/
-cp plans-server.cjs build-plans.cjs work/sync/
 
-mkdir -p work/sync/.pi/agent/npm
-cp .pi/agent/settings.json .pi/agent/models.json work/sync/.pi/agent/
-cp .pi/agent/npm/README.md .pi/agent/npm/.gitignore work/sync/.pi/agent/npm/
+cp package.json AGENTS.md README.md .ignore .nvmrc skills/brayness-sync/published/
+
+mkdir -p skills/brayness-sync/published/.pi/agent/npm
+cp .pi/agent/settings.json .pi/agent/models.json skills/brayness-sync/published/.pi/agent/
+cp .pi/agent/npm/README.md .pi/agent/npm/.gitignore skills/brayness-sync/published/.pi/agent/npm/
 
 # Symlinks (recreate, don't copy targets)
 # pi loads skills via --skill in bin/pi (no symlink). Cursor/Claude Code
 # still read skills through their repo-root symlinks.
-ln -sfn ../../extensions work/sync/.pi/agent/extensions
-ln -sfn ../skills work/sync/.cursor/skills
-ln -sfn ../skills work/sync/.claude/skills
+ln -sfn ../../extensions skills/brayness-sync/published/.pi/agent/extensions
+ln -sfn ../skills skills/brayness-sync/published/.cursor/skills
+ln -sfn ../skills skills/brayness-sync/published/.claude/skills
 
 # NEVER copy sessions/, auth.json, trust.json, mcp caches, models-store.json
 ```
@@ -68,8 +70,8 @@ Run every check in `references/validation.md`. Stop on any failure.
 ## Step 5: Review diff
 
 ```bash
-git -C work/sync diff --stat
-git -C work/sync diff
+git -C skills/brayness-sync/published diff --stat
+git -C skills/brayness-sync/published diff
 ```
 
 Summarize; show key files (package.json, changed SKILL.md files) in full.
@@ -77,9 +79,9 @@ Summarize; show key files (package.json, changed SKILL.md files) in full.
 ## Step 6: Commit (after approval)
 
 ```bash
-git -C work/sync add -A
-git -C work/sync commit -m "approved message"
-git -C work/sync log --oneline -3
+git -C skills/brayness-sync/published add -A
+git -C skills/brayness-sync/published commit -m "approved message"
+git -C skills/brayness-sync/published log --oneline -3
 ```
 
 Commit format: one line on what shipped (skills added/updated, config

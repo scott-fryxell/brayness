@@ -25,13 +25,16 @@
   "scripts": {
     "brayness": "./bin/pi",
     "start": "npm run brayness",
-    "test": "node --test --experimental-strip-types extensions/memory/index-db.test.ts",
+    "test": "node --test --experimental-strip-types extensions/memory/index-db.test.ts extensions/edit-log/log.test.ts",
+    "check:ext": "node ./bin/no-mjs.js",
     "pi:update": "rm -rf ~/.npm/_npx && npx --yes @earendil-works/pi-coding-agent update --all",
     "pi:list": "./bin/pi list",
     "feeds": "./skills/vault/rebuild-feeds.sh",
-    "plans": "NODE_PATH=work/blog/node_modules node plans-server.cjs",
-    "plans:build": "NODE_PATH=work/blog/node_modules node build-plans.cjs",
-    "make:animation": "node ./bin/make-animation.js"
+    "plans": "node ./bin/plans.js",
+    "plans:build": "node ./bin/plans.js --build",
+    "make:animation": "node ./bin/make-animation.js",
+    "make:posters": "node ./bin/make-posters.js",
+    "gallery": "node ./bin/gallery.js"
   },
   "license": "MIT",
   "type": "module",

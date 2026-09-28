@@ -4,7 +4,7 @@ _A harness for your anxious digital brain._
 
 A personal workspace for [pi](https://github.com/earendil-works/pi-coding-agent): skills, extensions, and agent config.
 
-This is a **starter**. Fork it, then make it yours. Every skill and extension you find here is yours to keep or rewrite - none of it is sacred. The pieces are a first pass for you to reshape as you work.
+This workspace is Scott's source harness. The hosted starter is an allowlisted build of it. Each person owns their copy: they can use proposed starter updates, stop receiving them, or export their harness and Pi history. The update flow is planned; today, a hosted actor starts from the image and keeps its own files.
 
 ## Where things live
 
@@ -66,6 +66,12 @@ pi always stores downloaded add-ons in a folder called `npm/` inside its home di
 
 Think of it as **the add-on cupboard**, not "npm".
 
+## Starter and personal files
+
+The published starter includes `AGENTS.md`, selected skills, extensions, and required configuration. `AGENTS.local.md` is the personal place for agent instructions. The vault, `work/`, `artifacts/`, and Pi sessions belong to the person. A starter update must compare managed files with the version first received and show any personal edits before replacing them. Sessions help explain edits, but cannot detect all changes alone.
+
+Plans may move into the vault. For now, this source workspace keeps them in `plans/`.
+
 ## What to edit vs ignore
 
 | You edit                                 | Auto-generated (ignore)   |
@@ -107,22 +113,25 @@ No install step needed - this repo has no `node_modules/`. Requires Node >= 22.1
 
 Run npm commands from the repository root.
 
-| Command                                 | Purpose and requirements                                                                                                      |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `npm start` / `npm run brayness`        | Start through `bin/pi`.                                                                                                       |
-| `npm run pi:list`                       | List installed pi packages.                                                                                                   |
-| `npm run pi:update`                     | Delete the shared `~/.npm/_npx` cache, then update pi packages. Other npx tools will download again.                          |
-| `npm test`                              | Run the memory index tests.                                                                                                   |
-| `npm run make:animation -- clip.mov`    | Run `bin/make-animation.js`; requirements below.                                                                              |
-| `npm run feeds`                         | Rebuild personal vault feeds; requires the local vault setup.                                                                 |
-| `npm run plans` / `npm run plans:build` | Workspace-only: need `work/blog` dependencies and `work/brayness/examples/plan-viewer`. These paths are not in this checkout. |
+| Command                                 | Purpose and requirements                                                                                               |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `npm start` / `npm run brayness`        | Start through `bin/pi`; Node >= 22.19.                                                                                 |
+| `npm run pi:list`                       | List installed pi packages.                                                                                            |
+| `npm run pi:update`                     | Delete the shared `~/.npm/_npx` cache, then update pi packages. Other npx tools will download again.                   |
+| `npm test`                              | Run the memory index tests.                                                                                            |
+| `npm run check:ext`                     | Run `bin/no-mjs.js` to reject `.mjs` files across the workspace (excluding artifacts, dependencies, and git metadata). |
+| `npm run make:animation -- clip.mov`    | Run `bin/make-animation.js`; requirements below.                                                                       |
+| `npm run feeds`                         | Rebuild personal vault feeds; requires the local vault setup.                                                          |
+| `npm run plans` / `npm run plans:build` | Render `plans/` with the static example in `artifacts/plans-site/`; first run downloads and installs it.               |
+
+The feeds row is not a standalone clean-checkout command; plans needs the network on first run.
 
 ### Video to traced animation
 
 Install FFmpeg and a Chromium browser (Chrome, Brave, Chromium, or Edge).
-On macOS, install FFmpeg with `brew install ffmpeg`.
-The script uses `https://realness.online/poster-driver`, so rendering needs
-network access and that page must be available.
+On macOS, FFmpeg is available with `brew install ffmpeg`.
+The script uses the deployed `https://realness.online/poster-driver` page,
+so rendering needs network access and that page must be available.
 
 ```bash
 npm run make:animation -- clip.mov --fps 12 --workers 2
@@ -165,3 +174,4 @@ Use it, then leave it - Scott deletes it himself so he can check the work first.
 
 - Agent instructions: `AGENTS.md`
 - Setup: install Node >= 22.19, then run `npm start` from this checkout.
+- Published mirror: `skills/brayness-sync/published/`

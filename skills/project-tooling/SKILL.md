@@ -34,3 +34,4 @@ The scripts, `scripts/`, and `tools/` dirs are still authoritative - read `packa
 
 - `work/seeq-app/.tooling.md` - heavy logging (`logs:errors`, `logs:search`), admin data tools, emulators, deploy.
 - `work/realness-ops/.tooling.md` - thin proxy to `functions/` + ops tools (`traffic`, `ads`).
+- `work/brayness/.tooling.md` - the control/live split, the `webspace` CLI in `control/`, and the four directions.

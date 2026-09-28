@@ -5,7 +5,7 @@ description: Helps research a company and prepare for its hiring process -- comp
 
 # Interview Prep
 
-Prepares a target company/role end-to-end: research, fit, behavioral prep, technical prep, and process tracking. All notes live in the Anotht vault under `02 Areas/Job Hunt/` (`work/Anotht/02 Areas/Job Hunt/`) -- see `references/process-and-tracker.md` for the exact layout.
+Prepares a target company/role end-to-end: research, fit, behavioral prep, technical prep, and process tracking. All notes live in the vault under `02 Areas/Job Hunt/` (`work/vault/02 Areas/Job Hunt/`) -- see `references/process-and-tracker.md` for the exact layout.
 
 ## Workflow
 

@@ -111,6 +111,16 @@ export default function memoryExtension(pi: ExtensionAPI) {
 		},
 	});
 
+	// A fresh Pi conversation still has access to earlier turns without putting
+	// those turns in the model context. The index is derived from local JSONL.
+	pi.on("session_start", async () => {
+		try {
+			await indexSessions({ path: DB_PATH });
+		} catch {
+			// A missing or locked index must not block the terminal from opening.
+		}
+	});
+
 	pi.registerCommand("remember", {
 		description: "Search past sessions. Usage: /remember <words>",
 		handler: async (args, ctx) => {

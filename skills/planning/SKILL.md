@@ -6,8 +6,8 @@ description: >-
   task branches, explodes like a mind map, or is a creative project - anything
   with parallel or dependent pieces a linear checklist would flatten. Produces
   an ordered, reviewable plan, checks in at each gate, then executes. Built from
-  the Building an Advanced Agentic Harness article's Planner role, inverted per
-  brayness's plan doc (the harness plans, the human decides).
+  the Building an Advanced Agentic Harness article's Planner role, inverted so
+  the harness plans and the human decides.
 metadata:
   category: Workflow
   tags:
@@ -70,16 +70,44 @@ flowchart LR
   a["a research angle"] --> b["b pick sources"]
   b --> d["d assemble"]
   c["c draft section 1"] --> d
-  d --> G{{"GATE 1<br/>shape approved"}}
+  d --> G{{"🚦 GATE 1<br/>shape approved"}}
 
   classDef gate fill:#3a2f1a,stroke:#c9a227,color:#f5e6c8;
+  classDef done fill:none,stroke:#555,stroke-dasharray:3 3,color:#777;
+  classDef active fill:#1f2f3a,stroke:#4f8fbf,color:#d6e9f5;
+  classDef blocked fill:#3a1f1f,stroke:#bf4f4f,color:#f5d6d6;
   class G gate;
+  class a done;
+  class b active;
 ```
 ````
 
 Node ids lead the label (`a1`, `b3`) so the table can refer to them. Gates use
 the `{{...}}` hexagon and the `gate` classDef. Keep labels to a few words and put
 effort in the table, not the graph.
+
+Before showing a DAG in chat, run `bin/mermaid-fit.js <file>`. Pi's feed shows
+the raw fence when a diagram is wider than the pane; shorten labels until it
+passes.
+
+**Status is color plus emoji**, so it reads in any renderer and in plain text:
+
+| Status      | Emoji | classDef                |
+| ----------- | ----- | ----------------------- |
+| done        | ✅    | `done` (dimmed, dashed) |
+| in progress | 🔄    | `active` (blue)         |
+| blocked     | ⛔    | `blocked` (red)         |
+| not started | none  | default                 |
+| gate        | 🚦    | `gate` (amber)          |
+
+The emoji leads the label (`"✅ a1 research angle"`) and matches the node's
+`class` line. Update both as work moves. Finished work dims so the eye lands on
+what is left.
+
+**The node list dims too.** A finished row's id is struck through,
+`| ~~a1~~ ✅ |`. Markdown renders that as `<del>`, so any viewer dims the
+whole row with `tr:has(del) { opacity: 0.45 }` and GitHub shows it crossed
+out. One line above the table names the legend.
 
 ASCII only for a throwaway sketch that will never persist.
 
@@ -93,6 +121,13 @@ Word bloat is the nemesis. Judge every line: **does this change a decision, or
 could the code say it?** If neither, cut it. A plan over ~120 lines has absorbed
 something - find it and delete it.
 
+Write ideas, not explanations: one idea per line, seven to ten words where
+possible. The reader knows what to do; no instructions addressed to them, no
+hedges, no reasoning they did not ask for.
+
+Open with who it is for: one sentence naming the target customer, so every
+node can be judged against them.
+
 Carries: decisions and what was rejected, one line each. Open questions, as
 questions. What to do next and how to judge it. What the code cannot say -
 gotchas that bite, why the thing exists at all.
@@ -102,14 +137,19 @@ Does not carry:
 - A changelog. Git holds history. No dated "what changed" list, no gate log, no
   "approved on" section, no restating how the plan got here.
 - Settled questions. Move the decision to Decisions and delete the question.
-- Nodes for work already done, or that a decision absorbed. When a branch is
-  picked, the choosing node disappears and the choice stands alone.
+- Nodes a decision absorbed. When a branch is picked, the choosing node
+  disappears and the choice stands alone.
+
+Finished nodes stay, dimmed, until the human says to prune. Pruning removes
+the node, its edges, its row, and any mention elsewhere. Never prune on your
+own.
+
 - A decision explained twice - as a bullet, then prose, then a rationale
   paragraph. Or a rejected option kept as its own paragraph.
 - Restated docstrings or how a function works inside.
 - Prose explaining a command.
 
-Prune on the way out of a session, not later. Say what you cut. See the
+Trim words on the way out of a session, not later. Say what you cut. See the
 `readable` skill for the sentence-level pass.
 
 ### 4. Gate 1 - approve the shape
@@ -123,8 +163,8 @@ the outcome as a Decisions line, not a gate log.
 
 Topological order, dependencies first, parallel where independent.
 
-A node need not be a subagent. Use a helper only when it needs isolation - heavy
-tooling, a different model, a long-running chunk. Plain execution is the default.
+Plain execution is the default. A node that iterates toward a measurable target
+runs as an autoresearch loop; there are no subagents.
 
 ### 6. Critic - verify
 
@@ -158,7 +198,7 @@ Summarize what ran. Ask whether it meets the plan. Done is your call.
 
 ## Source
 
-"Building an Advanced Agentic Harness" (data4sci, 2026-07-15), vault clipping
-`work/Anotht/Clippings/Building an Advanced Agentic Harness.md`. Goal doc
-`work/Anotht/the-harness-is-the-thing.md`, plan
-`plans/harness-capabilities-internalize.md`.
+- "Building an Advanced Agentic Harness" (data4sci, 2026-07-15), clipped to
+  the vault at `Clippings/Building an Advanced Agentic Harness.md`.
+- "The Harness Is the Thing" -
+  <https://scott-fryxell.github.io/blog/the-harness-is-the-thing/>

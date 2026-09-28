@@ -16,7 +16,9 @@ session file to reopen.
 | `/remember` | the same search as a widget, for a human to read |
 
 Search filters: `project` (part of the working directory), `since` (ISO date),
-`limit`.
+`limit`. The index updates at Pi startup and after a completed agent turn. A
+new conversation can search old turns without sending them to the model by
+default; search results enter context only when the agent calls `remember`.
 
 ## How it works
 

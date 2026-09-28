@@ -1,9 +1,10 @@
 #!/bin/bash
 # Fix frontmatter for files with wrong [[self]] author but external cardlink content
 
-cd /Users/scott/Desktop/brayness/work/Anotht
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+cd "${VAULT:-$ROOT/work/vault}" || exit 1
 
-scratch=/Users/scott/Desktop/brayness/artifacts/vault
+scratch="$ROOT/artifacts/vault"
 mkdir -p "$scratch"
 
 count=0

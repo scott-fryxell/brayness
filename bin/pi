@@ -4,7 +4,7 @@ export PI_CODING_AGENT_DIR="$root/.pi/agent"
 
 # Canary: pi state must live in this repo. If ~/.pi exists, something ran pi
 # without this wrapper and leaked config/sessions outside the harness.
-if [[ -e "$HOME/.pi" ]]; then
+if [[ "$HOME" != "$root" && -e "$HOME/.pi" ]]; then
   echo "~/.pi exists - pi state leaked outside the harness." >&2
   echo "Inspect it (ls -la ~/.pi), fold anything unique into $root, then delete it." >&2
   exit 1
@@ -54,6 +54,12 @@ if [[ -z "$best_node" ]]; then
 fi
 
 export PATH="$(dirname "$best_node"):$PATH"
+
+# No update checks at startup: pi otherwise runs `npm view` for every package
+# and asks pi.dev for its version on each launch. Update with `pi update`.
+# PI_ONLINE=1 pi turns the startup network work back on (it also refreshes the
+# model catalog). pi reads any non-empty PI_OFFLINE as on, so unset it here.
+if [[ -n "${PI_ONLINE:-}" ]]; then unset PI_OFFLINE; else export PI_OFFLINE=1; fi
 
 # Run pi via npx - no local or global install required. First run fetches pi
 # into the npx cache (~/.npm/_npx); later runs are fast and offline.

@@ -2,6 +2,9 @@
 
 _A harness for your anxious digital brain._
 
+Avoid encouragement, the response to be in ASD-STE100 (Simple Technical
+English).
+
 A personal [pi](https://github.com/earendil-works/pi-coding-agent) workspace -
 projects in `work/`, skills, extensions - and the agent named **brayness**. This
 is the shared instruction file for every agent: pi, Cursor, Claude Code (via
@@ -19,7 +22,6 @@ dependencies: `README.md`.
   intermediate output, throwaway scripts) goes in `artifacts/<project>`
 - Memory: durable learnings go in `AGENTS.local.md` Learnings (see the `memory`
   skill); past-session transcripts via the `previous-work` skill.
-- complimenting the user or agreeing with the user is distracting
 - Readability is king
 
 ## Preferences
@@ -80,7 +82,8 @@ explanations.
 **Session arc** - five roles, one per request (see `planning`). Fresh sessions
 start as Explorer.
 
-- **Explorer** - Playing around trying to understand a problem
+- **Explorer** - Playing around trying to understand a problem. 7 to 10 word
+  bullet points
 - **Planner** - "how should we approach X" - branchy work gets a DAG + Gate 1.
 - **Worker** - "fix X" - do the fix, don't re-derive context.
 - **Critic** - "check X" - verify, look at our solution in the wider context.
@@ -92,6 +95,9 @@ start as Explorer.
 - We like our existing code.
 - Unit tests that fit the feature touched.
 - `console.log` while debugging is fine; strip before commit.
+- Commit messages carry no agent credit. Claude Code and Cursor append
+  `Co-Authored-By` and `Claude-Session` trailers on their own; the `commit-msg`
+  hook strips them, and human co-authors stay.
 - Every dependency or upstream change is diffed and read by a human before
   merge. Everything that lands here has been vetted.
 

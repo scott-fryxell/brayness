@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.85.1",
-  "defaultProvider": "openrouter",
-  "defaultModel": "deepseek/deepseek-v4.1-flash",
-  "defaultThinkingLevel": "xhigh",
+  "lastChangelogVersion": "0.87.1",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-5-5",
+  "defaultThinkingLevel": "off",
   "packages": [
     "npm:pi-mono-btw",
     "npm:pi-mono-auto-fix",
@@ -12,20 +12,25 @@
     "npm:pi-rewind-hook",
     "npm:pi-autoresearch",
     "npm:pi-mcp-adapter",
-    "npm:pi-subagents-j0k3r"
+    "npm:pi-claude-oauth-adapter"
   ],
   "enabledModels": [
-    "openrouter/openrouter/free",
-    "openrouter/z-ai/glm-5.2",
-    "anthropic/claude-fable-5",
+    "anthropic/claude-fable-5-1",
+    "anthropic/claude-opus-5-5",
+    "openai-codex/gpt-6-astra",
+    "openai-codex/gpt-6-sol",
+    "openai-codex/gpt-6-luna",
+    "openrouter/deepseek/deepseek-v4.1-flash",
+    "openrouter/deepseek/deepseek-v4.1-flash:batch",
     "openrouter/thinkingmachines/inkling",
-    "openrouter/moonshotai/kimi-k3",
-    "openrouter/deepseek/deepseek-v4-flash-0731",
     "openrouter/thinkingmachines/inkling-small",
     "openrouter/thinkingmachines/inkling-small:free",
-    "openrouter/thinkingmachines/inkling:free",
-    "openrouter/deepseek/deepseek-v4.1-flash"
+    "openrouter/thinkingmachines/inkling:free"
   ],
   "theme": "dark",
-  "hideThinkingBlock": true
+  "hideThinkingBlock": true,
+  "quietStartup": true,
+  "warnings": {
+    "anthropicExtraUsage": false
+  }
 }

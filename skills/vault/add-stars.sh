@@ -1,6 +1,6 @@
 #!/bin/bash
 # add-stars.sh
-# Sync GitHub starred repos into the Anotht vault, distributed across PARA sections.
+# Sync GitHub starred repos into the vault, distributed across PARA sections.
 # Uses the public GitHub API - no token needed for 808 repos (9 pages, within 60/hr limit).
 #
 # First run: fetches all starred repos, creates notes.
@@ -12,8 +12,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-VAULT="/Users/scott/Desktop/brayness/work/Anotht"
-GITHUB_USER="scott-fryxell"
+VAULT="${VAULT:-$(cd "$(dirname "$0")/../../work/vault" && pwd)}"
+GITHUB_USER="${GITHUB_USER:-$(gh api user --jq .login 2>/dev/null)}"
+[ -n "$GITHUB_USER" ] || { echo "Set GITHUB_USER or log in with gh" >&2; exit 1; }
 DEFAULT_DIR="03 Resources/GitHub Stars"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 

@@ -18,7 +18,7 @@ Before prepping answers, work through why this company/role is actually interest
 
 ## Cross-referencing personal interests
 
-Search the Anotht vault for existing notes related to the company's domain, tech, or mission (`rg -l "<topic>" work/Anotht`, or check `02 Areas` and `03 Resources`). A genuine connection to existing interests makes for a stronger "why us" answer than researched-on-the-spot enthusiasm -- surface it if one exists, don't force one if it doesn't.
+Search the vault for existing notes related to the company's domain, tech, or mission (`rg -l "<topic>" work/vault`, or check `02 Areas` and `03 Resources`). A genuine connection to existing interests makes for a stronger "why us" answer than researched-on-the-spot enthusiasm -- surface it if one exists, don't force one if it doesn't.
 
 ## Questions to ask interviewers
 

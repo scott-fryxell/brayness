@@ -1,5 +1,5 @@
 #!/bin/bash
-VAULT="$(cd "$(dirname "$0")/../../work/Anotht" && pwd)"
+VAULT="${VAULT:-$(cd "$(dirname "$0")/../../work/vault" && pwd)}"
 
 for section in "01 Projects" "02 Areas" "03 Resources" "04 Archive"; do
   # Prune feeds for empty directories

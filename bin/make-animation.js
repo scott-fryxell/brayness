@@ -21,25 +21,21 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
+import {
+  chrome_path,
+  data_url_of,
+  open_driver,
+  trace
+} from './lib/poster-driver.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const __filename = fileURLToPath(import.meta.url)
 const brayness_root = path.join(__dirname, '..')
 const out_dir = path.join(brayness_root, 'artifacts', 'animation')
 
-// Render against the deployed site so a render never depends on a local
-// build, prerender, or wasm step being present and current. Override for a
-// preview (e.g. REALNESS_URL=https://realness.local).
-const base_url = process.env.REALNESS_URL || 'https://realness.online'
-const DRIVER_ROUTE = '/poster-driver'
-const READY_TIMEOUT_MS = 120000
-const POLL_MS = 1000
 const PROGRESS_TICK_MS = 500
 const US_PER_SECOND = 1e6
 const STATUS_PAD = 48
-const RENDER_RETRIES = 3
-const BROWSER_TIMEOUT_MS = 20000
-const BROWSER_POLL_MS = 200
 const DEBUG_PORT = 9335
 const DEFAULT_FPS = 24
 const DEFAULT_WORKERS = 6
@@ -52,8 +48,6 @@ const CRF_MIN = 0
 const CRF_MAX = 51
 const BYTES_PER_MB = 1e6
 const ERR_TAIL_LINES = 4
-const PROFILE_RM_RETRIES = 5
-const PROFILE_RM_DELAY_MS = 200
 const SIGINT_EXIT = 130
 const SIGTERM_EXIT = 143
 
@@ -63,40 +57,6 @@ const CHUNK_TYPE_END = 16
 const WIDTH_AT = 16
 const HEIGHT_AT = 20
 const IHDR_HEADER_BYTES = 24
-
-const BROWSER_CANDIDATES = [
-  '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  '/Applications/Chromium.app/Contents/MacOS/Chromium',
-  '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
-  '/usr/bin/google-chrome',
-  '/usr/bin/chromium',
-  '/usr/bin/chromium-browser'
-].filter(fs.existsSync)
-
-const chrome_path =
-  (process.env.CHROME_PATH &&
-    fs.existsSync(process.env.CHROME_PATH) &&
-    process.env.CHROME_PATH) ||
-  BROWSER_CANDIDATES[0]
-
-/**
- * Why a rendered poster frame cannot be kept, or null when it is usable.
- *
- * A poster whose symbol defs never mounted still exports a well-formed png and
- * svg - just an empty shell, with `use` hrefs pointing at symbols that were
- * never merged in. Traced paths are the proof the frame is real, so a pathless
- * frame is a failed render and not a frame to write.
- *
- * @param {{ png?: string, svg?: string }} [frame]
- * @returns {string | null}
- */
-const frame_problem = ({ png, svg } = {}) => {
-  if (!png) return 'produced no poster png'
-  if (!svg) return 'produced no poster svg'
-  if (!svg.includes('<path')) return 'traced no paths'
-  return null
-}
 
 /**
  * The pixel size to rasterize a traced poster at. The svg is the master and
@@ -269,83 +229,6 @@ const extract_frames = (video_path, fps, pattern, on_progress) =>
     })
   })
 
-const sleep = ms =>
-  new Promise(resolve => {
-    setTimeout(resolve, ms)
-  })
-
-const page_socket_url = async debug_port => {
-  const deadline = Date.now() + BROWSER_TIMEOUT_MS
-  while (Date.now() < deadline) {
-    try {
-      const response = await fetch(`http://127.0.0.1:${debug_port}/json/list`)
-      const targets = await response.json()
-      const page = targets.find(
-        target => target.type === 'page' && target.webSocketDebuggerUrl
-      )
-      if (page) return page.webSocketDebuggerUrl
-    } catch {
-      // browser is still coming up
-    }
-    await sleep(BROWSER_POLL_MS)
-  }
-  throw new Error('browser never exposed a page target')
-}
-
-const connect = socket_url =>
-  new Promise((resolve, reject) => {
-    const socket = new WebSocket(socket_url)
-    socket.onopen = () => resolve(socket)
-    socket.onerror = () => reject(new Error('devtools socket failed'))
-  })
-
-const devtools = socket => {
-  let next_id = 0
-  const pending = new Map()
-  socket.onmessage = event => {
-    const message = JSON.parse(String(event.data))
-    if (message.id !== undefined && pending.has(message.id)) {
-      const { resolve, reject } = pending.get(message.id)
-      pending.delete(message.id)
-      if (message.error) reject(new Error(message.error.message))
-      else resolve(message.result)
-      return
-    }
-    if (message.method === 'Runtime.exceptionThrown')
-      console.error(
-        'make-animation: page error',
-        message.params?.exceptionDetails?.exception?.description ??
-          message.params?.exceptionDetails?.text
-      )
-  }
-  const send = (method, params = {}) =>
-    new Promise((resolve, reject) => {
-      const id = ++next_id
-      pending.set(id, { resolve, reject })
-      socket.send(JSON.stringify({ id, method, params }))
-    })
-  const evaluate = async expression => {
-    const result = await send('Runtime.evaluate', {
-      expression,
-      awaitPromise: true,
-      returnByValue: true
-    })
-    if (result.exceptionDetails)
-      throw new Error(
-        result.exceptionDetails.exception?.description ??
-          result.exceptionDetails.text ??
-          'evaluate failed'
-      )
-    return result.result?.value
-  }
-  return { send, evaluate }
-}
-
-const data_url_of = file => {
-  const ext = path.extname(file).slice(1) || 'png'
-  return `data:image/${ext};base64,${fs.readFileSync(file).toString('base64')}`
-}
-
 const status = message => console.info(`make-animation: ${message}`)
 
 /**
@@ -362,29 +245,6 @@ const png_size_of = file => {
     fs.closeSync(handle)
   }
   return read_png_size(buffer)
-}
-
-/**
- * Trace one source frame through the app's poster pipeline, returning its svg.
- * An empty poster still comes back as a well-formed png and svg, so a render
- * that resolves is not proof the frame is good - a rejected one is traced
- * again rather than written.
- */
-const trace_frame = async (evaluate, data_url, label) => {
-  for (let attempt = 1; attempt <= RENDER_RETRIES; attempt++)
-    try {
-      const rendered = JSON.parse(
-        await evaluate(
-          `window.poster_driver.render(${JSON.stringify(data_url)}).then(r => JSON.stringify({ png: r.png, svg: r.svg }))`
-        )
-      )
-      const problem = frame_problem(rendered)
-      if (problem) throw new Error(problem)
-      return rendered.svg
-    } catch (error) {
-      status(`${label} attempt ${attempt} failed: ${error.message}`)
-    }
-  throw new Error(`${label} failed after retries`)
 }
 
 /**
@@ -428,62 +288,16 @@ const run_worker = async opts => {
     worker_id,
     target_width
   } = opts
-  const profile_dir = mkdtempSync(path.join(tmpdir(), 'make-animation-prof-'))
-  const target_url = `${base_url}${DRIVER_ROUTE}`
-  const browser = spawn(
-    chrome_path,
-    [
-      '--headless=new',
-      '--disable-gpu',
-      '--no-first-run',
-      '--no-default-browser-check',
-      `--remote-debugging-port=${debug_port}`,
-      `--user-data-dir=${profile_dir}`,
-      target_url
-    ],
-    { stdio: 'ignore' }
-  )
-  const shutdown = () => {
-    browser.kill()
-    try {
-      rmSync(profile_dir, {
-        recursive: true,
-        force: true,
-        maxRetries: PROFILE_RM_RETRIES,
-        retryDelay: PROFILE_RM_DELAY_MS
-      })
-    } catch {
-      console.warn(`make-animation: left profile dir behind at ${profile_dir}`)
-    }
-  }
-  // Close cleanly on signal so the headless browser is never orphaned holding
-  // its debug port.
-  for (const sig of ['SIGINT', 'SIGTERM'])
-    process.once(sig, () => {
-      shutdown()
-      process.exit(sig === 'SIGINT' ? SIGINT_EXIT : SIGTERM_EXIT)
-    })
-
   const frame_files = fs
     .readdirSync(source_dir)
     .filter(name => name.endsWith('.png'))
     .sort()
 
+  const { evaluate, shutdown } = await open_driver({
+    debug_port,
+    name: 'make-animation'
+  })
   try {
-    const socket = await connect(await page_socket_url(debug_port))
-    const { send, evaluate } = devtools(socket)
-    await send('Runtime.enable')
-    const ready_deadline = Date.now() + READY_TIMEOUT_MS
-    let ready = false
-    while (Date.now() < ready_deadline) {
-      if (await evaluate('window.poster_driver?.ready === true')) {
-        ready = true
-        break
-      }
-      await sleep(POLL_MS)
-    }
-    if (!ready) throw new Error('poster driver never became ready')
-
     for (let index = start; index < end; index++) {
       const frame_stem = `poster-${String(index + 1).padStart(5, '0')}`
       const out_png = path.join(poster_dir, `${frame_stem}.png`)
@@ -499,11 +313,12 @@ const run_worker = async opts => {
         status(
           `tracing ${index + 1}/${frame_files.length} (worker ${worker_id})`
         )
-        svg = await trace_frame(
+        const traced = await trace(
           evaluate,
           data_url_of(path.join(source_dir, frame)),
-          `frame ${index + 1}`
+          { label: `frame ${index + 1}`, status }
         )
+        svg = traced.svg
         fs.writeFileSync(out_svg, svg)
       }
 

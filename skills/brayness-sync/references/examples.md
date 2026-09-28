@@ -38,9 +38,9 @@ extensions/agents-local/index.ts             | 25 +-
 ```
 Release: brayness-sync + agents-local update
 
-- Added: brayness-sync skill (copy changes, validate, commit to work/sync/)
+- Added: brayness-sync skill (copy changes, validate, commit to skills/brayness-sync/published/)
 - Updated: agents-local extension
-- Synced: dev -> work/sync/ for release
+- Synced: dev -> skills/brayness-sync/published/ for release
 
 Ready to tag v1.2.0
 ```
@@ -57,12 +57,12 @@ Ready to tag v1.2.0
 
 ```
 ✗ SECURITY: .env file found
-  Location: /Users/scott/Desktop/brayness/work/sync/skills/my-skill/.env
+  Location: /Users/scott/Desktop/brayness/skills/brayness-sync/published/skills/my-skill/.env
 
 Action: STOP - Do not commit. Secret file was copied.
 
 Steps:
-1. Fix: Delete work/sync/skills/my-skill/.env
+1. Fix: Delete skills/brayness-sync/published/skills/my-skill/.env
 2. Delete: dev /Users/scott/Desktop/brayness/skills/my-skill/.env
 3. Commit secret removal to dev history
 4. Retry sync
@@ -87,7 +87,7 @@ Fix it in /Users/scott/Desktop/brayness/skills/my-skill/.env, then we'll retry.
 
 ```
 ✗ Git corruption: .git directory found
-  Location: /Users/scott/Desktop/brayness/work/sync/extensions/my-submodule/.git
+  Location: /Users/scott/Desktop/brayness/skills/brayness-sync/published/extensions/my-submodule/.git
 ```
 
 **Agent suggests**:
@@ -100,7 +100,7 @@ Check: ls -la /Users/scott/Desktop/brayness/extensions/my-submodule/
 If it has .git/, the exclude pattern didn't work.
 
 Options:
-1. Manually remove .git: rm -rf /Users/scott/Desktop/brayness/work/sync/extensions/my-submodule/.git
+1. Manually remove .git: rm -rf /Users/scott/Desktop/brayness/skills/brayness-sync/published/extensions/my-submodule/.git
 2. Retry sync with stricter exclusion
 3. Skip this extension and investigate dev setup
 ```
@@ -161,7 +161,7 @@ Skills:
 Extensions:
 - html: semantic element detection improvements
 
-Synced from dev -> work/sync/
+Synced from dev -> skills/brayness-sync/published/
 ```
 
 **User approves** -> **Commit executes** -> Git log shows:
@@ -174,7 +174,7 @@ def5678 Previous release v1.1.0
 **Ready to tag and npm publish**:
 
 ```bash
-cd /Users/scott/Desktop/brayness/work/sync/
+cd /Users/scott/Desktop/brayness/skills/brayness-sync/published/
 git tag v1.2.0
 npm publish
 ```

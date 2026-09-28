@@ -11,7 +11,7 @@
 
 ## Vault layout
 
-All job-hunt material lives under `02 Areas/Job Hunt/` in the Anotht vault (`work/Anotht/02 Areas/Job Hunt/`):
+All job-hunt material lives under `02 Areas/Job Hunt/` in the vault (`work/vault/02 Areas/Job Hunt/`):
 
 ```
 02 Areas/Job Hunt/

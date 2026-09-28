@@ -1,38 +1,38 @@
 ---
 name: brayness-sync
-description: Sync changes from dev brayness/ to the published `work/sync/` git mirror. Copies skills, extensions, bin, agent docs, and selected .pi/agent config while excluding secrets, sessions, nested .git dirs, and node_modules. Validates the copy, shows git diffs, and proposes commits. Use for "sync brayness", "prepare release", or after major skill/extension changes.
+description: Sync changes from dev brayness/ to the published git mirror at `skills/brayness-sync/published/`. Copies skills, extensions, bin, agent docs, and selected .pi/agent config while excluding secrets, sessions, nested .git dirs, and node_modules. Validates the copy, shows git diffs, and proposes commits. Use for "sync brayness", "prepare release", or after major skill/extension changes.
 ---
 
 # Brayness Sync
 
-One-way copy: dev root -> `work/sync/` (the git-tracked mirror for
+One-way copy: dev root -> `skills/brayness-sync/published/` (the git-tracked mirror for
 releases). Dev has working chaos (nested repos, secrets, sessions); the
 mirror stays clean and publishable. Every sync is reviewed - no blind sync.
 
 ## Copy list (source of truth)
 
-| Path                                                  | Why                                         |
-| ----------------------------------------------------- | ------------------------------------------- |
-| `skills/`                                             | skill catalog                               |
-| `extensions/`                                         | extensions                                  |
-| `bin/`                                                | harness scripts and CLI wrapper             |
-| `package.json`                                        | app dependency + scripts                    |
-| `plans-server.cjs`, `build-plans.cjs`                 | plans viewer scripts named in package.json  |
-| `AGENTS.md`, `README.md`                              | agent docs                                  |
-| `.ignore`, `.nvmrc`                                   | repo config                                 |
-| `.pi/agent/settings.json`, `.pi/agent/models.json`    | pi config                                   |
-| `.pi/agent/npm/README.md`, `.pi/agent/npm/.gitignore` | add-on signposts                            |
-| `.pi/agent/subagents.json`                            | subagent config (defaults, tools, profiles) |
-| `.pi/agent/extensions`                                | symlink                                     |
-| `.cursor/skills`, `.claude/skills`                    | repo-root symlinks (Cursor/Claude Code)     |
+| Path                                                  | Why                                     |
+| ----------------------------------------------------- | --------------------------------------- |
+| `skills/`                                             | skill catalog                           |
+| `extensions/`                                         | extensions                              |
+| `bin/`                                                | harness scripts and CLI wrapper         |
+| `prompts/`                                            | prompt templates                        |
+| `package.json`                                        | app dependency + scripts                |
+| `AGENTS.md`, `README.md`                              | agent docs                              |
+| `.ignore`, `.nvmrc`                                   | repo config                             |
+| `.pi/agent/settings.json`, `.pi/agent/models.json`    | pi config                               |
+| `.pi/agent/npm/README.md`, `.pi/agent/npm/.gitignore` | add-on signposts                        |
+| `.pi/agent/extensions`                                | symlink                                 |
+| `.cursor/skills`, `.claude/skills`                    | repo-root symlinks (Cursor/Claude Code) |
 
 Never copy: `.pi/agent/` anything else (auth, trust, caches, models-store,
 sessions, npm/node_modules), `.env*`, nested `.git/`, `node_modules/`,
-`AGENTS.local.md`, `plans/`, `work/` projects.
+`AGENTS.local.md`, `plans/`, `work/` projects, and `skills/brayness-sync/published/` itself - the
+mirror is the target, never a source.
 
-The two `plans-*.cjs` scripts ship because package.json names them, but they
-need dev-only paths (`plans/`, `work/blog/node_modules`) to actually run - the
-published copies are inert.
+The plans viewer now lives in `work/brayness/examples/plan-viewer/` - a product
+tree the mirror does not ship. `package.json` still names its scripts, so a
+published `npm run plans` points at a path that stays on the dev machine.
 
 Sessions rule: transcripts may contain secrets or personal info. They stay
 in dev, always.

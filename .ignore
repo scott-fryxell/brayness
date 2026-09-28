@@ -53,3 +53,7 @@ artifacts/
 
 # Agents
 .agents/
+
+# The published mirror - a filtered copy of this tree under the sync skill,
+# tracked as its own repo. Never synced, never scanned.
+published/

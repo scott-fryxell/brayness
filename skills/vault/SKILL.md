@@ -1,31 +1,37 @@
 ---
 name: vault
-description: Read, search, and maintain the Anotht Obsidian vault (PARA-structured personal knowledge base covering projects, interests, and reference material). Use when the user asks about their notes, interests, or wants links categorized, feeds rebuilt, or raindrop imports cleaned up.
+description: Read, search, and maintain the user's Obsidian vault at work/vault, a PARA-structured knowledge base of projects, interests, and reference material. Creates one if none exists. Use when the user asks about their notes or interests, or wants links categorized or feeds rebuilt.
 ---
 
 # Vault
 
-The Anotht vault is a PARA-structured Obsidian brain.
+The vault is a PARA-structured Obsidian brain. Other skills read and write it.
 
 ## Location
 
-The vault lives in the work directory:
-
 ```bash
-VAULT=/Users/scott/Desktop/brayness/work/Anotht
+VAULT=./work/vault   # from the harness root
 ```
 
-Or relative from brayness root:
+## If there is no vault
+
+Don't ask at session start. The first time a task needs the vault:
+
+1. Ask once: "Do you have an Obsidian vault? Where is it?"
+2. If they have one elsewhere, link it: `ln -s "<their vault>" work/vault`.
+3. If not, create it:
 
 ```bash
-VAULT=./work/Anotht
+mkdir -p "work/vault/"{"01 Projects","02 Areas","03 Resources","04 Archive",Clippings}
 ```
+
+Then carry on with the original task.
 
 ## Structure
 
-- `01 Projects/` -- active work: Blog, Music, Drawing, Nature, Realness, SMS, Anotht Agent
-- `02 Areas/` -- ongoing interests: Cyberpunks (politics, think pieces, counter-culture), Engineering, Music (gear, genres, production), Storytelling, Writing
-- `03 Resources/` -- reference material: AI, Art, Design, Engineering, Finance, Health, Manufacturing, Math, Writing
+- `01 Projects/` -- active work with an end
+- `02 Areas/` -- ongoing interests
+- `03 Resources/` -- reference material
 - `04 Archive/` -- inactive items
 - `05 journal/` -- yearly journals
 - `Clippings/` -- saved articles and links inbox (categorize into PARA sections)
@@ -48,14 +54,6 @@ rg -l "cowpunk" "$VAULT"
 cat "$VAULT/02 Areas/Music/:feed.md"
 ```
 
-Or from brayness root:
-
-```bash
-ls ./work/Anotht/Clippings/
-rg -l "cowpunk" ./work/Anotht
-cat "./work/Anotht/02 Areas/Music/:feed.md"
-```
-
 For semantic search ("what notes feel related to X"), no tool exists yet -
 fall back to `rg` with synonyms.
 
@@ -64,8 +62,6 @@ fall back to `rg` with synonyms.
 When asked "what's been happening recently in my vault" or "what's new":
 
 ```bash
-VAULT=/Users/scott/Desktop/brayness/work/Anotht
-
 # 1. Current journal -- newest entries at the bottom
 read "$VAULT/05 journal/Journal.md"
 read "$VAULT/05 journal/Journal $(date +%Y).md"
@@ -94,9 +90,9 @@ find "$VAULT/Unsorted" -name "*.md" -mtime -30 2>/dev/null | sort
 Also check specific project notes for structured updates (release notes, TODOs, design briefs):
 
 ```bash
-for project in Realness SMS Blog; do
-  echo "=== $project ==="
-  ls "$VAULT/01 Projects/$project/" | grep -i -E "(todo|release|log|status|notes|update)" | head -5
+for project in "$VAULT/01 Projects"/*/; do
+  echo "=== $(basename "$project") ==="
+  ls "$project" | grep -i -E "(todo|release|log|status|notes|update)" | head -5
 done
 ```
 
@@ -120,7 +116,6 @@ bash rebuild-feeds.sh
 ## Maintenance
 
 ```bash
-./clean-raindrop.py        # convert raindrop-imported notes to rich cardlinks (one-shot; already run on backlog)
 ./add-frontmatter.sh       # batch add YAML frontmatter to files missing it (extracts source URL, author from domain)
 ./add-stars.sh             # sync GitHub starred repos into vault (idempotent, skips existing via github: frontmatter key)
 ./rebuild-feeds.sh         # regenerate all :feed.md files (runs after add-stars.sh to surface new entries)
@@ -128,7 +123,7 @@ bash rebuild-feeds.sh
 
 ### GitHub stars sync
 
-`add-stars.sh` fetches all starred repos for `scott-fryxell`, categorizes each into the right PARA section using `skills/vault/github-stars-map.yaml` rules (topic matching with language/description fallbacks), and creates a note with `github: owner/repo` frontmatter. Re-runs are safe -- existing notes are skipped.
+`add-stars.sh` fetches your starred repos (`GITHUB_USER`, or the `gh` login), categorizes each into the right PARA section using `skills/vault/github-stars-map.yaml` rules (topic matching with language/description fallbacks), and creates a note with `github: owner/repo` frontmatter. Re-runs are safe -- existing notes are skipped.
 
 See `skills/vault/github-stars-map.yaml` for the categorization mapping. Override any misclassification by moving the note to the right directory and the feed will pick it up.
 
@@ -136,7 +131,6 @@ See `skills/vault/github-stars-map.yaml` for the categorization mapping. Overrid
 
 - Filename is the title -- do not duplicate it as a heading inside the note.
 - Bare URLs trigger the auto-card-link plugin; do not wrap them.
-- Cyberpunks holds politics, think pieces, and counter-culture.
 - Unsorted is the inbox; anything there should be categorized into a PARA section and removed from Unsorted.
 - **Add `created` date in frontmatter when organizing** -- use the file's original timestamp. Preserves capture date if files are ever copied/moved (filesystem ctime changes, frontmatter survives).
 - **Frontmatter format:**
