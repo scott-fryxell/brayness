@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "0.85.1",
   "defaultProvider": "openrouter",
-  "defaultModel": "deepseek/deepseek-v4-flash-0731",
+  "defaultModel": "deepseek/deepseek-v4.1-flash",
   "defaultThinkingLevel": "xhigh",
   "packages": [
     "npm:pi-mono-btw",
@@ -20,7 +20,12 @@
     "anthropic/claude-fable-5",
     "openrouter/thinkingmachines/inkling",
     "openrouter/moonshotai/kimi-k3",
-    "openrouter/deepseek/deepseek-v4-flash-0731"
+    "openrouter/deepseek/deepseek-v4-flash-0731",
+    "openrouter/thinkingmachines/inkling-small",
+    "openrouter/thinkingmachines/inkling-small:free",
+    "openrouter/thinkingmachines/inkling:free",
+    "openrouter/deepseek/deepseek-v4.1-flash"
   ],
-  "theme": "dark"
+  "theme": "dark",
+  "hideThinkingBlock": true
 }

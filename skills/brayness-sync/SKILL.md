@@ -17,6 +17,7 @@ mirror stays clean and publishable. Every sync is reviewed - no blind sync.
 | `extensions/`                                         | extensions                                  |
 | `bin/`                                                | harness scripts and CLI wrapper             |
 | `package.json`                                        | app dependency + scripts                    |
+| `plans-server.cjs`, `build-plans.cjs`                 | plans viewer scripts named in package.json  |
 | `AGENTS.md`, `README.md`                              | agent docs                                  |
 | `.ignore`, `.nvmrc`                                   | repo config                                 |
 | `.pi/agent/settings.json`, `.pi/agent/models.json`    | pi config                                   |
@@ -28,6 +29,10 @@ mirror stays clean and publishable. Every sync is reviewed - no blind sync.
 Never copy: `.pi/agent/` anything else (auth, trust, caches, models-store,
 sessions, npm/node_modules), `.env*`, nested `.git/`, `node_modules/`,
 `AGENTS.local.md`, `plans/`, `work/` projects.
+
+The two `plans-*.cjs` scripts ship because package.json names them, but they
+need dev-only paths (`plans/`, `work/blog/node_modules`) to actually run - the
+published copies are inert.
 
 Sessions rule: transcripts may contain secrets or personal info. They stay
 in dev, always.

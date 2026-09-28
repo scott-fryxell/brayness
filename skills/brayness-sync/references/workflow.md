@@ -14,7 +14,7 @@ diff -rq bin work/sync/bin --exclude=.git --exclude=node_modules | head -30
 
 # Single files
 for f in package.json AGENTS.md README.md \
-         .ignore .nvmrc \
+         .ignore .nvmrc plans-server.cjs build-plans.cjs \
          .pi/agent/settings.json .pi/agent/models.json .pi/agent/subagents.json; do
   cmp -s "$f" "work/sync/$f" || echo "differs: $f"
 done
@@ -45,6 +45,7 @@ rsync -av --delete \
 cp .pi/agent/subagents.json work/sync/.pi/agent/subagents.json
 
 cp package.json AGENTS.md README.md .ignore .nvmrc work/sync/
+cp plans-server.cjs build-plans.cjs work/sync/
 
 mkdir -p work/sync/.pi/agent/npm
 cp .pi/agent/settings.json .pi/agent/models.json work/sync/.pi/agent/

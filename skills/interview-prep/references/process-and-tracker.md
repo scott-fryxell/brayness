@@ -1,6 +1,7 @@
 # Process, Tracker & Negotiation
 
 ## Contents
+
 - Vault layout
 - Tracker
 - Hiring process stages
@@ -17,6 +18,7 @@ All job-hunt material lives under `02 Areas/Job Hunt/` in the Anotht vault (`wor
   :feed.md              -- dataview feed, follow existing vault convention
   tracker.md            -- master table, one row per company
   Story Bank.md         -- reusable STAR stories (see fit-and-story-bank.md)
+  Cover Notes.md        -- reusable cover-note slots (see fit-and-story-bank.md)
   Companies/
     <company-slug>.md   -- one note per company (assets/company-note-template.md)
   Study/
@@ -30,7 +32,7 @@ Create the folder and `:feed.md` the first time this skill touches the vault, ma
 `tracker.md` is a single table, most recent activity first:
 
 | Company | Role | Stage | Next action | Date |
-|---------|------|-------|-------------|------|
+| ------- | ---- | ----- | ----------- | ---- |
 
 Update it whenever a company's stage changes. This is the answer to "where do things stand" -- don't make the user open every company note to get status.
 

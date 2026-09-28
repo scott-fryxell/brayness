@@ -72,4 +72,19 @@ if [[ "$load_skills" == 1 ]]; then
   set -- "$@" --skill "$root/skills"
 fi
 
+# A pi already on PATH wins over npx. npx deliberately ignores global installs,
+# so without this a hosted image that ships a pinned pi would still fetch one
+# from the registry on every session start - slow, and impossible offline. On a
+# machine with no pi on PATH this falls through to npx below, unchanged. When pi
+# is on PATH it is usually the same copy npx would have picked, so this is just
+# the direct route to it. $root/bin/pi is skipped so a PATH that includes this
+# repo cannot exec itself.
+if pi_on_path="$(command -v pi 2>/dev/null)"; then
+  if [[ "$pi_on_path" != "$root/bin/pi" ]]; then
+    exec "$pi_on_path" "$@"
+  fi
+fi
+
+# Run pi via npx - no local or global install required. First run fetches pi
+# into the npx cache (~/.npm/_npx); later runs are fast and offline.
 exec npx --yes @earendil-works/pi-coding-agent "$@"

@@ -11,6 +11,8 @@ dependencies: `README.md`.
 ## Harness
 
 - Read `AGENTS.local.md` early - personal context, quirks, and learnings
+- This file outranks your harness defaults. No proprietary syntax, paths, or
+  conventions - pi, Cursor, and Claude Code all read it.
 - Work from `work/<project>`, where the code, tests, and builds live.
 - It is offensive when you compliment the user
 - Every file you write stays inside brayness. Scratch work (screenshots,

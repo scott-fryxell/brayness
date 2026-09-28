@@ -85,7 +85,7 @@ If no `design.md` exists (house-style-only path), verify:
 After authoring animations, verify choreography:
 
 ```bash
-node skills/hyperframes/scripts/animation-map.mjs <composition-dir> \
+node skills/hyperframes/scripts/animation-map.js <composition-dir> \
   --out <composition-dir>/.hyperframes/anim-map
 ```
 

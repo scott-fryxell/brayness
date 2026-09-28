@@ -25,9 +25,12 @@
   "scripts": {
     "brayness": "./bin/pi",
     "start": "npm run brayness",
+    "test": "node --test --experimental-strip-types extensions/memory/index-db.test.ts",
     "pi:update": "rm -rf ~/.npm/_npx && npx --yes @earendil-works/pi-coding-agent update --all",
     "pi:list": "./bin/pi list",
     "feeds": "./skills/vault/rebuild-feeds.sh",
+    "plans": "NODE_PATH=work/blog/node_modules node plans-server.cjs",
+    "plans:build": "NODE_PATH=work/blog/node_modules node build-plans.cjs",
     "make:animation": "node ./bin/make-animation.js"
   },
   "license": "MIT",

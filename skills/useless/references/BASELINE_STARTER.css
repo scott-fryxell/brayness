@@ -1,5 +1,5 @@
 /*
- * Portable starter for the realness-design method: one spacing unit, a
+ * Portable starter for the useless method: one spacing unit, a
  * fluid modular type scale, and the reset that makes whole-multiple
  * vertical rhythm mean anything. Copy this file, then tune the six
  * inputs below (unit, two ratios, two viewport thresholds) for your
@@ -36,7 +36,7 @@
  * ------------------------------------------------------------------- */
 :root {
   --unit: 1rem;
-  --measure: calc(var(--unit) * 22);  /* ~ 22rem, tune to your font */
+  --measure: calc(var(--unit) * 22); /* ~ 22rem, tune to your font */
   --gate: calc(var(--unit) * 32);
   --limit: calc(var(--unit) * 48);
 }
@@ -83,23 +83,43 @@ html {
   );
 }
 h1 {
-  font-size: clamp(var(--h1-min), calc(2.074rem + (3.157 - 2.074) * (100dvw - 20rem) / (60 - 20)), var(--h1-max));
+  font-size: clamp(
+    var(--h1-min),
+    calc(2.074rem + (3.157 - 2.074) * (100dvw - 20rem) / (60 - 20)),
+    var(--h1-max)
+  );
 }
 h2 {
-  font-size: clamp(var(--h2-min), calc(1.728rem + (2.369 - 1.728) * (100dvw - 20rem) / (60 - 20)), var(--h2-max));
+  font-size: clamp(
+    var(--h2-min),
+    calc(1.728rem + (2.369 - 1.728) * (100dvw - 20rem) / (60 - 20)),
+    var(--h2-max)
+  );
 }
 h3 {
-  font-size: clamp(var(--h3-min), calc(1.44rem + (1.777 - 1.44) * (100dvw - 20rem) / (60 - 20)), var(--h3-max));
+  font-size: clamp(
+    var(--h3-min),
+    calc(1.44rem + (1.777 - 1.44) * (100dvw - 20rem) / (60 - 20)),
+    var(--h3-max)
+  );
 }
 h4 {
-  font-size: clamp(var(--h4-min), calc(1.2rem + (1.333 - 1.2) * (100dvw - 20rem) / (60 - 20)), var(--h4-max));
+  font-size: clamp(
+    var(--h4-min),
+    calc(1.2rem + (1.333 - 1.2) * (100dvw - 20rem) / (60 - 20)),
+    var(--h4-max)
+  );
 }
 h5 {
   font-size: var(--h5-min);
 }
 h6 {
   /* bounds swapped - see the --h6-min/--h6-max comment above */
-  font-size: clamp(var(--h6-max), calc(0.833rem + (0.75 - 0.833) * (100dvw - 20rem) / (60 - 20)), var(--h6-min));
+  font-size: clamp(
+    var(--h6-max),
+    calc(0.833rem + (0.75 - 0.833) * (100dvw - 20rem) / (60 - 20)),
+    var(--h6-min)
+  );
 }
 
 /* ---------------------------------------------------------------------
@@ -108,10 +128,19 @@ h6 {
  * the font's own line-height so headings land an integer number of
  * units below the previous block, never a fraction.
  * ------------------------------------------------------------------- */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-bottom: var(--unit);
 }
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   /* four units high, minus the font's own leading */
   margin-top: calc((var(--unit) - 1em) + var(--unit) * 2);
 }
@@ -123,6 +152,10 @@ h6 {
   /* two units high */
   margin-top: calc(var(--unit) - 1em);
 }
-p, textarea, input, blockquote, form {
+p,
+textarea,
+input,
+blockquote,
+form {
   max-width: var(--measure);
 }

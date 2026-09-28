@@ -59,7 +59,7 @@ retrieval actions.
 Run the eval against a throwaway copy so a bad run cannot touch the real skills.
 
 ```bash
-EVAL_DIR=/tmp/skill-writer-eval-run
+EVAL_DIR=artifacts/skill-writer/eval-run
 rm -rf "$EVAL_DIR" && mkdir -p "$EVAL_DIR"
 rsync -a --exclude=.git --exclude=node_modules ./ "$EVAL_DIR"/
 cd "$EVAL_DIR"

@@ -30,6 +30,12 @@ models.json
 models-store.json
 .auto/
 
+# Session memory index - derived from the transcripts, rebuild with the
+# remember tool. Never synced (see the brayness-sync skill).
+memory.db
+memory.db-wal
+memory.db-shm
+
 # Session logs - conversation transcripts, may contain secrets/personal info.
 # Kept in dev /brayness only, never synced to the published repo.
 sessions/

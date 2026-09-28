@@ -1,17 +1,17 @@
 #!/usr/bin/env node
-// animation-map.mjs — HyperFrames animation map for agents
+// animation-map.js — HyperFrames animation map for agents
 //
 // Reads every GSAP timeline registered in window.__timelines, enumerates
 // tweens, samples bboxes at N points per tween, computes flags and
 // human-readable summaries. Outputs a single animation-map.json.
 //
 // Usage:
-//   node skills/hyperframes/scripts/animation-map.mjs <composition-dir> \
+//   node skills/hyperframes/scripts/animation-map.js <composition-dir> \
 //     [--frames N] [--out <dir>] [--min-duration S] [--width W] [--height H] [--fps N]
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { hyperframesPackageSpec, importPackagesOrBootstrap } from "./package-loader.mjs";
+import { hyperframesPackageSpec, importPackagesOrBootstrap } from "./package-loader.js";
 
 const {
   createFileServer,

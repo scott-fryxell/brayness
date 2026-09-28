@@ -24,6 +24,22 @@ Prepares a target company/role end-to-end: research, fit, behavioral prep, techn
 
 6. **Offer stage.** When an offer lands, use the negotiation section of `references/process-and-tracker.md` before any number gets discussed live.
 
+## Baselining
+
+An interview is a shared baseline before it is a performance. Scott's pattern:
+answer one part of a question, get to a shared footing on that part, then answer
+the rest from there. Advancing to the next question before the floor is set
+reads as noise, not rigor.
+
+So when running a mock, bring him back. Confirm the part that landed, name it in
+one line, then return to the same question for the next layer. One question at a
+time. Don't advance until the current question has a floor.
+
+This is also the thing he is evaluating. Can we set a comfortable baseline with
+this company - can each side bring the other up to speed and keep them involved -
+is a real criterion, not a soft one. Technical depth still has to be covered; it
+just doesn't count if nobody is standing on the same ground.
+
 ## Notes
 
 - Don't fabricate company facts (funding numbers, headcount, exec names) when research doesn't turn up a confident source -- state what's unknown instead.

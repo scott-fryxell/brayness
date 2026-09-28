@@ -28,7 +28,7 @@ bullet under a `## Learnings` section in `AGENTS.local.md`:
 - YYYY-MM-DD: [the one reproducible lesson / hint]
 ```
 
-Keep entries short. One useful hint beats a paragraph. If the lesson should
+Keep every entry to 5-7 words - one hint, no reasoning. If the lesson should
 guide every agent, put it in `AGENTS.md` instead - other harnesses read
 that, not `AGENTS.local.md`.
 
@@ -46,7 +46,7 @@ On a user correction or a repeated failure, work the loop:
 2. Gather evidence: the user's words, the failing command/output, the file path.
 3. Decide whether the fault is in a skill/process or was a one-off mistake.
 4. If it points at a skill defect, propose the change as a diff to that skill's `SKILL.md` (in chat, or a file under `plans/` for bigger rewrites) and wait for a human to approve before editing the
-production skill.
+   production skill.
 5. Append the learning to `AGENTS.local.md` Learnings regardless.
 
 The producer never grades its own homework: when reviewing your own work, reason from evidence and state what is wrong plainly.

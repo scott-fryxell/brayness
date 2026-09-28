@@ -121,7 +121,7 @@ After building the composition, check WITH ACTUAL CODE:
 After authoring animations, run the animation map to verify choreography:
 
 ```bash
-node skills/hyperframes/scripts/animation-map.mjs <composition-dir>
+node skills/hyperframes/scripts/animation-map.js <composition-dir>
 ```
 
 Read the summaries. Fix every flag: offscreen, collision, invisible, pacing issues.

@@ -35,7 +35,11 @@ You know these rules but you violate them. Stop.
 
 Don't default to what you know. If the content is luxury, a grotesque sans might create more tension than the expected Didone serif. Decide the register first, then search.
 
-Save this script to `/tmp/fontquery.py` and run with `curl -s 'https://fonts.google.com/metadata/fonts' > /tmp/gfonts.json && python3 /tmp/fontquery.py /tmp/gfonts.json`:
+Save this script to `artifacts/<project>/fontquery.py` and run it from `artifacts/<project>/`:
+
+```bash
+curl -s 'https://fonts.google.com/metadata/fonts' > gfonts.json && python3 fontquery.py gfonts.json
+```
 
 ```python
 import json, sys, random

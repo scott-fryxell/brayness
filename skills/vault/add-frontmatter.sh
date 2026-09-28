@@ -3,6 +3,9 @@
 
 cd /Users/scott/Desktop/brayness/work/Anotht
 
+scratch=/Users/scott/Desktop/brayness/artifacts/vault
+mkdir -p "$scratch"
+
 count=0
 
 # Find files with [[self]] author and cardlink
@@ -36,7 +39,7 @@ find . -name "*.md" -type f | while read -r file; do
     author=$(echo "$domain" | awk '{print toupper(substr($0,1,1)) tolower(substr($0,2))}')
     
     # Create new frontmatter
-    cat > /tmp/new_frontmatter.txt << EOF
+    cat > "$scratch/new_frontmatter.txt" << EOF
 ---
 title: "$(basename "$file" .md)"
 source: "${url}"
@@ -53,11 +56,11 @@ EOF
     
     # Replace existing frontmatter with new one
     # First, remove old frontmatter (lines between --- and ---)
-    tail -n +$(grep -n "^---$" "$file" | tail -1 | cut -d: -f1) "$file" | tail -n +2 > /tmp/body.txt 2>/dev/null
+    tail -n +$(grep -n "^---$" "$file" | tail -1 | cut -d: -f1) "$file" | tail -n +2 > "$scratch/body.txt" 2>/dev/null
     
     # Combine new frontmatter + body
-    cat /tmp/new_frontmatter.txt /tmp/body.txt > /tmp/fixed_file.md
-    mv /tmp/fixed_file.md "$file"
+    cat "$scratch/new_frontmatter.txt" "$scratch/body.txt" > "$scratch/fixed_file.md"
+    mv "$scratch/fixed_file.md" "$file"
     
     count=$((count + 1))
     if [ $((count % 50)) -eq 0 ]; then

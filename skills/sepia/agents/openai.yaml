@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sepia — de-AI writing"
+  short_description: "Make AI-generated fiction and professional prose read as human-written."
+
+policy:
+  allow_implicit_invocation: true
